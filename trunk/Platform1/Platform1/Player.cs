@@ -273,25 +273,17 @@ namespace LearningXNA
             //{
             //    case MONSTER:
                     // If any digital horizontal movement input is found, override the analog movement.
-            if (gamePadState.IsButtonDown(Buttons.DPadLeft) ||
-                keyboardState.IsKeyDown(Keys.Left) ||
-                keyboardState.IsKeyDown(Keys.A))
+            if (keyboardState.IsKeyDown(Keys.Left))
             {
                 movement = -1.0f;
             }
-            else if (gamePadState.IsButtonDown(Buttons.DPadRight) ||
-                     keyboardState.IsKeyDown(Keys.Right) ||
-                     keyboardState.IsKeyDown(Keys.D))
+            else if (keyboardState.IsKeyDown(Keys.Right))
             {
                 movement = 1.0f;
             }
 
             // Check if the player wants to jump.
-            isJumping =
-                gamePadState.IsButtonDown(JumpButton) ||
-                keyboardState.IsKeyDown(Keys.Space) ||
-                keyboardState.IsKeyDown(Keys.Up) ||
-                keyboardState.IsKeyDown(Keys.W);
+            isJumping = keyboardState.IsKeyDown(Keys.Up);
 
             if( keyboardState.IsKeyDown(Keys.D1))
             {
@@ -466,6 +458,11 @@ namespace LearningXNA
                             }
                             else if (collision == TileCollision.Impassable) // Ignore platforms.
                             {
+                                if (animalShape == MONSTER_CAT)
+                                {
+                                    //CLIMB STUFF
+                                }
+
                                 // Resolve the collision along the X axis.
                                 Position = new Vector2(Position.X + depth.X, Position.Y);
 
