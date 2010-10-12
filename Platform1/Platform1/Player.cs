@@ -262,11 +262,11 @@ namespace LearningXNA
 
             if( keyboardState.IsKeyDown(Keys.D1))
             {
-                animalShape = MONSTER;
+                changeShape(MONSTER);
             }
             else if (keyboardState.IsKeyDown(Keys.D2))
             {
-                animalShape = MONSTER_CAT;
+                changeShape(MONSTER_CAT);
             }
 
             //        break;
@@ -490,6 +490,15 @@ namespace LearningXNA
                     break;
             }
         }
+
+        /// <summary>
+        /// Called when the player change shape
+        /// </summary>
+        public void changeShape(short shapeFlag)
+        {
+            animalShape = shapeFlag;
+        }
+
 
         /// <summary>
         /// Draws the animated player.
