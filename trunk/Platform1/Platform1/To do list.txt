@@ -1,0 +1,12 @@
+The to do list:
+
+12/10-10
+G- Implementing different monster behaviours, similar to state-machine way (monster and monsterCat for now)
+M- Look into mooving platforms (in ALL directions!!)
+0- Figure out about the sound part.
+0- Find out how to  work with the GUI.
+
+
+
+The Done List:
+
