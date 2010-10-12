@@ -71,11 +71,8 @@ namespace LearningXNA
         /// <summary>
         /// The speed at which this enemy moves along the X axis.
         /// </summary>
-#if ZUNE
-        private const float MoveSpeed = 64.0f;
-#else
+
         private const float MoveSpeed = 128.0f;
-#endif
 
         /// <summary>
         /// Constructs a new Enemy.

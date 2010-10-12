@@ -54,24 +54,6 @@ namespace LearningXNA
         }
         Vector2 velocity;
 
-#if ZUNE
-        // Constants for controling horizontal movement
-        private const float MoveAcceleration = 7000.0f;
-        private const float MaxMoveSpeed = 1000.0f;
-        private const float GroundDragFactor = 0.38f;
-        private const float AirDragFactor = 0.48f;
-
-        // Constants for controlling vertical movement
-        private const float MaxJumpTime = 0.35f;
-        private const float JumpLaunchVelocity = -2000.0f;
-        private const float GravityAcceleration = 1700.0f;
-        private const float MaxFallSpeed = 450.0f;
-        private const float JumpControlPower = 0.13f;
-
-        // Input configuration
-        private const float MoveStickScale = 0.0f;
-        private const Buttons JumpButton = Buttons.B;        
-#else
         // Constants for controling horizontal movement
         private const float MoveAcceleration = 14000.0f;
         private const float MaxMoveSpeed = 2000.0f;
@@ -88,7 +70,6 @@ namespace LearningXNA
         // Input configuration
         private const float MoveStickScale = 1.0f;
         private const Buttons JumpButton = Buttons.A;
-#endif
 
         /// <summary>
         /// Gets whether or not the player's feet are on the ground.
