@@ -5,6 +5,8 @@ G- Implementing different monster behaviours, similar to state-machine way (mons
 M- Look into mooving platforms (in ALL directions!!)
 0- Figure out about the sound part.
 0- Find out how to  work with the GUI.
+0- Vertical spikes (die only from the top)
+0- Uncontrollable behaviours
 
 
 

@@ -159,6 +159,9 @@ namespace LearningXNA
 
             LoadContent();
 
+            // I start the level as a MONSTER
+            changeShape(MONSTER);
+
             Reset(position);
         }
 
@@ -503,6 +506,9 @@ namespace LearningXNA
                     sprite.PlayAnimation(monsterCatDieAnimation);
                     break;
             }
+
+            // Get beck to MONSTER when killed
+            changeShape(MONSTER);
         }
 
         /// <summary>
