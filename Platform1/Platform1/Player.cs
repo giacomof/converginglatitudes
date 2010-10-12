@@ -69,18 +69,48 @@ namespace LearningXNA
         }
         Vector2 velocity;
 
+        //***********MONSTER SHAPE MOVEMENTS*****************
         // Constants for controling horizontal movement
-        private const float MoveAcceleration = 14000.0f;
-        private const float MaxMoveSpeed = 2000.0f;
-        private const float GroundDragFactor = 0.58f;
-        private const float AirDragFactor = 0.65f;
+        private const float monsterMoveAcceleration = 8000.0f;
+        private const float monsterMaxMoveSpeed = 1200.0f;
+        private const float monsterGroundDragFactor = 0.58f;
+        private const float monsterAirDragFactor = 0.65f;
 
         // Constants for controlling vertical movement
-        private const float MaxJumpTime = 0.35f;
-        private const float JumpLaunchVelocity = -4000.0f;
-        private const float GravityAcceleration = 3500.0f;
-        private const float MaxFallSpeed = 600.0f;
-        private const float JumpControlPower = 0.14f;
+        private const float monsterMaxJumpTime = 0.35f;
+        private const float monsterJumpLaunchVelocity = -2000.0f;
+        private const float monsterGravityAcceleration = 3500.0f;
+        private const float monsterMaxFallSpeed = 1200.0f;
+        private const float monsterJumpControlPower = 0.14f;
+        //****************************************************
+
+        //***********MONSTER-CAT SHAPE MOVEMENTS*****************
+        // Constants for controling horizontal movement
+        private const float monsterCatMoveAcceleration = 14000.0f;
+        private const float monsterCatMaxMoveSpeed = 2000.0f;
+        private const float monsterCatGroundDragFactor = 0.58f;
+        private const float monsterCatAirDragFactor = 0.65f;
+
+        // Constants for controlling vertical movement
+        private const float monsterCatMaxJumpTime = 0.35f;
+        private const float monsterCatJumpLaunchVelocity = -4000.0f;
+        private const float monsterCatGravityAcceleration = 3500.0f;
+        private const float monsterCatMaxFallSpeed = 600.0f;
+        private const float monsterCatJumpControlPower = 0.14f;
+        //*******************************************************
+
+        // Constants for controling horizontal movement
+        private float MoveAcceleration = 14000.0f;
+        private float MaxMoveSpeed = 2000.0f;
+        private float GroundDragFactor = 0.58f;
+        private float AirDragFactor = 0.65f;
+
+        // Constants for controlling vertical movement
+        private float MaxJumpTime = 0.35f;
+        private float JumpLaunchVelocity = -4000.0f;
+        private float GravityAcceleration = 3500.0f;
+        private float MaxFallSpeed = 600.0f;
+        private float JumpControlPower = 0.14f;
 
         // Input configuration
         private const float MoveStickScale = 1.0f;
@@ -497,6 +527,39 @@ namespace LearningXNA
         public void changeShape(short shapeFlag)
         {
             animalShape = shapeFlag;
+
+            switch(shapeFlag)
+            {
+                case MONSTER:
+                    // Constants for controling horizontal movement
+                    MoveAcceleration = monsterMoveAcceleration;
+                    MaxMoveSpeed = monsterMaxMoveSpeed;
+                    GroundDragFactor = monsterGroundDragFactor;
+                    AirDragFactor = monsterAirDragFactor;
+
+                    // Constants for controlling vertical movement
+                    MaxJumpTime = monsterMaxJumpTime;
+                    JumpLaunchVelocity = monsterJumpLaunchVelocity;
+                    GravityAcceleration = monsterGravityAcceleration;
+                    MaxFallSpeed = monsterMaxFallSpeed;
+                    JumpControlPower = monsterJumpControlPower;
+                    break;
+
+                case MONSTER_CAT:
+                    // Constants for controling horizontal movement
+                    MoveAcceleration = monsterCatMoveAcceleration;
+                    MaxMoveSpeed = monsterCatMaxMoveSpeed;
+                    GroundDragFactor = monsterCatGroundDragFactor;
+                    AirDragFactor = monsterCatAirDragFactor;
+
+                    // Constants for controlling vertical movement
+                    MaxJumpTime = monsterCatMaxJumpTime;
+                    JumpLaunchVelocity = monsterCatJumpLaunchVelocity;
+                    GravityAcceleration = monsterCatGravityAcceleration;
+                    MaxFallSpeed = monsterCatMaxFallSpeed;
+                    JumpControlPower = monsterCatJumpControlPower;
+                    break;
+            }
         }
 
 
