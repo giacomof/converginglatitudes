@@ -188,11 +188,30 @@ namespace LearningXNA
             {
                 if (Math.Abs(Velocity.X) - 0.02f > 0)
                 {
-                    sprite.PlayAnimation(monsterRunAnimation);
+                    switch (animalShape)
+                    {
+                        case MONSTER:
+                            sprite.PlayAnimation(monsterRunAnimation);
+                            break;
+
+                        case MONSTER_CAT:
+                            sprite.PlayAnimation(monsterCatRunAnimation);
+                            break;
+                    }
+
                 }
                 else
                 {
-                    sprite.PlayAnimation(monsterIdleAnimation);
+                    switch (animalShape)
+                    {
+                        case MONSTER:
+                            sprite.PlayAnimation(monsterIdleAnimation);
+                            break;
+
+                        case MONSTER_CAT:
+                            sprite.PlayAnimation(monsterCatIdleAnimation);
+                            break;
+                    }
                 }
             }
 
@@ -326,7 +345,16 @@ namespace LearningXNA
                         jumpSound.Play();
 
                     jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    sprite.PlayAnimation(monsterJumpAnimation);
+                    switch (animalShape)
+                    {
+                        case MONSTER:
+                            sprite.PlayAnimation(monsterJumpAnimation);
+                            break;
+
+                        case MONSTER_CAT:
+                            sprite.PlayAnimation(monsterCatJumpAnimation);
+                            break;
+                    }
                 }
 
                 // If we are in the ascent of the jump
@@ -436,7 +464,15 @@ namespace LearningXNA
             else
                 fallSound.Play();
 
-            sprite.PlayAnimation(monsterDieAnimation);
+            switch (animalShape)
+            {
+                case MONSTER:
+                    sprite.PlayAnimation(monsterDieAnimation);
+                    break;
+                case MONSTER_CAT:
+                    sprite.PlayAnimation(monsterCatDieAnimation);
+                    break;
+            }
         }
 
         /// <summary>
@@ -444,7 +480,15 @@ namespace LearningXNA
         /// </summary>
         public void OnReachedExit()
         {
-            sprite.PlayAnimation(monsterCelebrateAnimation);
+            switch (animalShape)
+            {
+                case MONSTER:
+                    sprite.PlayAnimation(monsterCelebrateAnimation);
+                    break;
+                case MONSTER_CAT:
+                    sprite.PlayAnimation(monsterCatCelebrateAnimation);
+                    break;
+            }
         }
 
         /// <summary>
