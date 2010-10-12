@@ -262,11 +262,11 @@ namespace LearningXNA
 
             if( keyboardState.IsKeyDown(Keys.D1))
             {
-                animalShape = 0;
+                animalShape = MONSTER;
             }
             else if (keyboardState.IsKeyDown(Keys.D2))
             {
-                animalShape = 1;
+                animalShape = MONSTER_CAT;
             }
 
             //        break;
