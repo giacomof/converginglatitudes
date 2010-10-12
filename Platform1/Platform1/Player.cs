@@ -7,16 +7,31 @@ using Microsoft.Xna.Framework.Input;
 namespace LearningXNA
 {
     /// <summary>
-    /// Our fearless adventurer!
+    /// Our character: the monster
     /// </summary>
     class Player
     {
+        // Shape state of the character; starting from 0 as a monster
+        const short MONSTER             = 0;
+        const short MONSTER_CAT         = 1;
+        const short MONSTER_DUCK        = 2;
+        private short animalShape = MONSTER;
+
+
         // Animations
-        private Animation idleAnimation;
-        private Animation runAnimation;
-        private Animation jumpAnimation;
-        private Animation celebrateAnimation;
-        private Animation dieAnimation;
+        private Animation monsterIdleAnimation;
+        private Animation monsterRunAnimation;
+        private Animation monsterJumpAnimation;
+        private Animation monsterCelebrateAnimation;
+        private Animation monsterDieAnimation;
+
+        private Animation monsterCatIdleAnimation;
+        private Animation monsterCatRunAnimation;
+        private Animation monsterCatJumpAnimation;
+        private Animation monsterCatCelebrateAnimation;
+        private Animation monsterCatDieAnimation;
+
+
         private SpriteEffects flip = SpriteEffects.None;
         private AnimationPlayer sprite;
 
@@ -123,17 +138,23 @@ namespace LearningXNA
         public void LoadContent()
         {
             // Load animated textures.
-            idleAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Idle"), 0.1f, true);
-            runAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Run"), 0.1f, true);
-            jumpAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Jump"), 0.1f, false);
-            celebrateAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Celebrate"), 0.1f, false);
-            dieAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Die"), 0.1f, false);
+            monsterIdleAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Idle"), 0.1f, true);
+            monsterRunAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Run"), 0.1f, true);
+            monsterJumpAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Jump"), 0.1f, false);
+            monsterCelebrateAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Celebrate"), 0.1f, false);
+            monsterDieAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Die"), 0.1f, false);
+
+            monsterCatIdleAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/catIdle"), 0.1f, true);
+            monsterCatRunAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/catRun"), 0.1f, true);
+            monsterCatJumpAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/catJump"), 0.1f, false);
+            monsterCatCelebrateAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/catCelebrate"), 0.1f, false);
+            monsterCatDieAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/catDie"), 0.1f, false);
 
             // Calculate bounds within texture size.            
-            int width = (int)(idleAnimation.FrameWidth * 0.4);
-            int left = (idleAnimation.FrameWidth - width) / 2;
-            int height = (int)(idleAnimation.FrameWidth * 0.8);
-            int top = idleAnimation.FrameHeight - height;
+            int width = (int)(monsterIdleAnimation.FrameWidth * 0.4);
+            int left = (monsterIdleAnimation.FrameWidth - width) / 2;
+            int height = (int)(monsterIdleAnimation.FrameWidth * 0.8);
+            int top = monsterIdleAnimation.FrameHeight - height;
             localBounds = new Rectangle(left, top, width, height);
 
             // Load sounds.            
@@ -151,7 +172,7 @@ namespace LearningXNA
             Position = position;
             Velocity = Vector2.Zero;
             isAlive = true;
-            sprite.PlayAnimation(idleAnimation);
+            sprite.PlayAnimation(monsterIdleAnimation);
         }
 
         /// <summary>
@@ -167,11 +188,11 @@ namespace LearningXNA
             {
                 if (Math.Abs(Velocity.X) - 0.02f > 0)
                 {
-                    sprite.PlayAnimation(runAnimation);
+                    sprite.PlayAnimation(monsterRunAnimation);
                 }
                 else
                 {
-                    sprite.PlayAnimation(idleAnimation);
+                    sprite.PlayAnimation(monsterIdleAnimation);
                 }
             }
 
@@ -196,7 +217,10 @@ namespace LearningXNA
             if (Math.Abs(movement) < 0.5f)
                 movement = 0.0f;
 
-            // If any digital horizontal movement input is found, override the analog movement.
+            //switch (animalShape)
+            //{
+            //    case MONSTER:
+                    // If any digital horizontal movement input is found, override the analog movement.
             if (gamePadState.IsButtonDown(Buttons.DPadLeft) ||
                 keyboardState.IsKeyDown(Keys.Left) ||
                 keyboardState.IsKeyDown(Keys.A))
@@ -216,6 +240,21 @@ namespace LearningXNA
                 keyboardState.IsKeyDown(Keys.Space) ||
                 keyboardState.IsKeyDown(Keys.Up) ||
                 keyboardState.IsKeyDown(Keys.W);
+
+            if( keyboardState.IsKeyDown(Keys.D1))
+            {
+                animalShape = 0;
+            }
+            else if (keyboardState.IsKeyDown(Keys.D2))
+            {
+                animalShape = 1;
+            }
+
+            //        break;
+
+            //    default:
+            //        break;
+            //}
         }
 
         /// <summary>
@@ -287,7 +326,7 @@ namespace LearningXNA
                         jumpSound.Play();
 
                     jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    sprite.PlayAnimation(jumpAnimation);
+                    sprite.PlayAnimation(monsterJumpAnimation);
                 }
 
                 // If we are in the ascent of the jump
@@ -397,7 +436,7 @@ namespace LearningXNA
             else
                 fallSound.Play();
 
-            sprite.PlayAnimation(dieAnimation);
+            sprite.PlayAnimation(monsterDieAnimation);
         }
 
         /// <summary>
@@ -405,7 +444,7 @@ namespace LearningXNA
         /// </summary>
         public void OnReachedExit()
         {
-            sprite.PlayAnimation(celebrateAnimation);
+            sprite.PlayAnimation(monsterCelebrateAnimation);
         }
 
         /// <summary>
