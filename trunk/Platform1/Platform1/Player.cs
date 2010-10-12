@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace LearningXNA
 {
-    /// <summary>//
+    /// <summary>
     /// Our character: the monster
     /// </summary>
     class Player
