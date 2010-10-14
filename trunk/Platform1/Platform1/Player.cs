@@ -71,8 +71,8 @@ namespace LearningXNA
 
         //***********MONSTER SHAPE MOVEMENTS*****************
         // Constants for controling horizontal movement
-        private const float monsterMoveAcceleration = 8000.0f;
-        private const float monsterMaxMoveSpeed = 1200.0f;
+        private const float monsterMoveAcceleration = 6000.0f;
+        private const float monsterMaxMoveSpeed = 2000.0f;
         private const float monsterGroundDragFactor = 0.58f;
         private const float monsterAirDragFactor = 0.65f;
 
@@ -129,6 +129,11 @@ namespace LearningXNA
         /// Current user movement input on the X axis.
         /// </summary>
         private float movementX;
+
+        /// <summary>
+        /// Last user movement input on the X axis.
+        /// </summary>
+        private float lastMovementX;
 
         /// <summary>
         /// Current user movement input on the Y axis.
@@ -289,10 +294,12 @@ namespace LearningXNA
             if (keyboardState.IsKeyDown(Keys.Left))
             {
                 movementX = -1.0f;
+                lastMovementX = -1.0f;
             }
             else if (keyboardState.IsKeyDown(Keys.Right))
             {
                 movementX = 1.0f;
+                lastMovementX = 1.0f;
             }
 
             if (keyboardState.IsKeyDown(Keys.Up))
@@ -363,16 +370,6 @@ namespace LearningXNA
                     Position += velocity * elapsed;
                     Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
 
-                    // If the player is now colliding with the level, separate them.
-                    HandleCollisions();
-
-                    // If the collision stopped us from moving, reset the velocity to zero.
-                    if (Position.X == previousPosition.X)
-                        velocity.X = 0;
-
-                    if (Position.Y == previousPosition.Y)
-                        velocity.Y = 0;
-
                     break;
 
                 case MONSTER_CAT:
@@ -390,17 +387,6 @@ namespace LearningXNA
                         // Apply velocity.
                         Position += velocity * elapsed;
                         Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
-
-                        // If the player is now colliding with the level, separate them.
-                        HandleCollisions();
-
-                        // If the collision stopped us from moving, reset the velocity to zero.
-                        if (Position.X == previousPosition.X)
-                            velocity.X = 0;
-
-                        if (Position.Y == previousPosition.Y)
-                            velocity.Y = 0;
-
 
                     }
                     else
@@ -425,19 +411,18 @@ namespace LearningXNA
                         Position += velocity * elapsed;
                         Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
 
-                        // If the player is now colliding with the level, separate them.
-                        HandleCollisions();
-
-                        // If the collision stopped us from moving, reset the velocity to zero.
-                        if (Position.X == previousPosition.X)
-                            velocity.X = 0;
-
-                        if (Position.Y == previousPosition.Y)
-                                velocity.Y = 0;
-
                     }
                     break;
             }
+            // If the player is now colliding with the level, separate them.
+            HandleCollisions();
+
+            // If the collision stopped us from moving, reset the velocity to zero.
+            if (Position.X == previousPosition.X)
+                velocity.X = 0;
+
+            if (Position.Y == previousPosition.Y)
+                velocity.Y = 0;
 
         }
 
@@ -464,7 +449,7 @@ namespace LearningXNA
             if (isJumping)
             {
                 // Begin or continue a jump
-                if ((!wasJumping && IsOnGround) || jumpTime > 0.0f)
+                if ((!wasJumping && (IsOnGround || canClimb())) || jumpTime > 0.0f)
                 {
                     if (jumpTime == 0.0f)
                         jumpSound.Play();
@@ -586,17 +571,18 @@ namespace LearningXNA
             int bottomTile = (int)Math.Ceiling(((float)bounds.Bottom / Tile.Height)) - 1;
 
             int side;
+            int xPosition = bounds.X + bounds.Width/10;
 
-            if (movementX > 0)
+            if (lastMovementX > 0)
             {
-                side = ((int)Math.Ceiling((float)bounds.Right / Tile.Width));
+                side = ((int)Math.Ceiling((float)xPosition / Tile.Width));
             }
             else
             {
-                side = ((int)Math.Floor((float)bounds.Left / Tile.Width))-1;
-            }
+                side = ((int)Math.Floor((float)xPosition / Tile.Width)) - 1;
+            }          
 
-            for (int y = topTile; y <= bottomTile; ++y)
+            for (int y = topTile+2; y <= bottomTile+1; ++y)
             {
                 TileCollision collision = Level.GetCollision(side, y);
                 if (collision != TileCollision.Impassable)
