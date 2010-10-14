@@ -140,8 +140,6 @@ namespace LearningXNA
         /// </summary>
         private bool isDoingSpecialAction;
 
-        // Climbing state
-        private bool isClimbing;
 
         // Jumping state
         private bool isJumping;
@@ -184,8 +182,8 @@ namespace LearningXNA
         public void LoadContent()
         {
             // Load animated textures.
-            monsterIdleAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Idle"), 0.1f, true);
-            monsterRunAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Run"), 0.1f, true);
+            monsterIdleAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/monsterIdle"), 0.2f, true);
+            monsterRunAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/monsterRun"), 0.1f, true);
             monsterJumpAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Jump"), 0.1f, false);
             monsterCelebrateAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Celebrate"), 0.1f, false);
             monsterDieAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Die"), 0.1f, false);
@@ -301,9 +299,14 @@ namespace LearningXNA
             {
                 movementY = -1.0f;
             }
-            else if (keyboardState.IsKeyDown(Keys.Right))
+            else if (keyboardState.IsKeyDown(Keys.Down))
             {
                 movementY = 1.0f;
+            }
+
+            if (keyboardState.IsKeyDown(Keys.S))
+            {
+                movementY = movementY;
             }
 
             // Check if the player wants to jump.
@@ -374,15 +377,15 @@ namespace LearningXNA
 
                 case MONSTER_CAT:
 
-                    if (isClimbing)
-                    {                    
+                    if (isDoingSpecialAction && canClimb())
+                    {
                         //velocity.X += MathHelper.Clamp(velocity.X + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
-                        
+
                         velocity.Y = movementY * MoveAcceleration * elapsed;
                         // NEED TO BE CHANGED IN CLIMB DRAG FACTOR
                         velocity.Y *= GroundDragFactor;
 
-                        velocity.Y = MathHelper.Clamp(velocity.Y, -MaxMoveSpeed, MaxMoveSpeed);
+                        //velocity.Y = MathHelper.Clamp(velocity.Y, -MaxMoveSpeed, MaxMoveSpeed);
 
                         // Apply velocity.
                         Position += velocity * elapsed;
@@ -430,9 +433,9 @@ namespace LearningXNA
                             velocity.X = 0;
 
                         if (Position.Y == previousPosition.Y)
-                            velocity.Y = 0;
-                    }
+                                velocity.Y = 0;
 
+                    }
                     break;
             }
 
@@ -461,7 +464,7 @@ namespace LearningXNA
             if (isJumping)
             {
                 // Begin or continue a jump
-                if ((!wasJumping && (IsOnGround || isClimbing)) || jumpTime > 0.0f)
+                if ((!wasJumping && IsOnGround) || jumpTime > 0.0f)
                 {
                     if (jumpTime == 0.0f)
                         jumpSound.Play();
@@ -555,22 +558,7 @@ namespace LearningXNA
                             }
                             else if (collision == TileCollision.Impassable) // Ignore platforms.
                             {
-                                if (animalShape == MONSTER_CAT)
-                                {
-                                    if (isDoingSpecialAction)
-                                    {
-                                        isClimbing = true;
-                                    }
-                                    else
-                                    {
-                                        isClimbing = false;
-                                    }
-                                }
-                                else
-                                {
-
-                                    
-                                }
+                                
                                 // Resolve the collision along the X axis.
                                 Position = new Vector2(Position.X + depth.X, Position.Y);
 
@@ -585,6 +573,43 @@ namespace LearningXNA
             // Save the new bounds bottom.
             previousBottom = bounds.Bottom;
         }
+
+        /// <summary>
+        /// Called to check if the player can climb.
+        /// </summary>
+        bool canClimb()
+        {
+            bool canClimb = true;
+            Rectangle bounds = BoundingRectangle;
+
+            int topTile = (int)Math.Floor((float)bounds.Top / Tile.Height);
+            int bottomTile = (int)Math.Ceiling(((float)bounds.Bottom / Tile.Height)) - 1;
+
+            int side;
+
+            if (movementX > 0)
+            {
+                side = ((int)Math.Ceiling((float)bounds.Right / Tile.Width));
+            }
+            else
+            {
+                side = ((int)Math.Floor((float)bounds.Left / Tile.Width))-1;
+            }
+
+            for (int y = topTile; y <= bottomTile; ++y)
+            {
+                TileCollision collision = Level.GetCollision(side, y);
+                if (collision != TileCollision.Impassable)
+                {
+                    canClimb = false;
+                    return canClimb;
+                }
+            }
+            return canClimb;
+        }
+
+
+        
 
         /// <summary>
         /// Called when the player has been killed.
