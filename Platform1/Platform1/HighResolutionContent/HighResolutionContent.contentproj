@@ -293,6 +293,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Sprites\Player\monsterIdle.png">
+      <Name>monsterIdle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="Sprites\Player\monsterRun.png">
       <Name>monsterRun</Name>
       <Importer>TextureImporter</Importer>
