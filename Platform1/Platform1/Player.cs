@@ -126,9 +126,22 @@ namespace LearningXNA
         bool isOnGround;
 
         /// <summary>
-        /// Current user movement input.
+        /// Current user movement input on the X axis.
         /// </summary>
-        private float movement;
+        private float movementX;
+
+        /// <summary>
+        /// Current user movement input on the Y axis.
+        /// </summary>
+        private float movementY;
+
+        /// <summary>
+        /// Current user state about being doing a special action.
+        /// </summary>
+        private bool isDoingSpecialAction;
+
+        // Climbing state
+        private bool isClimbing;
 
         // Jumping state
         private bool isJumping;
@@ -249,7 +262,8 @@ namespace LearningXNA
             }
 
             // Clear input.
-            movement = 0.0f;
+            movementX = 0.0f;
+            movementY = 0.0f;
             isJumping = false;
         }
 
@@ -259,31 +273,41 @@ namespace LearningXNA
         private void GetInput()
         {
             // Get input state.
-            GamePadState gamePadState = GamePad.GetState(PlayerIndex.One);
             KeyboardState keyboardState = Keyboard.GetState();
-
-            // Get analog horizontal movement.
-            movement = gamePadState.ThumbSticks.Left.X * MoveStickScale;
-
-            // Ignore small movements to prevent running in place.
-            if (Math.Abs(movement) < 0.5f)
-                movement = 0.0f;
 
             //switch (animalShape)
             //{
             //    case MONSTER:
                     // If any digital horizontal movement input is found, override the analog movement.
+            if (keyboardState.IsKeyDown(Keys.X))
+            {
+                isDoingSpecialAction = true;
+            }
+            else
+            {
+                isDoingSpecialAction = false;
+            }
+
             if (keyboardState.IsKeyDown(Keys.Left))
             {
-                movement = -1.0f;
+                movementX = -1.0f;
             }
             else if (keyboardState.IsKeyDown(Keys.Right))
             {
-                movement = 1.0f;
+                movementX = 1.0f;
+            }
+
+            if (keyboardState.IsKeyDown(Keys.Up))
+            {
+                movementY = -1.0f;
+            }
+            else if (keyboardState.IsKeyDown(Keys.Right))
+            {
+                movementY = 1.0f;
             }
 
             // Check if the player wants to jump.
-            isJumping = keyboardState.IsKeyDown(Keys.Up);
+            isJumping = keyboardState.IsKeyDown(Keys.Space);
 
             if( keyboardState.IsKeyDown(Keys.D1))
             {
@@ -293,6 +317,8 @@ namespace LearningXNA
             {
                 changeShape(MONSTER_CAT);
             }
+
+            
 
             //        break;
 
@@ -310,35 +336,106 @@ namespace LearningXNA
 
             Vector2 previousPosition = Position;
 
-            // Base velocity is a combination of horizontal movement control and
-            // acceleration downward due to gravity.
-            velocity.X += movement * MoveAcceleration * elapsed;
-            velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
+            switch (animalShape)
+            {
+                case MONSTER:
 
-            velocity.Y = DoJump(velocity.Y, gameTime);
+                    // Base velocity is a combination of horizontal movement control and
+                    // acceleration downward due to gravity.
+                    velocity.X += movementX * MoveAcceleration * elapsed;
+                    velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
 
-            // Apply pseudo-drag horizontally.
-            if (IsOnGround)
-                velocity.X *= GroundDragFactor;
-            else
-                velocity.X *= AirDragFactor;
+                    velocity.Y = DoJump(velocity.Y, gameTime);
 
-            // Prevent the player from running faster than his top speed.            
-            velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
+                    // Apply pseudo-drag horizontally.
+                    if (IsOnGround)
+                        velocity.X *= GroundDragFactor;
+                    else
+                        velocity.X *= AirDragFactor;
 
-            // Apply velocity.
-            Position += velocity * elapsed;
-            Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
+                    // Prevent the player from running faster than his top speed.            
+                    velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
 
-            // If the player is now colliding with the level, separate them.
-            HandleCollisions();
+                    // Apply velocity.
+                    Position += velocity * elapsed;
+                    Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
 
-            // If the collision stopped us from moving, reset the velocity to zero.
-            if (Position.X == previousPosition.X)
-                velocity.X = 0;
+                    // If the player is now colliding with the level, separate them.
+                    HandleCollisions();
 
-            if (Position.Y == previousPosition.Y)
-                velocity.Y = 0;
+                    // If the collision stopped us from moving, reset the velocity to zero.
+                    if (Position.X == previousPosition.X)
+                        velocity.X = 0;
+
+                    if (Position.Y == previousPosition.Y)
+                        velocity.Y = 0;
+
+                    break;
+
+                case MONSTER_CAT:
+
+                    if (isClimbing)
+                    {                    
+                        //velocity.X += MathHelper.Clamp(velocity.X + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
+                        
+                        velocity.Y = movementY * MoveAcceleration * elapsed;
+                        // NEED TO BE CHANGED IN CLIMB DRAG FACTOR
+                        velocity.Y *= GroundDragFactor;
+
+                        velocity.Y = MathHelper.Clamp(velocity.Y, -MaxMoveSpeed, MaxMoveSpeed);
+
+                        // Apply velocity.
+                        Position += velocity * elapsed;
+                        Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
+
+                        // If the player is now colliding with the level, separate them.
+                        HandleCollisions();
+
+                        // If the collision stopped us from moving, reset the velocity to zero.
+                        if (Position.X == previousPosition.X)
+                            velocity.X = 0;
+
+                        if (Position.Y == previousPosition.Y)
+                            velocity.Y = 0;
+
+
+                    }
+                    else
+                    {
+                        // Base velocity is a combination of horizontal movement control and
+                        // acceleration downward due to gravity.
+                        velocity.X += movementX * MoveAcceleration * elapsed;
+                        velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
+
+                        velocity.Y = DoJump(velocity.Y, gameTime);
+
+                        // Apply pseudo-drag horizontally.
+                        if (IsOnGround)
+                            velocity.X *= GroundDragFactor;
+                        else
+                            velocity.X *= AirDragFactor;
+
+                        // Prevent the player from running faster than his top speed.            
+                        velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
+
+                        // Apply velocity.
+                        Position += velocity * elapsed;
+                        Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
+
+                        // If the player is now colliding with the level, separate them.
+                        HandleCollisions();
+
+                        // If the collision stopped us from moving, reset the velocity to zero.
+                        if (Position.X == previousPosition.X)
+                            velocity.X = 0;
+
+                        if (Position.Y == previousPosition.Y)
+                            velocity.Y = 0;
+                    }
+
+                    break;
+            }
+
         }
 
         /// <summary>
@@ -364,7 +461,7 @@ namespace LearningXNA
             if (isJumping)
             {
                 // Begin or continue a jump
-                if ((!wasJumping && IsOnGround) || jumpTime > 0.0f)
+                if ((!wasJumping && (IsOnGround || isClimbing)) || jumpTime > 0.0f)
                 {
                     if (jumpTime == 0.0f)
                         jumpSound.Play();
@@ -460,9 +557,20 @@ namespace LearningXNA
                             {
                                 if (animalShape == MONSTER_CAT)
                                 {
-                                    //CLIMB STUFF
+                                    if (isDoingSpecialAction)
+                                    {
+                                        isClimbing = true;
+                                    }
+                                    else
+                                    {
+                                        isClimbing = false;
+                                    }
                                 }
+                                else
+                                {
 
+                                    
+                                }
                                 // Resolve the collision along the X axis.
                                 Position = new Vector2(Position.X + depth.X, Position.Y);
 
