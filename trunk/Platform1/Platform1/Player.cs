@@ -72,7 +72,7 @@ namespace LearningXNA
         //***********MONSTER SHAPE MOVEMENTS*****************
         // Constants for controling horizontal movement
         private const float monsterMoveAcceleration = 6000.0f;
-        private const float monsterMaxMoveSpeed = 2000.0f;
+        private const float monsterMaxMoveSpeed = 6000.0f;
         private const float monsterGroundDragFactor = 0.58f;
         private const float monsterAirDragFactor = 0.65f;
 
@@ -87,7 +87,7 @@ namespace LearningXNA
         //***********MONSTER-CAT SHAPE MOVEMENTS*****************
         // Constants for controling horizontal movement
         private const float monsterCatMoveAcceleration = 14000.0f;
-        private const float monsterCatMaxMoveSpeed = 2000.0f;
+        private const float monsterCatMaxMoveSpeed = 14000.0f;
         private const float monsterCatGroundDragFactor = 0.58f;
         private const float monsterCatAirDragFactor = 0.65f;
 
@@ -101,7 +101,7 @@ namespace LearningXNA
 
         // Constants for controling horizontal movement
         private float MoveAcceleration = 14000.0f;
-        private float MaxMoveSpeed = 2000.0f;
+        private float MaxMoveSpeed = 14000.0f;
         private float GroundDragFactor = 0.58f;
         private float AirDragFactor = 0.65f;
 
@@ -198,13 +198,6 @@ namespace LearningXNA
             monsterCatJumpAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/catJump"), 0.1f, false);
             monsterCatCelebrateAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/catCelebrate"), 0.1f, false);
             monsterCatDieAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/catDie"), 0.1f, false);
-
-            // Calculate bounds within texture size.            
-            int width = (int)(monsterIdleAnimation.FrameWidth * 0.4);
-            int left = (monsterIdleAnimation.FrameWidth - width) / 2;
-            int height = (int)(monsterIdleAnimation.FrameWidth * 0.8);
-            int top = monsterIdleAnimation.FrameHeight - height;
-            localBounds = new Rectangle(left, top, width, height);
 
             // Load sounds.            
             killedSound = Level.Content.Load<SoundEffect>("Sounds/PlayerKilled");
@@ -650,6 +643,12 @@ namespace LearningXNA
         {
             animalShape = shapeFlag;
 
+            // Calculate standard bounding box dimension
+            int width = (int)(monsterIdleAnimation.FrameWidth * 0.4);
+            int left = (monsterIdleAnimation.FrameWidth - width) / 2;
+            int height = (int)(monsterIdleAnimation.FrameWidth * 0.8);
+            int top = monsterIdleAnimation.FrameHeight - height;
+
             switch(shapeFlag)
             {
                 case MONSTER:
@@ -665,6 +664,7 @@ namespace LearningXNA
                     GravityAcceleration = monsterGravityAcceleration;
                     MaxFallSpeed = monsterMaxFallSpeed;
                     JumpControlPower = monsterJumpControlPower;
+
                     break;
 
                 case MONSTER_CAT:
@@ -680,8 +680,18 @@ namespace LearningXNA
                     GravityAcceleration = monsterCatGravityAcceleration;
                     MaxFallSpeed = monsterCatMaxFallSpeed;
                     JumpControlPower = monsterCatJumpControlPower;
+
+                    // Calculate bounding box dimension
+                    width = (int)(monsterCatIdleAnimation.FrameWidth * 0.4);
+                    left = (monsterCatIdleAnimation.FrameWidth - width) / 2;
+                    height = (int)(monsterCatIdleAnimation.FrameWidth * 0.8);
+                    top = monsterCatIdleAnimation.FrameHeight - height;
+
                     break;
             }
+
+            // Change bounding box dimension        
+            localBounds = new Rectangle(left, top, width, height);
         }
 
 
