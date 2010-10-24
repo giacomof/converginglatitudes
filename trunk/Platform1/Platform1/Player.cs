@@ -30,6 +30,8 @@ namespace LearningXNA
         private Animation monsterCatJumpAnimation;
         private Animation monsterCatCelebrateAnimation;
         private Animation monsterCatDieAnimation;
+        private Animation monsterCatClimbAnimation;
+        private Animation monsterCatClimbIdleAnimation;
 
 
         private SpriteEffects flip = SpriteEffects.None;
@@ -144,6 +146,7 @@ namespace LearningXNA
         /// Current user state about being doing a special action.
         /// </summary>
         private bool isDoingSpecialAction;
+        private bool isClimbing;
 
 
         // Jumping state
@@ -198,6 +201,8 @@ namespace LearningXNA
             monsterCatJumpAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/catJump"), 0.1f, false);
             monsterCatCelebrateAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/catCelebrate"), 0.1f, false);
             monsterCatDieAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/catDie"), 0.1f, false);
+            monsterCatClimbAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/catClimb"), 0.1f, true);
+            monsterCatClimbIdleAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/catClimbIdle"), 0.1f, false);
 
             // Load sounds.            
             killedSound = Level.Content.Load<SoundEffect>("Sounds/PlayerKilled");
@@ -228,7 +233,7 @@ namespace LearningXNA
 
             if (IsAlive && IsOnGround)
             {
-                if (Math.Abs(Velocity.X) - 0.02f > 0)
+                if (Math.Abs(Velocity.X)  > 0)
                 {
                     switch (animalShape)
                     {
@@ -237,7 +242,8 @@ namespace LearningXNA
                             break;
 
                         case MONSTER_CAT:
-                            sprite.PlayAnimation(monsterCatRunAnimation);
+                            
+                                sprite.PlayAnimation(monsterCatRunAnimation);
                             break;
                     }
 
@@ -256,11 +262,23 @@ namespace LearningXNA
                     }
                 }
             }
+            else if (isClimbing)
+            {
+                if (Math.Abs(Velocity.Y) > 0)
+                {
+                    sprite.PlayAnimation(monsterCatClimbAnimation);
+                }
+                else
+                {
+                    sprite.PlayAnimation(monsterCatClimbIdleAnimation);
+                }
+            }
 
             // Clear input.
             movementX = 0.0f;
             movementY = 0.0f;
             isJumping = false;
+            isClimbing = false;
         }
 
         /// <summary>
@@ -271,10 +289,7 @@ namespace LearningXNA
             // Get input state.
             KeyboardState keyboardState = Keyboard.GetState();
 
-            //switch (animalShape)
-            //{
-            //    case MONSTER:
-                    // If any digital horizontal movement input is found, override the analog movement.
+            // If any digital horizontal movement input is found, override the analog movement.
             if (keyboardState.IsKeyDown(Keys.X))
             {
                 isDoingSpecialAction = true;
@@ -322,12 +337,6 @@ namespace LearningXNA
             }
 
             
-
-            //        break;
-
-            //    default:
-            //        break;
-            //}
         }
 
         /// <summary>
@@ -369,8 +378,7 @@ namespace LearningXNA
 
                     if (isDoingSpecialAction && canClimb())
                     {
-                        //velocity.X += MathHelper.Clamp(velocity.X + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
-
+                        isClimbing = true;
                         velocity.Y = movementY * MoveAcceleration * elapsed;
                         // NEED TO BE CHANGED IN CLIMB DRAG FACTOR
                         velocity.Y *= GroundDragFactor;
