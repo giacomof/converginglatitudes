@@ -318,7 +318,6 @@ namespace LearningXNA
             // Get input state.
             KeyboardState keyboardState = Keyboard.GetState();
 
-            // If any digital horizontal movement input is found, override the analog movement.
             if (keyboardState.IsKeyDown(Keys.X))
             {
                 isDoingSpecialAction = true;
@@ -373,9 +372,12 @@ namespace LearningXNA
                 }
             }
 
+            // Key press used for debug reasons
             if (keyboardState.IsKeyDown(Keys.S))
             {
                 movementY = movementY;
+                //position.X = 2004;
+                //position.Y = 673;
             }
 
             // Check if the player wants to jump.
@@ -524,6 +526,7 @@ namespace LearningXNA
                                 jumpSound.Play();
 
                             jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                            sprite.PlayAnimation(monsterJumpAnimation);
                         }
                         break;
 
@@ -534,6 +537,7 @@ namespace LearningXNA
                                 jumpSound.Play();
 
                             jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                            sprite.PlayAnimation(monsterCatJumpAnimation);
                         }
                         break;
                 }
@@ -575,6 +579,10 @@ namespace LearningXNA
             int rightTile = (int)Math.Ceiling(((float)bounds.Right / Tile.Width)) - 1;
             int topTile = (int)Math.Floor((float)bounds.Top / Tile.Height);
             int bottomTile = (int)Math.Ceiling(((float)bounds.Bottom / Tile.Height)) - 1;
+
+            // Debug stuff
+            //Console.WriteLine("leftTile: " + leftTile + "| rightTile: " + rightTile + "| topTile: " + topTile + "| bottomTile: " + bottomTile);
+            //Console.WriteLine("x: " + position.X + "| y: " + position.Y);
 
             // Reset flag to search for ground collision.
             isOnGround = false;
