@@ -504,23 +504,30 @@ namespace LearningXNA
             if (isJumping)
             {
                 // Begin or continue a jump
-                if ((!wasJumping && (IsOnGround || canClimb())) || jumpTime > 0.0f)
+                switch (animalShape)
                 {
-                    if (jumpTime == 0.0f)
-                        jumpSound.Play();
+                    case MONSTER:
+                        // Begin or continue a jump
+                        if ((!wasJumping && IsOnGround) || jumpTime > 0.0f)
+                        {
+                            if (jumpTime == 0.0f)
+                                jumpSound.Play();
 
-                    jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    switch (animalShape)
-                    {
-                        case MONSTER:
-                            sprite.PlayAnimation(monsterJumpAnimation);
-                            break;
+                            jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        }
+                        break;
 
-                        case MONSTER_CAT:
-                            sprite.PlayAnimation(monsterCatJumpAnimation);
-                            break;
-                    }
+                    case MONSTER_CAT:
+                        if ((!wasJumping && (IsOnGround || canClimb())) || jumpTime > 0.0f)
+                        {
+                            if (jumpTime == 0.0f)
+                                jumpSound.Play();
+
+                            jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        }
+                        break;
                 }
+                            
 
                 // If we are in the ascent of the jump
                 if (0.0f < jumpTime && jumpTime <= MaxJumpTime)
