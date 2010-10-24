@@ -92,6 +92,8 @@ namespace LearningXNA
         private const float monsterCatMaxMoveSpeed = 14000.0f;
         private const float monsterCatGroundDragFactor = 0.58f;
         private const float monsterCatAirDragFactor = 0.65f;
+        private const float monsterCatWallDragFactor = 0.45f;
+
 
         // Constants for controlling vertical movement
         private const float monsterCatMaxJumpTime = 0.35f;
@@ -146,7 +148,17 @@ namespace LearningXNA
         /// Current user state about being doing a special action.
         /// </summary>
         private bool isDoingSpecialAction;
+
         private bool isClimbing;
+        public bool IsClimbing
+        {
+            get { return isClimbing; }
+        }
+
+        private bool wasClimbing;
+
+        //This used to be private float movement;
+        private Vector2 movement;
 
 
         // Jumping state
@@ -231,46 +243,49 @@ namespace LearningXNA
 
             ApplyPhysics(gameTime);
 
-            if (IsAlive && IsOnGround)
+            if (IsAlive)
             {
-                if (Math.Abs(Velocity.X)  > 0)
+                if (isOnGround)
                 {
-                    switch (animalShape)
+                    if (Math.Abs(Velocity.X) > 0)
                     {
-                        case MONSTER:
-                            sprite.PlayAnimation(monsterRunAnimation);
-                            break;
+                        switch (animalShape)
+                        {
+                            case MONSTER:
+                                sprite.PlayAnimation(monsterRunAnimation);
+                                break;
 
-                        case MONSTER_CAT:
-                            
+                            case MONSTER_CAT:
+
                                 sprite.PlayAnimation(monsterCatRunAnimation);
-                            break;
-                    }
+                                break;
+                        }
 
-                }
-                else
-                {
-                    switch (animalShape)
+                    }
+                    else
                     {
-                        case MONSTER:
-                            sprite.PlayAnimation(monsterIdleAnimation);
-                            break;
+                        switch (animalShape)
+                        {
+                            case MONSTER:
+                                sprite.PlayAnimation(monsterIdleAnimation);
+                                break;
 
-                        case MONSTER_CAT:
-                            sprite.PlayAnimation(monsterCatIdleAnimation);
-                            break;
+                            case MONSTER_CAT:
+                                sprite.PlayAnimation(monsterCatIdleAnimation);
+                                break;
+                        }
                     }
                 }
-            }
-            else if (isClimbing)
-            {
-                if (Math.Abs(Velocity.Y) > 0)
+                else if (isClimbing)
                 {
-                    sprite.PlayAnimation(monsterCatClimbAnimation);
-                }
-                else
-                {
-                    sprite.PlayAnimation(monsterCatClimbIdleAnimation);
+                    if (Math.Abs(Velocity.Y) > 0)
+                    {
+                        sprite.PlayAnimation(monsterCatClimbAnimation);
+                    }
+                    else
+                    {
+                        sprite.PlayAnimation(monsterCatClimbIdleAnimation);
+                    }
                 }
             }
 
@@ -278,7 +293,11 @@ namespace LearningXNA
             movementX = 0.0f;
             movementY = 0.0f;
             isJumping = false;
+
+            movement = Vector2.Zero;
+            wasClimbing = isClimbing;
             isClimbing = false;
+
         }
 
         /// <summary>
@@ -301,6 +320,7 @@ namespace LearningXNA
 
             if (keyboardState.IsKeyDown(Keys.Left))
             {
+
                 movementX = -1.0f;
                 lastMovementX = -1.0f;
             }
@@ -313,10 +333,34 @@ namespace LearningXNA
             if (keyboardState.IsKeyDown(Keys.Up))
             {
                 movementY = -1.0f;
+
+                if (animalShape == MONSTER_CAT)
+                {
+                    isClimbing = false;
+
+                    if (canClimb())
+                    {
+                        isClimbing = true;
+                        isJumping = false;
+                        isOnGround = false;
+                    }
+                }
             }
             else if (keyboardState.IsKeyDown(Keys.Down))
             {
                 movementY = 1.0f;
+
+                if (animalShape == MONSTER_CAT)
+                {
+                    isClimbing = false;
+
+                    if (canClimb())
+                    {
+                        isClimbing = true;
+                        isJumping = false;
+                        isOnGround = false;
+                    }
+                }
             }
 
             if (keyboardState.IsKeyDown(Keys.S))
@@ -376,12 +420,11 @@ namespace LearningXNA
 
                 case MONSTER_CAT:
 
-                    if (isDoingSpecialAction && canClimb())
+                    if (isDoingSpecialAction && isClimbing)
                     {
-                        isClimbing = true;
                         velocity.Y = movementY * MoveAcceleration * elapsed;
                         // NEED TO BE CHANGED IN CLIMB DRAG FACTOR
-                        velocity.Y *= GroundDragFactor;
+                        velocity.Y *= monsterCatWallDragFactor;
 
                         //velocity.Y = MathHelper.Clamp(velocity.Y, -MaxMoveSpeed, MaxMoveSpeed);
 
@@ -389,6 +432,17 @@ namespace LearningXNA
                         Position += velocity * elapsed;
                         Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
 
+                    }
+                    else if (wasClimbing && !isClimbing)
+                    {
+                        // Base velocity is a combination of horizontal movement control and
+                        // acceleration downward due to gravity.
+                        velocity.X += movementX * MoveAcceleration * elapsed;
+                        velocity.X *= AirDragFactor;
+
+                        // Apply velocity.
+                        Position += velocity * elapsed;
+                        Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
                     }
                     else
                     {
@@ -565,34 +619,42 @@ namespace LearningXNA
         /// </summary>
         bool canClimb()
         {
-            bool canClimb = true;
+
             Rectangle bounds = BoundingRectangle;
-
-            int topTile = (int)Math.Floor((float)bounds.Top / Tile.Height);
-            int bottomTile = (int)Math.Ceiling(((float)bounds.Bottom / Tile.Height)) - 1;
-
+            int topTile = (int)Math.Round((float)bounds.Top / Tile.Height);
+            int bottomTile = (int)Math.Round(((float)bounds.Bottom / Tile.Height));
             int side;
-            int xPosition = bounds.X + bounds.Width/10;
+            int distance;
 
-            if (lastMovementX > 0)
+            // Change movementX in lastMovementX if you want to use only X key for climbing
+            if (movementX > 0)
             {
-                side = ((int)Math.Ceiling((float)xPosition / Tile.Width));
+                side = (int)Math.Round((float)bounds.Right / Tile.Width);
+                distance = Math.Abs(bounds.Right - side * Tile.Width);
+            }
+            else if (movementX < 0)
+            {
+                side = (int)Math.Round((float)bounds.Left / Tile.Width) - 1;
+                distance = Math.Abs(bounds.Left - (side + 1) * Tile.Width);
             }
             else
             {
-                side = ((int)Math.Floor((float)xPosition / Tile.Width)) - 1;
-            }          
+                return false;
+            }
 
-            for (int y = topTile+2; y <= bottomTile+1; ++y)
+            Console.WriteLine("Side: " + side + "| top: " + topTile + "| bottom: " + bottomTile + "| distance: " + distance + "| MovementX: " + lastMovementX);
+
+            for (int y = topTile+1; y <= bottomTile; y++)
             {
                 TileCollision collision = Level.GetCollision(side, y);
-                if (collision != TileCollision.Impassable)
+                if (collision != TileCollision.Impassable || distance > 0)
                 {
-                    canClimb = false;
-                    return canClimb;
+                    return false;
                 }
             }
-            return canClimb;
+
+           
+            return true;
         }
 
 
