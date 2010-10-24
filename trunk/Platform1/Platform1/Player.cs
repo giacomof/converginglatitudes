@@ -294,10 +294,20 @@ namespace LearningXNA
             movementY = 0.0f;
             isJumping = false;
 
-            movement = Vector2.Zero;
             wasClimbing = isClimbing;
-            isClimbing = false;
 
+            if(isDoingSpecialAction)
+            {
+                switch (animalShape)
+                {
+                    case MONSTER:
+                        isClimbing = false;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
         }
 
         /// <summary>
@@ -634,12 +644,12 @@ namespace LearningXNA
             int distance;
 
             // Change movementX in lastMovementX if you want to use only X key for climbing
-            if (movementX > 0)
+            if (lastMovementX > 0)
             {
                 side = (int)Math.Round((float)bounds.Right / Tile.Width);
                 distance = Math.Abs(bounds.Right - side * Tile.Width);
             }
-            else if (movementX < 0)
+            else if (lastMovementX < 0)
             {
                 side = (int)Math.Round((float)bounds.Left / Tile.Width) - 1;
                 distance = Math.Abs(bounds.Left - (side + 1) * Tile.Width);
@@ -649,7 +659,8 @@ namespace LearningXNA
                 return false;
             }
 
-            Console.WriteLine("Side: " + side + "| top: " + topTile + "| bottom: " + bottomTile + "| distance: " + distance + "| MovementX: " + lastMovementX);
+            // Debug writing
+            //Console.WriteLine("Side: " + side + "| top: " + topTile + "| bottom: " + bottomTile + "| distance: " + distance + "| MovementX: " + lastMovementX);
 
             for (int y = topTile+1; y <= bottomTile; y++)
             {
