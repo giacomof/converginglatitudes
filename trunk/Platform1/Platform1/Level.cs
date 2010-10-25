@@ -290,6 +290,9 @@ namespace LearningXNA
             return new Tile(null, TileCollision.Passable);
         }
 
+        /// <summary>
+        /// Instantiates an animal and puts him in the level.
+        /// </summary>
         private Tile LoadAnimalTile(int x, int y, string spriteSet)
         {
             Vector2 position = RectangleExtensions.GetBottomCenter(GetBounds(x, y));
@@ -454,6 +457,9 @@ namespace LearningXNA
             }
         }
 
+        /// <summary>
+        /// Animates each animal and allow them to be eated by the player.
+        /// </summary>
         private void UpdateAnimals(GameTime gameTime)
         {
             foreach (Animal animal in animals)
@@ -494,6 +500,12 @@ namespace LearningXNA
             Player.OnKilled(killedBy);
         }
 
+        /// <summary>
+        /// Called when the player eats an animal.
+        /// </summary>
+        /// <param name="killedBy">
+        /// The animal who was eaten by the player.
+        /// </param>
         private void OnPlayerEated(Animal eatenAnimal)
         {
             Player.OnPlayerEated(eatenAnimal);

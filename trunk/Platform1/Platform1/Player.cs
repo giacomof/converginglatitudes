@@ -17,6 +17,7 @@ namespace LearningXNA
         const short MONSTER_DUCK        = 2;
         private short animalShape = MONSTER;
 
+        // Define if the player can shape change to monster cat
         public bool CanBeCat
         {
             get { return canBeCat; }
@@ -24,6 +25,7 @@ namespace LearningXNA
         }
         private bool canBeCat;
 
+        // Define if the player can shape change to monster duck
         public bool CanBeDuck
         {
             get { return canBeDuck; }
@@ -56,6 +58,8 @@ namespace LearningXNA
         private SoundEffect killedSound;
         private SoundEffect jumpSound;
         private SoundEffect fallSound;
+        private SoundEffect eatCatSound;
+        private SoundEffect eatDuckSound;
 
         public Level Level
         {
@@ -150,7 +154,7 @@ namespace LearningXNA
         private float movementX;
 
         /// <summary>
-        /// Last user movement input on the X axis.
+        /// Last user movement input on the X axis. Used for the climbing algorithm.
         /// </summary>
         private float lastMovementX;
 
@@ -208,6 +212,7 @@ namespace LearningXNA
             // I start the level as a MONSTER
             changeShape(MONSTER);
 
+            // Reset the shape changing abilities
             CanBeCat = false;
             CanBeDuck = false;
 
@@ -238,6 +243,7 @@ namespace LearningXNA
             killedSound = Level.Content.Load<SoundEffect>("Sounds/PlayerKilled");
             jumpSound = Level.Content.Load<SoundEffect>("Sounds/PlayerJump");
             fallSound = Level.Content.Load<SoundEffect>("Sounds/PlayerFall");
+            eatCatSound = Level.Content.Load<SoundEffect>("Sounds/EatCat");
         }
 
         /// <summary>
@@ -253,7 +259,7 @@ namespace LearningXNA
         }
 
         /// <summary>
-        /// Handles input, performs physics, and animates the player sprite.
+        /// Handles input, performs physics, resets some values and animates the player sprite.
         /// </summary>
         public void Update(GameTime gameTime)
         {
@@ -696,8 +702,6 @@ namespace LearningXNA
                     return false;
                 }
             }
-
-           
             return true;
         }
 
@@ -734,15 +738,20 @@ namespace LearningXNA
             changeShape(MONSTER);
         }
 
+        /// <summary>
+        /// Called when the player eats an animal.
+        /// </summary>
+        /// <param name="killedBy">
+        /// The animal who was eaten by the player.
+        /// </param>
         public void OnPlayerEated(Animal eatenAnimal)
         {
-            fallSound.Play();
-
             switch (eatenAnimal.AnimalShape)
             {
                 case MONSTER_CAT:
                     canBeCat = true;
                     changeShape(MONSTER_CAT);
+                    eatCatSound.Play();
                     break;
             }
             
