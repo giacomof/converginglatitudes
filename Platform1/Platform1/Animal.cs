@@ -8,12 +8,14 @@ namespace LearningXNA
     /// A monster who is impeding the progress of our fearless adventurer.
     /// </summary>
     class Animal
-    {   /// <summary>
-        /// Shape flag of the animal.
-        /// </summary>
+    {   
+        // Animal Flags
         const short MONSTER_CAT = 1;
         const short MONSTER_DUCK = 2;
 
+        /// <summary>
+        /// Shape flag of the animal.
+        /// </summary>
         public short AnimalShape
         {
             get { return animalShape; }
@@ -84,6 +86,7 @@ namespace LearningXNA
             this.level = level;
             this.position = position;
 
+            // Change the flag of the actual animal in relation to the sprite set requested by the parser in the level loader
             if (spriteSet == "Cat")
             {
                 animalShape = MONSTER_CAT;

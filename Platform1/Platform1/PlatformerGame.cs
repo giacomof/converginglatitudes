@@ -10,7 +10,7 @@ namespace LearningXNA
 {
 
     /// <summary>
-    /// Facing direction along the X axis. Used for Animals and Enemies.
+    /// Facing direction along the X axis. Used to flip sprites of Animals and Enemies.
     /// </summary>
     enum FaceDirection
     {
@@ -48,6 +48,7 @@ namespace LearningXNA
         private const int BackBufferWidth = 1280;
         private const int BackBufferHeight = 720;
 
+        // Used to store tha ability to change animal between levels
         public bool canBeCat = false;
         public bool canBeDuck = false;
 
@@ -155,12 +156,14 @@ namespace LearningXNA
             // Unloads the content for the current level before loading the next one.
             if (level != null)
             {
+                // Save the change shape abilities before disposing the actual level
                 canBeCat = level.Player.CanBeCat;
                 canBeDuck = level.Player.CanBeDuck;
                 level.Dispose();
             }
             // Load the level.
             level = new Level(Services, levelPath);
+            // Apply the old change shape abilities after loading the new level
             level.Player.CanBeCat = canBeCat;
             level.Player.CanBeDuck = canBeDuck;
         }
