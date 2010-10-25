@@ -47,7 +47,9 @@ namespace LearningXNA
         private const int TargetFrameRate = 60;
         private const int BackBufferWidth = 1280;
         private const int BackBufferHeight = 720;
-        private const Buttons ContinueButton = Buttons.A;
+
+        public bool canBeCat = false;
+        public bool canBeDuck = false;
 
         public PlatformerGame()
         {
@@ -101,15 +103,12 @@ namespace LearningXNA
         private void HandleInput()
         {
             KeyboardState keyboardState = Keyboard.GetState();
-            GamePadState gamepadState = GamePad.GetState(PlayerIndex.One);
 
             // Exit the game when back is pressed.
-            if (gamepadState.Buttons.Back == ButtonState.Pressed)
+            if (keyboardState.IsKeyDown(Keys.Escape))
                 Exit();
 
-            bool continuePressed =
-                keyboardState.IsKeyDown(Keys.Space) ||
-                gamepadState.IsButtonDown(ContinueButton);
+            bool continuePressed = keyboardState.IsKeyDown(Keys.Space);
 
             // Perform the appropriate action to advance the game and
             // to get the player back to playing.
@@ -155,10 +154,15 @@ namespace LearningXNA
 
             // Unloads the content for the current level before loading the next one.
             if (level != null)
+            {
+                canBeCat = level.Player.CanBeCat;
+                canBeDuck = level.Player.CanBeDuck;
                 level.Dispose();
-
+            }
             // Load the level.
             level = new Level(Services, levelPath);
+            level.Player.CanBeCat = canBeCat;
+            level.Player.CanBeDuck = canBeDuck;
         }
 
         private void ReloadCurrentLevel()

@@ -17,8 +17,20 @@ namespace LearningXNA
         const short MONSTER_DUCK        = 2;
         private short animalShape = MONSTER;
 
-        private bool canBeCat = false;
-        private bool canBeDuck = false;
+        public bool CanBeCat
+        {
+            get { return canBeCat; }
+            set { canBeCat = value; }
+        }
+        private bool canBeCat;
+
+        public bool CanBeDuck
+        {
+            get { return canBeDuck; }
+            set { canBeDuck = value; }
+        }
+        private bool canBeDuck;
+       
 
 
         // Animations
@@ -195,6 +207,9 @@ namespace LearningXNA
 
             // I start the level as a MONSTER
             changeShape(MONSTER);
+
+            CanBeCat = false;
+            CanBeDuck = false;
 
             Reset(position);
         }
