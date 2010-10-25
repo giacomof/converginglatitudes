@@ -8,6 +8,17 @@ using Microsoft.Xna.Framework.Media;
 
 namespace LearningXNA
 {
+
+    /// <summary>
+    /// Facing direction along the X axis. Used for Animals and Enemies.
+    /// </summary>
+    enum FaceDirection
+    {
+        Left = -1,
+        Right = 1,
+    }
+
+
     /// <summary>
     /// This is the main type for your game
     /// </summary>

@@ -30,6 +30,7 @@ namespace LearningXNA
 
         private List<Gem> gems = new List<Gem>();
         private List<Enemy> enemies = new List<Enemy>();
+        private List<Animal> animals = new List<Animal>();
 
         // Key locations in the level.        
         private Vector2 start;
@@ -188,10 +189,12 @@ namespace LearningXNA
                     return LoadEnemyTile(x, y, "MonsterA");
                 case 'B':
                     return LoadEnemyTile(x, y, "MonsterB");
-                case 'C':
-                    return LoadEnemyTile(x, y, "MonsterC");
                 case 'D':
                     return LoadEnemyTile(x, y, "MonsterD");
+
+                // Various animals
+                case 'C':
+                    return LoadAnimalTile(x, y, "Cat");
 
                 // Platform block
                 case '~':
@@ -283,6 +286,14 @@ namespace LearningXNA
         {
             Vector2 position = RectangleExtensions.GetBottomCenter(GetBounds(x, y));
             enemies.Add(new Enemy(this, position, spriteSet));
+
+            return new Tile(null, TileCollision.Passable);
+        }
+
+        private Tile LoadAnimalTile(int x, int y, string spriteSet)
+        {
+            Vector2 position = RectangleExtensions.GetBottomCenter(GetBounds(x, y));
+            animals.Add(new Animal(this, position, spriteSet));
 
             return new Tile(null, TileCollision.Passable);
         }
@@ -389,6 +400,7 @@ namespace LearningXNA
                     OnPlayerKilled(null);
 
                 UpdateEnemies(gameTime);
+                UpdateAnimals(gameTime);
 
                 // The player has reached the exit if they are standing on the ground and
                 // his bounding rectangle contains the center of the exit tile. They can only
@@ -442,6 +454,22 @@ namespace LearningXNA
             }
         }
 
+        private void UpdateAnimals(GameTime gameTime)
+        {
+            foreach (Animal animal in animals)
+            {
+                animal.Update(gameTime);
+
+                // Touching an enemy instantly kills the player
+                if (animal.BoundingRectangle.Intersects(Player.BoundingRectangle))
+                {
+                    OnPlayerEated(animal);
+                    animals.Remove(animal);
+                    break;
+                }
+            }
+        }
+
         /// <summary>
         /// Called when a gem is collected.
         /// </summary>
@@ -464,6 +492,11 @@ namespace LearningXNA
         private void OnPlayerKilled(Enemy killedBy)
         {
             Player.OnKilled(killedBy);
+        }
+
+        private void OnPlayerEated(Animal eatenAnimal)
+        {
+            Player.OnPlayerEated(eatenAnimal);
         }
 
         /// <summary>
@@ -511,6 +544,9 @@ namespace LearningXNA
 
             foreach (Enemy enemy in enemies)
                 enemy.Draw(gameTime, spriteBatch);
+
+            foreach (Animal animal in animals)
+                animal.Draw(gameTime, spriteBatch);
 
             spriteBatch.End();
 
