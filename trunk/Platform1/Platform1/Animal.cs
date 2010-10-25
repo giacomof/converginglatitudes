@@ -7,8 +7,19 @@ namespace LearningXNA
     /// <summary>
     /// A monster who is impeding the progress of our fearless adventurer.
     /// </summary>
-    class Enemy
-    {
+    class Animal
+    {   /// <summary>
+        /// Shape flag of the animal.
+        /// </summary>
+        const short MONSTER_CAT = 1;
+        const short MONSTER_DUCK = 2;
+
+        public short AnimalShape
+        {
+            get { return animalShape; }
+        }
+        short animalShape;
+
         public Level Level
         {
             get { return level; }
@@ -16,7 +27,7 @@ namespace LearningXNA
         Level level;
 
         /// <summary>
-        /// Position in world space of the bottom center of this enemy.
+        /// Position in world space of the bottom center of this animal.
         /// </summary>
         public Vector2 Position
         {
@@ -26,7 +37,7 @@ namespace LearningXNA
 
         private Rectangle localBounds;
         /// <summary>
-        /// Gets a rectangle which bounds this enemy in world space.
+        /// Gets a rectangle which bounds this animal in world space.
         /// </summary>
         public Rectangle BoundingRectangle
         {
@@ -45,12 +56,12 @@ namespace LearningXNA
         private AnimationPlayer sprite;
 
         /// <summary>
-        /// The direction this enemy is facing and moving along the X axis.
+        /// The direction this animal is facing and moving along the X axis.
         /// </summary>
         private FaceDirection direction = FaceDirection.Left;
 
         /// <summary>
-        /// How long this enemy has been waiting before turning around.
+        /// How long this animal has been waiting before turning around.
         /// </summary>
         private float waitTime;
 
@@ -60,24 +71,29 @@ namespace LearningXNA
         private const float MaxWaitTime = 0.5f;
 
         /// <summary>
-        /// The speed at which this enemy moves along the X axis.
+        /// The speed at which this animal moves along the X axis.
         /// </summary>
 
         private const float MoveSpeed = 128.0f;
 
         /// <summary>
-        /// Constructs a new Enemy.
+        /// Constructs a new Animal.
         /// </summary>
-        public Enemy(Level level, Vector2 position, string spriteSet)
+        public Animal(Level level, Vector2 position, string spriteSet)
         {
             this.level = level;
             this.position = position;
+
+            if (spriteSet == "Cat")
+            {
+                animalShape = MONSTER_CAT;
+            }
 
             LoadContent(spriteSet);
         }
 
         /// <summary>
-        /// Loads a particular enemy sprite sheet and sounds.
+        /// Loads a particular animal sprite sheet and sounds.
         /// </summary>
         public void LoadContent(string spriteSet)
         {
@@ -136,7 +152,7 @@ namespace LearningXNA
         }
 
         /// <summary>
-        /// Draws the animated enemy.
+        /// Draws the animated animal.
         /// </summary>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -154,7 +170,7 @@ namespace LearningXNA
             }
 
 
-            // Draw facing the way the enemy is moving.
+            // Draw facing the way the animal is moving.
             SpriteEffects flip = direction > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             sprite.Draw(gameTime, spriteBatch, Position, flip);
         }

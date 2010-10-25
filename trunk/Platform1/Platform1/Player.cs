@@ -17,6 +17,9 @@ namespace LearningXNA
         const short MONSTER_DUCK        = 2;
         private short animalShape = MONSTER;
 
+        private bool canBeCat = false;
+        private bool canBeDuck = false;
+
 
         // Animations
         private Animation monsterIdleAnimation;
@@ -387,7 +390,7 @@ namespace LearningXNA
             {
                 changeShape(MONSTER);
             }
-            else if (keyboardState.IsKeyDown(Keys.D2))
+            else if (keyboardState.IsKeyDown(Keys.D2) && canBeCat)
             {
                 changeShape(MONSTER_CAT);
             }
@@ -714,6 +717,20 @@ namespace LearningXNA
 
             // Get beck to MONSTER when killed
             changeShape(MONSTER);
+        }
+
+        public void OnPlayerEated(Animal eatenAnimal)
+        {
+            fallSound.Play();
+
+            switch (eatenAnimal.AnimalShape)
+            {
+                case MONSTER_CAT:
+                    canBeCat = true;
+                    changeShape(MONSTER_CAT);
+                    break;
+            }
+            
         }
 
         /// <summary>
