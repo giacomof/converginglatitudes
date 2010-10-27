@@ -470,7 +470,7 @@ namespace LearningXNA
                         velocity.X *= AirDragFactor;
 
                     // Prevent the player from running faster than his top speed.            
-                    //velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
+                    velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
 
                     // Apply velocity.
                     Position += velocity * elapsed;
@@ -489,7 +489,7 @@ namespace LearningXNA
                         velocity.X += movementX * MoveAcceleration * elapsed;
                         velocity.X *= monsterCatWallDragFactor;
 
-                        //velocity.Y = MathHelper.Clamp(velocity.Y, -MaxMoveSpeed, MaxMoveSpeed);
+                        velocity.Y = MathHelper.Clamp(velocity.Y, -MaxMoveSpeed, MaxMoveSpeed);
 
                         // Apply velocity.
                         Position += velocity * elapsed;
@@ -719,7 +719,7 @@ namespace LearningXNA
             }
 
             // Debug writing
-            Console.WriteLine("Side: " + side + "| top: " + topTile + "| bottom: " + bottomTile + "| distance: " + distance + "| MovementX: " + lastMovementX);
+            //Console.WriteLine("Side: " + side + "| top: " + topTile + "| bottom: " + bottomTile + "| distance: " + distance + "| MovementX: " + lastMovementX);
 
             for (int y = topTile+1; y <= bottomTile; y++)
             {
