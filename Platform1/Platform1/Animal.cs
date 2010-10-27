@@ -141,6 +141,7 @@ namespace LearningXNA
             {
                 // If we are about to run into a wall or off a cliff, start waiting.
                 if (Level.GetCollision(tileX + (int)direction, tileY - 1) == TileCollision.Impassable ||
+                    Level.GetCollision(tileX + (int)direction, tileY - 1) == TileCollision.LevelFrame ||
                     Level.GetCollision(tileX + (int)direction, tileY) == TileCollision.Passable)
                 {
                     waitTime = MaxWaitTime;
