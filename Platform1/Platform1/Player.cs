@@ -345,6 +345,7 @@ namespace LearningXNA
             if (keyboardState.IsKeyDown(Keys.X))
             {
                 isDoingSpecialAction = true;
+                System.Console.WriteLine(canClimbOnCeiling());
             }
             else
             {
@@ -461,9 +462,6 @@ namespace LearningXNA
                         velocity.Y = movementY * MoveAcceleration * elapsed;
                         // NEED TO BE CHANGED IN CLIMB DRAG FACTOR
                         velocity.Y *= monsterCatWallDragFactor;
-
-                        velocity.X += movementX * MoveAcceleration * elapsed;
-                        velocity.X *= monsterCatWallDragFactor;
 
                         //velocity.Y = MathHelper.Clamp(velocity.Y, -MaxMoveSpeed, MaxMoveSpeed);
 
@@ -718,7 +716,7 @@ namespace LearningXNA
             Rectangle bounds = BoundingRectangle;
             int topTile = (int)Math.Round((float)bounds.Top / Tile.Height)-1;
 
-            int centralTile = (int)Math.Floor((float)bounds.X + bounds.Width / 2) / Tile.Height;
+            int centralTile = (int)Math.Floor(((float)bounds.X + bounds.Width / 2) / Tile.Height)+1;
 
             TileCollision collision = Level.GetCollision(centralTile, topTile);
             if (collision == TileCollision.Impassable)
