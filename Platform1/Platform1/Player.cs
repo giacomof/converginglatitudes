@@ -636,7 +636,7 @@ namespace LearningXNA
                                     isOnGround = true;
 
                                 // Ignore platforms, unless we are on the ground.
-                                if (collision == TileCollision.Impassable || IsOnGround)
+                                if ((collision == TileCollision.Impassable || collision == TileCollision.LevelFrame) || IsOnGround)
                                 {
                                     // Resolve the collision along the Y axis.
                                     Position = new Vector2(Position.X, Position.Y + depth.Y);
@@ -645,7 +645,7 @@ namespace LearningXNA
                                     bounds = BoundingRectangle;
                                 }
                             }
-                            else if (collision == TileCollision.Impassable) // Ignore platforms.
+                            else if (collision == TileCollision.Impassable || collision == TileCollision.LevelFrame) // Ignore platforms.
                             {
                                 
                                 // Resolve the collision along the X axis.
@@ -697,7 +697,7 @@ namespace LearningXNA
             for (int y = topTile+1; y <= bottomTile; y++)
             {
                 TileCollision collision = Level.GetCollision(side, y);
-                if (collision != TileCollision.Impassable || distance > 0)
+                if (collision != TileCollision.Impassable || distance > 20)
                 {
                     return false;
                 }
