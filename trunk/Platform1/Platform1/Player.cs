@@ -462,6 +462,9 @@ namespace LearningXNA
                         // NEED TO BE CHANGED IN CLIMB DRAG FACTOR
                         velocity.Y *= monsterCatWallDragFactor;
 
+                        velocity.X += movementX * MoveAcceleration * elapsed;
+                        velocity.X *= monsterCatWallDragFactor;
+
                         //velocity.Y = MathHelper.Clamp(velocity.Y, -MaxMoveSpeed, MaxMoveSpeed);
 
                         // Apply velocity.
@@ -706,6 +709,27 @@ namespace LearningXNA
         }
 
 
+        /// <summary>
+        /// Called to check if the player can climb on the ceiling.
+        /// </summary>
+        bool canClimbOnCeiling()
+        {
+
+            Rectangle bounds = BoundingRectangle;
+            int topTile = (int)Math.Round((float)bounds.Top / Tile.Height)-1;
+
+            int centralTile = (int)Math.Floor((float)bounds.X + bounds.Width / 2) / Tile.Height;
+
+            TileCollision collision = Level.GetCollision(centralTile, topTile);
+            if (collision == TileCollision.Impassable)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         
 
         /// <summary>
