@@ -334,7 +334,7 @@ namespace LearningXNA
         {
             // Prevent escaping past the level ends.
             if (x < 0 || x >= Width)
-                return TileCollision.Impassable;
+                return TileCollision.LevelFrame;
             // Allow jumping past the level top and falling through the bottom.
             if (y < 0 || y >= Height)
                 return TileCollision.Passable;

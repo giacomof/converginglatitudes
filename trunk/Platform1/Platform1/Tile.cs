@@ -26,6 +26,12 @@ namespace LearningXNA
         /// past it to the left and right, but can not fall down through the top of it.
         /// </summary>
         Platform = 2,
+
+        /// <summary>
+        /// A virtual tile that is considered to be the building block of the frame of 
+        /// level.
+        /// </summary>
+        LevelFrame = 3,
     }
 
     /// <summary>
