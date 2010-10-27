@@ -456,7 +456,7 @@ namespace LearningXNA
 
                 case MONSTER_CAT:
 
-                    if (isDoingSpecialAction && isClimbing)
+                    if (isDoingSpecialAction && isClimbing && canClimb())
                     {
                         velocity.Y = movementY * MoveAcceleration * elapsed;
                         // NEED TO BE CHANGED IN CLIMB DRAG FACTOR
