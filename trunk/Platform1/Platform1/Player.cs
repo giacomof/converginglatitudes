@@ -320,7 +320,7 @@ namespace LearningXNA
 
             wasClimbing = isClimbing;
 
-            if(isDoingSpecialAction)
+            if(!isDoingSpecialAction)
             {
                 switch (animalShape)
                 {
@@ -345,7 +345,6 @@ namespace LearningXNA
             if (keyboardState.IsKeyDown(Keys.X))
             {
                 isDoingSpecialAction = true;
-                System.Console.WriteLine(canClimbOnCeiling());
             }
             else
             {
@@ -357,11 +356,35 @@ namespace LearningXNA
 
                 movementX = -1.0f;
                 lastMovementX = -1.0f;
+
+                if (animalShape == MONSTER_CAT)
+                {
+                    isClimbing = false;
+
+                    if (canClimbOnCeiling() && isDoingSpecialAction)
+                    {
+                        isClimbing = true;
+                        isJumping = false;
+                        isOnGround = false;
+                    }
+                }
             }
             else if (keyboardState.IsKeyDown(Keys.Right))
             {
                 movementX = 1.0f;
                 lastMovementX = 1.0f;
+
+                if (animalShape == MONSTER_CAT)
+                {
+                    isClimbing = false;
+
+                    if (canClimbOnCeiling() && isDoingSpecialAction)
+                    {
+                        isClimbing = true;
+                        isJumping = false;
+                        isOnGround = false;
+                    }
+                }
             }
 
             if (keyboardState.IsKeyDown(Keys.Up))
@@ -372,7 +395,7 @@ namespace LearningXNA
                 {
                     isClimbing = false;
 
-                    if (canClimb())
+                    if (canClimb() && isDoingSpecialAction)
                     {
                         isClimbing = true;
                         isJumping = false;
@@ -388,7 +411,7 @@ namespace LearningXNA
                 {
                     isClimbing = false;
 
-                    if (canClimb())
+                    if (canClimb() && isDoingSpecialAction)
                     {
                         isClimbing = true;
                         isJumping = false;
@@ -447,7 +470,7 @@ namespace LearningXNA
                         velocity.X *= AirDragFactor;
 
                     // Prevent the player from running faster than his top speed.            
-                    velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
+                    //velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
 
                     // Apply velocity.
                     Position += velocity * elapsed;
@@ -457,11 +480,14 @@ namespace LearningXNA
 
                 case MONSTER_CAT:
 
-                    if (isDoingSpecialAction && isClimbing && canClimb())
+                    if (isDoingSpecialAction && isClimbing)
                     {
                         velocity.Y = movementY * MoveAcceleration * elapsed;
                         // NEED TO BE CHANGED IN CLIMB DRAG FACTOR
                         velocity.Y *= monsterCatWallDragFactor;
+
+                        velocity.X += movementX * MoveAcceleration * elapsed;
+                        velocity.X *= monsterCatWallDragFactor;
 
                         //velocity.Y = MathHelper.Clamp(velocity.Y, -MaxMoveSpeed, MaxMoveSpeed);
 
@@ -693,12 +719,12 @@ namespace LearningXNA
             }
 
             // Debug writing
-            //Console.WriteLine("Side: " + side + "| top: " + topTile + "| bottom: " + bottomTile + "| distance: " + distance + "| MovementX: " + lastMovementX);
+            Console.WriteLine("Side: " + side + "| top: " + topTile + "| bottom: " + bottomTile + "| distance: " + distance + "| MovementX: " + lastMovementX);
 
             for (int y = topTile+1; y <= bottomTile; y++)
             {
                 TileCollision collision = Level.GetCollision(side, y);
-                if (collision != TileCollision.Impassable || distance > 20)
+                if (collision != TileCollision.Impassable || distance > 0)
                 {
                     return false;
                 }
@@ -716,7 +742,10 @@ namespace LearningXNA
             Rectangle bounds = BoundingRectangle;
             int topTile = (int)Math.Round((float)bounds.Top / Tile.Height)-1;
 
-            int centralTile = (int)Math.Floor(((float)bounds.X + bounds.Width / 2) / Tile.Height)+1;
+            int centralTile = (int)Math.Floor((float)bounds.Center.X / Tile.Width);
+            
+            // Debug writing
+            //Console.WriteLine("topTile: " + topTile + "| centralTile: " + centralTile);
 
             TileCollision collision = Level.GetCollision(centralTile, topTile);
             if (collision == TileCollision.Impassable)
