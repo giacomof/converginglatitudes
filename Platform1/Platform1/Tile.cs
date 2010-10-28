@@ -32,6 +32,11 @@ namespace LearningXNA
         /// level.
         /// </summary>
         LevelFrame = 3,
+
+        /// <summary>
+        /// Invisible tile for stopping moving platforms.
+        /// </summary>
+        PlatformCollider = 4,
     }
 
     /// <summary>
