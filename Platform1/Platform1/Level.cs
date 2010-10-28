@@ -1,10 +1,12 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using System.IO;
+
 
 namespace LearningXNA
 {
@@ -22,6 +24,9 @@ namespace LearningXNA
         private const int EntityLayer = 2;
 
         // Entities in the level.
+        //MOVING PLATFORM STUFF
+        public List<MovableTile> movableTiles = new List<MovableTile>();
+        //END OF MOVING PLATFORM STUFF
         public Player Player
         {
             get { return player; }
@@ -212,11 +217,28 @@ namespace LearningXNA
                 case '#':
                     return LoadVarietyTile("BlockA", 7, TileCollision.Impassable);
 
+                    ////MOVING PLATFORM STUFF
+
+                    // Moving platform - Horizontal
+                case 'M':
+                    return LoadMovableTile(x, y, TileCollision.Platform);
+                    ////END OF MOVING PLATFORM STUFF
+
                 // Unknown tile type character
                 default:
                     throw new NotSupportedException(String.Format("Unsupported tile type character '{0}' at position {1}, {2}.", tileType, x, y));
             }
         }
+        ////MOVING PLATFORM STUFF
+        private Tile LoadMovableTile(int x, int y, TileCollision collision)
+        {
+        Point position = GetBounds(x, y).Center;
+        movableTiles.Add(new MovableTile(this, new Vector2(position.X, position.Y), collision));
+
+        return new Tile(null, TileCollision.Passable);
+        }
+        ////END OF MOVING PLATFORM STUFF
+
 
         /// <summary>
         /// Creates a new tile. The other tile loading methods typically chain to this
@@ -396,6 +418,10 @@ namespace LearningXNA
 
                 Player.Update(gameTime);
 
+                ////MOVING PLATFORM STUFF
+                UpdateMovableTiles(gameTime);
+                ////END OF MOVING PLATFORM STUFF
+                ///
                 UpdateGems(gameTime);
 
                 // Falling off the bottom of the level kills the player.
@@ -420,6 +446,23 @@ namespace LearningXNA
             if (timeRemaining < TimeSpan.Zero)
                 timeRemaining = TimeSpan.Zero;
         }
+
+        ////MOVING PLATFORM STUFF
+        private void UpdateMovableTiles(GameTime gameTime)
+        {
+            for (int i = 0; i < movableTiles.Count; ++i)
+            {
+                MovableTile movableTile = movableTiles[i];
+                movableTile.Update(gameTime);
+
+                if (movableTile.PlayerIsOn)
+                {
+                    //Make player move with tile if the player is on top of tile  
+                    player.Position += movableTile.Velocity;
+                }
+            }
+        }
+        ////END OF MOVING PLATFORM STUFF
 
         /// <summary>
         /// Animates each gem and checks to allows the player to collect them.
@@ -548,6 +591,11 @@ namespace LearningXNA
             spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.None, cameraTransform);
 
             DrawTiles(spriteBatch);
+
+            ////MOVING PLATFORM STUFF
+            foreach (MovableTile tile in movableTiles)
+                tile.Draw(gameTime, spriteBatch);
+            ////END OF MOVING PLATFORM STUFF
 
             foreach (Gem gem in gems)
                 gem.Draw(gameTime, spriteBatch);

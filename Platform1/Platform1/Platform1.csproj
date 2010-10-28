@@ -91,6 +91,7 @@
     <Compile Include="Gem.cs" />
     <Compile Include="Layer.cs" />
     <Compile Include="Level.cs" />
+    <Compile Include="MovableTile.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
