@@ -217,8 +217,10 @@ namespace LearningXNA
                 case '#':
                     return LoadVarietyTile("BlockA", 7, TileCollision.Impassable);
 
-                    ////MOVING PLATFORM STUFF
+                case '╩':
+                    return LoadTile("Spikes", TileCollision.KillerTile);
 
+                    ////MOVING PLATFORM STUFF
                     // Moving platform - Horizontal
                 case '<':
                     return LoadMovableTile(x, y, TileCollision.Platform);
