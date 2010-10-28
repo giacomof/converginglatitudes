@@ -92,8 +92,8 @@ namespace LearningXNA
 
         //***********MONSTER SHAPE MOVEMENTS*****************
         // Constants for controling horizontal movement
-        private const float monsterMoveAcceleration = 6000.0f;
-        private const float monsterMaxMoveSpeed = 6000.0f;
+        private const float monsterMoveAcceleration = 10000.0f;
+        private const float monsterMaxMoveSpeed = 10000.0f;
         private const float monsterGroundDragFactor = 0.58f;
         private const float monsterAirDragFactor = 0.65f;
 
@@ -176,8 +176,8 @@ namespace LearningXNA
 
         private bool wasClimbing;
 
-        //This used to be private float movement;
-        private Vector2 movement;
+
+        private bool isDead;
 
 
         // Jumping state
@@ -255,6 +255,7 @@ namespace LearningXNA
             Position = position;
             Velocity = Vector2.Zero;
             isAlive = true;
+            isDead = false;
             sprite.PlayAnimation(monsterIdleAnimation);
         }
 
@@ -312,6 +313,10 @@ namespace LearningXNA
                     }
                 }
             }
+            else
+            {
+                isDead = true;
+            }
 
             // Clear input.
             movementX = 0.0f;
@@ -332,6 +337,7 @@ namespace LearningXNA
                         break;
                 }
             }
+
         }
 
         /// <summary>
@@ -637,7 +643,11 @@ namespace LearningXNA
                 {
                     // If this tile is collidable,
                     TileCollision collision = Level.GetCollision(x, y);
-                    if (collision != TileCollision.Passable)
+                    if (collision == TileCollision.KillerTile)
+                    {
+                        this.OnKilled(null);
+                    }
+                    if (collision != TileCollision.Passable && collision != TileCollision.PlatformCollider && collision != TileCollision.KillerTile)
                     {
                         // Determine collision depth (with direction) and magnitude.
                         Rectangle tileBounds = Level.GetBounds(x, y);
@@ -801,8 +811,10 @@ private Rectangle HandleCollision(Rectangle bounds, TileCollision collision, Rec
 
             if (killedBy != null)
                 killedSound.Play();
-            else
+            else if (!isDead)
+            {
                 fallSound.Play();
+            }
 
             switch (animalShape)
             {

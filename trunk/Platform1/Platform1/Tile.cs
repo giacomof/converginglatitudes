@@ -37,6 +37,11 @@ namespace LearningXNA
         /// Invisible tile for stopping moving platforms.
         /// </summary>
         PlatformCollider = 4,
+
+        /// <summary>
+        /// Tile that will kill the player if hit
+        /// </summary>
+        KillerTile = 5
     }
 
     /// <summary>
