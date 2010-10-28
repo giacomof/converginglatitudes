@@ -220,8 +220,10 @@ namespace LearningXNA
                     ////MOVING PLATFORM STUFF
 
                     // Moving platform - Horizontal
-                case 'M':
+                case '<':
                     return LoadMovableTile(x, y, TileCollision.Platform);
+                case '|':
+                    return LoadTile("Platform", TileCollision.PlatformCollider);
                     ////END OF MOVING PLATFORM STUFF
 
                 // Unknown tile type character
@@ -657,7 +659,10 @@ namespace LearningXNA
                 {
                     // If there is a visible tile in that position
                     Texture2D texture = tiles[x, y].Texture;
-                    if (texture != null)
+
+                    //Level.tiles[x, y].Texture = null;
+                    TileCollision collision = this.GetCollision(x, y);
+                    if (texture != null && collision != TileCollision.PlatformCollider)
                     {
                         // Draw it in screen space.
                         Vector2 position = new Vector2(x, y) * Tile.Size;
