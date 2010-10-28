@@ -342,13 +342,23 @@ namespace LearningXNA
             // Get input state.
             KeyboardState keyboardState = Keyboard.GetState();
 
-            if (keyboardState.IsKeyDown(Keys.X))
+            isClimbing = false;
+            isDoingSpecialAction = false;
+
+            if (keyboardState.IsKeyDown(Keys.Space))
             {
                 isDoingSpecialAction = true;
-            }
-            else
-            {
-                isDoingSpecialAction = false;
+
+                if (animalShape == MONSTER_CAT)
+                {
+                    if (canClimbOnCeiling() || canClimb())
+                    {
+                        isClimbing = true;
+                        isJumping = false;
+                        isOnGround = false;
+                    }
+                }
+
             }
 
             if (keyboardState.IsKeyDown(Keys.Left))
@@ -357,67 +367,23 @@ namespace LearningXNA
                 movementX = -1.0f;
                 lastMovementX = -1.0f;
 
-                if (animalShape == MONSTER_CAT)
-                {
-                    isClimbing = false;
 
-                    if (canClimbOnCeiling() && isDoingSpecialAction)
-                    {
-                        isClimbing = true;
-                        isJumping = false;
-                        isOnGround = false;
-                    }
-                }
             }
             else if (keyboardState.IsKeyDown(Keys.Right))
             {
                 movementX = 1.0f;
                 lastMovementX = 1.0f;
 
-                if (animalShape == MONSTER_CAT)
-                {
-                    isClimbing = false;
-
-                    if (canClimbOnCeiling() && isDoingSpecialAction)
-                    {
-                        isClimbing = true;
-                        isJumping = false;
-                        isOnGround = false;
-                    }
-                }
             }
 
             if (keyboardState.IsKeyDown(Keys.Up))
             {
                 movementY = -1.0f;
 
-                if (animalShape == MONSTER_CAT)
-                {
-                    isClimbing = false;
-
-                    if (canClimb() && isDoingSpecialAction)
-                    {
-                        isClimbing = true;
-                        isJumping = false;
-                        isOnGround = false;
-                    }
-                }
             }
             else if (keyboardState.IsKeyDown(Keys.Down))
             {
                 movementY = 1.0f;
-
-                if (animalShape == MONSTER_CAT)
-                {
-                    isClimbing = false;
-
-                    if (canClimb() && isDoingSpecialAction)
-                    {
-                        isClimbing = true;
-                        isJumping = false;
-                        isOnGround = false;
-                    }
-                }
             }
 
             // Key press used for debug reasons
@@ -429,7 +395,14 @@ namespace LearningXNA
             }
 
             // Check if the player wants to jump.
-            isJumping = keyboardState.IsKeyDown(Keys.Space);
+            if (!isClimbing)
+            {
+                isJumping = keyboardState.IsKeyDown(Keys.Up);
+            }
+            else
+            {
+                isJumping = false;
+            }
 
             if( keyboardState.IsKeyDown(Keys.D1))
             {
