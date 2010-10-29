@@ -116,7 +116,7 @@ namespace LearningXNA
 
         // Constants for controlling vertical movement
         private const float monsterCatMaxJumpTime = 0.35f;
-        private const float monsterCatJumpLaunchVelocity = -4000.0f;
+        public const float monsterCatJumpLaunchVelocity = -4000.0f;
         private const float monsterCatGravityAcceleration = 3500.0f;
         private const float monsterCatMaxFallSpeed = 600.0f;
         private const float monsterCatJumpControlPower = 0.14f;
@@ -181,6 +181,8 @@ namespace LearningXNA
 
 
         // Jumping state
+        private bool isBouncing;
+        private bool wasBouncing;
         private bool isJumping;
         private bool wasJumping;
         private float jumpTime;
@@ -322,6 +324,7 @@ namespace LearningXNA
             movementX = 0.0f;
             movementY = 0.0f;
             isJumping = false;
+            
 
             wasClimbing = isClimbing;
 
@@ -511,6 +514,10 @@ namespace LearningXNA
                     }
                     break;
             }
+
+            //Stops the bouncing
+            isBouncing = false;
+
             // If the player is now colliding with the level, separate them.
             HandleCollisions();
 
@@ -543,7 +550,7 @@ namespace LearningXNA
         private float DoJump(float velocityY, GameTime gameTime)
         {
             // If the player wants to jump
-            if (isJumping)
+            if (isJumping || isBouncing)
             {
                 // Begin or continue a jump
                 switch (animalShape)
@@ -571,13 +578,17 @@ namespace LearningXNA
                         }
                         break;
                 }
+
                             
 
                 // If we are in the ascent of the jump
                 if (0.0f < jumpTime && jumpTime <= MaxJumpTime)
                 {
                     // Fully override the vertical velocity with a power curve that gives players more control over the top of the jump
-                    velocityY = JumpLaunchVelocity * (1.0f - (float)Math.Pow(jumpTime / MaxJumpTime, JumpControlPower));
+                    if (isJumping)
+                        velocityY = JumpLaunchVelocity * (1.0f - (float)Math.Pow(jumpTime / MaxJumpTime, JumpControlPower));
+                    if (isBouncing)
+                        velocityY = JumpLaunchVelocity * (1.0f - (float)Math.Pow(jumpTime / MaxJumpTime, JumpControlPower)) * 2;
                 }
                 else
                 {
@@ -636,6 +647,16 @@ namespace LearningXNA
             } 
             //END OF MOVING PLATFORM
 
+            //only checking for bouncy objects underneath the monster
+            for (int x = leftTile; x <= rightTile; x++)
+            {
+                TileCollision collision = Level.GetCollision(x, bottomTile);
+                if (collision == TileCollision.Bouncy)
+                {
+                    this.isBouncing = true;
+                }
+            }
+
             // For each potentially colliding tile,
             for (int y = topTile; y <= bottomTile; ++y)
             {
@@ -647,6 +668,7 @@ namespace LearningXNA
                     {
                         this.OnKilled(null);
                     }
+                   
                     if (collision != TileCollision.Passable && collision != TileCollision.PlatformCollider && collision != TileCollision.KillerTile)
                     {
                         // Determine collision depth (with direction) and magnitude.
@@ -665,7 +687,7 @@ namespace LearningXNA
                                     isOnGround = true;
 
                                 // Ignore platforms, unless we are on the ground.
-                                if ((collision == TileCollision.Impassable || collision == TileCollision.LevelFrame) || IsOnGround)
+                                if ((collision == TileCollision.Impassable || collision == TileCollision.LevelFrame || collision == TileCollision.Bouncy) || IsOnGround)
                                 {
                                     // Resolve the collision along the Y axis.
                                     Position = new Vector2(Position.X, Position.Y + depth.Y);
@@ -674,7 +696,7 @@ namespace LearningXNA
                                     bounds = BoundingRectangle;
                                 }
                             }
-                            else if (collision == TileCollision.Impassable || collision == TileCollision.LevelFrame) // Ignore platforms.
+                            else if (collision == TileCollision.Impassable || collision == TileCollision.LevelFrame || collision == TileCollision.Bouncy) // Ignore platforms.
                             {
                                 
                                 // Resolve the collision along the X axis.

@@ -41,7 +41,13 @@ namespace LearningXNA
         /// <summary>
         /// Tile that will kill the player if hit
         /// </summary>
-        KillerTile = 5
+        KillerTile = 5,
+
+        /// <summary>
+        /// Tile that will make the player jump twice as high
+        /// </summary>
+        Bouncy = 7
+        
     }
 
     /// <summary>

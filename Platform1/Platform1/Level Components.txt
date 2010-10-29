@@ -1,0 +1,17 @@
+﻿This document is about the different level components there exist for making the levels.
+
+- Blank space 						'.'
+- Exit								'X'
+- Gem 								'G'
+- Floating platform 				'-'
+- Various enemies -					'A'
+									'B'
+									'D'
+- Cat 								'C'
+- Platform block 					'~'
+- Passable block					':'
+- Player 1 start point				'1'
+- Impassable block					'#'
+- Spikes							'╩'
+- Moving platform (Horizontal)		'<'
+- Platform Collider					'|'
