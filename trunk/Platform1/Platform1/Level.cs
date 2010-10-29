@@ -217,6 +217,10 @@ namespace LearningXNA
                 case '#':
                     return LoadVarietyTile("BlockA", 7, TileCollision.Impassable);
 
+                // Bouncing Object
+                case '§':
+                    return LoadTile("Platform", TileCollision.Bouncy);
+                // Spikes
                 case '╩':
                     return LoadTile("Spikes", TileCollision.KillerTile);
 

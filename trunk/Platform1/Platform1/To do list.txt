@@ -5,10 +5,27 @@ G- Implementing different monster behaviours, similar to state-machine way (mons
 M- Look into mooving platforms (in ALL directions!!)
 0- Figure out about the sound part.
 0- Find out how to  work with the GUI.
-0- Vertical spikes (die only from the top)
 0- Uncontrollable behaviours
+
+28/10-10
+- water tiles
+- monster call when close to animals
+- animal behaviour
+- disappearing and appearing blocks
+- ladder
+- dog's impact on monster cat
+- bouncy blocks for jumping higher
+- falling objects
+- flying enemies
+- birdcage and impact monstercat
+- level
+- extend monster cat climb algorithm
+     
 
 
 
 The Done List:
+(done)- invisible collision boxes for moving platforms
+(done)- spikes
+(done)- checkpoints
 
