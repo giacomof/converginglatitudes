@@ -655,7 +655,8 @@ namespace LearningXNA
                 {
                     this.isBouncing = true;
                 }
-            }
+                
+             }
 
             // For each potentially colliding tile,
             for (int y = topTile; y <= bottomTile; ++y)
@@ -664,6 +665,14 @@ namespace LearningXNA
                 {
                     // If this tile is collidable,
                     TileCollision collision = Level.GetCollision(x, y);
+
+                    //start Checkpoint
+                    if (collision == TileCollision.Checkpoint)
+                    {
+                        level.checkpoint = new Vector2(x, y) * Tile.Size;
+                    }
+                    //end Checkpoint
+
                     if (collision == TileCollision.KillerTile)
                     {
                         this.OnKilled(null);
@@ -678,6 +687,36 @@ namespace LearningXNA
                         {
                             float absDepthX = Math.Abs(depth.X);
                             float absDepthY = Math.Abs(depth.Y);
+
+                            //start destroy tile
+                            // RIGHT
+                            float previousLeft = bounds.Left;
+                            float previousRight = bounds.Right;
+                            KeyboardState keyboardState = Keyboard.GetState();
+                            if (collision == TileCollision.Impassable &&
+                                keyboardState.IsKeyDown(Keys.Z) &&
+                                keyboardState.IsKeyDown(Keys.Right) &&
+                                    previousRight >= tileBounds.Right)
+                            {
+                                x++;
+                                y--;
+                                Level.tiles[x, y].Texture = null;
+                                Level.tiles[x, y].Collision = TileCollision.Passable;
+                            }
+                            // LEFT
+                            if (collision == TileCollision.Impassable &&
+                            keyboardState.IsKeyDown(Keys.Z) &&
+                            keyboardState.IsKeyDown(Keys.Left) &&
+                                previousLeft <= tileBounds.Left)
+                            {
+
+                                x--;
+                                y--;
+                                Level.tiles[x--, y--].Texture = null;
+                                Level.tiles[x--, y--].Collision = TileCollision.Passable;
+                            }
+
+                           //end destroy tile
 
                             // Resolve the collision along the shallow axis.
                             if (absDepthY < absDepthX || collision == TileCollision.Platform)
