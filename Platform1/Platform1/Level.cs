@@ -18,7 +18,7 @@ namespace LearningXNA
     class Level : IDisposable
     {
         // Physical structure of the level.
-        private Tile[,] tiles;
+        public Tile[,] tiles;
         private Layer[] layers;
         // The layer which entities are drawn on top of.
         private const int EntityLayer = 2;
@@ -39,6 +39,9 @@ namespace LearningXNA
 
         // Key locations in the level.        
         private Vector2 start;
+        //start checkpoint
+        public Vector2 checkpoint;
+        //end checkpoint
         private Point exit = InvalidPosition;
         private static readonly Point InvalidPosition = new Point(-1, -1);
 
@@ -223,6 +226,10 @@ namespace LearningXNA
                 // Spikes
                 case '╩':
                     return LoadTile("Spikes", TileCollision.KillerTile);
+                // Checkpoint
+                case '¤':
+                    return LoadTile("BlockA0", TileCollision.Checkpoint);
+
 
                     ////MOVING PLATFORM STUFF
                     // Moving platform - Horizontal
@@ -575,10 +582,16 @@ namespace LearningXNA
         /// <summary>
         /// Restores the player to the starting point to try the level again.
         /// </summary>
+        /// 
+        //start checkpoint
         public void StartNewLife()
         {
-            Player.Reset(start);
+            if (checkpoint != Vector2.Zero) Player.Reset(checkpoint);
+            else
+                Player.Reset(start);
         }
+        //end checkpoint
+
 
         #endregion
 
