@@ -181,6 +181,8 @@ namespace LearningXNA
             get { return isClimbingOnCeiling; }
         }
 
+        private bool wasClimbingOnCeiling;
+
         private bool isDead;
 
 
@@ -347,6 +349,7 @@ namespace LearningXNA
             
 
             wasClimbing = isClimbing;
+            wasClimbingOnCeiling = isClimbingOnCeiling;
 
             if(!isDoingSpecialAction)
             {
@@ -493,30 +496,25 @@ namespace LearningXNA
 
                     if (isDoingSpecialAction && isClimbing)
                     {
-                        velocity.Y = movementY * MoveAcceleration * elapsed;
                         // NEED TO BE CHANGED IN CLIMB DRAG FACTOR
+                        velocity.Y = movementY * MoveAcceleration * elapsed;
                         velocity.Y *= monsterCatWallDragFactor;
+                        velocity.Y = MathHelper.Clamp(velocity.Y, -MaxMoveSpeed, MaxMoveSpeed);
 
                         velocity.X += movementX * MoveAcceleration * elapsed;
                         velocity.X *= monsterCatWallDragFactor;
 
-                        velocity.Y = MathHelper.Clamp(velocity.Y, -MaxMoveSpeed, MaxMoveSpeed);
-
+                       
                         // Apply velocity.
                         Position += velocity * elapsed;
                         Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
 
                     }
-                    else if (wasClimbing && !isClimbing)
+                    else if (wasClimbing && !isClimbing && !wasClimbingOnCeiling)
                     {
-                        // Base velocity is a combination of horizontal movement control and
-                        // acceleration downward due to gravity.
-                        velocity.X += movementX * MoveAcceleration * elapsed;
-                        velocity.X *= AirDragFactor;
-
                         // Apply velocity.
                         Position += velocity * elapsed;
-                        Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
+                        Position = new Vector2((float)Math.Round(Position.X+lastMovementX*5), (float)Math.Round(Position.Y-3));
                     }
                     else
                     {
