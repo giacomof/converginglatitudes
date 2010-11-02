@@ -912,7 +912,6 @@ namespace LearningXNA
             int distance;
 
             distance = Math.Abs(bounds.Top - (topTile+1)*Tile.Height);
-            Console.WriteLine(distance);
 
             TileCollision collision = Level.GetCollision(centralTile, topTile);
             if (collision == TileCollision.Impassable && distance == 0)
