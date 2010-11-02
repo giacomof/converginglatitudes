@@ -105,9 +105,9 @@ namespace LearningXNA
             // Load background layer textures. For now, all levels must
             // use the same backgrounds and only use the left-most part of them.
             layers = new Layer[3];
-            layers[0] = new Layer(Content, "Backgrounds/Layer0", 0.2f);
+            layers[0] = new Layer(Content, "Backgrounds/Layer0", 0.1f);
             layers[1] = new Layer(Content, "Backgrounds/Layer1", 0.5f);
-            layers[2] = new Layer(Content, "Backgrounds/Layer2", 0.8f);
+            layers[2] = new Layer(Content, "Backgrounds/Layer2", 1.0f);
 
             // Load sounds.
             exitReachedSound = Content.Load<SoundEffect>("Sounds/ExitReached");
