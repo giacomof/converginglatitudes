@@ -427,7 +427,7 @@ namespace LearningXNA
             // Key press used for debug reasons
             if (keyboardState.IsKeyDown(Keys.S))
             {
-                movementY = movementY;
+                //movementY = movementY;
                 //position.X = 2004;
                 //position.Y = 673;
             }
@@ -544,8 +544,7 @@ namespace LearningXNA
                     break;
             }
 
-            //Stops the bouncing
-            isBouncing = false;
+            
 
             // If the player is now colliding with the level, separate them.
             HandleCollisions();
@@ -586,7 +585,7 @@ namespace LearningXNA
                 {
                     case MONSTER:
                         // Begin or continue a jump
-                        if ((!wasJumping && IsOnGround) || jumpTime > 0.0f)
+                        if ((!wasJumping && IsOnGround) || isBouncing || jumpTime > 0.0f)
                         {
                             if (jumpTime == 0.0f)
                                 jumpSound.Play();
@@ -597,7 +596,7 @@ namespace LearningXNA
                         break;
 
                     case MONSTER_CAT:
-                        if ((!wasJumping && IsOnGround && !canClimb()) || jumpTime > 0.0f)
+                        if ((!wasJumping && IsOnGround && !canClimb()) || isBouncing || jumpTime > 0.0f)
                         {
                             if (jumpTime == 0.0f)
                                 jumpSound.Play();
@@ -614,21 +613,28 @@ namespace LearningXNA
                 if (0.0f < jumpTime && jumpTime <= MaxJumpTime)
                 {
                     // Fully override the vertical velocity with a power curve that gives players more control over the top of the jump
-                    if (isJumping)
+                    if (isBouncing && isJumping)
+                    {
                         velocityY = JumpLaunchVelocity * (1.0f - (float)Math.Pow(jumpTime / MaxJumpTime, JumpControlPower));
-                    if (isBouncing)
+                    }
+                    else if (isJumping && !isBouncing)
+                        velocityY = JumpLaunchVelocity * (1.0f - (float)Math.Pow(jumpTime / MaxJumpTime, JumpControlPower));
+                    else if (isBouncing && !isJumping)
                         velocityY = JumpLaunchVelocity * (1.0f - (float)Math.Pow(jumpTime / MaxJumpTime, JumpControlPower)) * 2;
+                    
                 }
                 else
                 {
                     // Reached the apex of the jump
                     jumpTime = 0.0f;
+                    isBouncing = false;
                 }
             }
             else
             {
                 // Continues not jumping or cancels a jump in progress
                 jumpTime = 0.0f;
+
             }
             wasJumping = isJumping;
 
