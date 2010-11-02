@@ -490,7 +490,7 @@ namespace LearningXNA
 
                         // Apply velocity.
                         Position += velocity * elapsed;
-                        Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
+                        Position = new Vector2((float)Math.Round(Position.X + movementX * 2), (float)Math.Round(Position.Y));
                     }
                     else
                     {
@@ -653,7 +653,7 @@ namespace LearningXNA
             for (int x = leftTile; x <= rightTile; x++)
             {
                 TileCollision collision = Level.GetCollision(x, bottomTile);
-                if (collision == TileCollision.Bouncy)
+                if (collision == TileCollision.Bouncy && isAlive)
                 {
                     this.isBouncing = true;
                 }
