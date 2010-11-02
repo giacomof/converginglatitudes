@@ -10,6 +10,7 @@ using System.IO;
 
 namespace LearningXNA
 {
+    
     /// <summary>
     /// A uniform grid of tiles with collections of Cookies and enemies.
     /// The level owns the player and controls the game's win and lose
@@ -17,6 +18,8 @@ namespace LearningXNA
     /// </summary>
     class Level : IDisposable
     {
+       public double elapsedTime = 0;
+       public bool changeCollider = false;
         // Physical structure of the level.
         public Tile[,] tiles;
         private Layer[] layers;
@@ -238,6 +241,8 @@ namespace LearningXNA
                 case '|':
                     return LoadTile("Platform", TileCollision.PlatformCollider);
                     ////END OF MOVING PLATFORM STUFF
+                case '*':
+                    return LoadTile("Platform", TileCollision.Disappearing);
 
                 // Unknown tile type character
                 default:
@@ -435,13 +440,14 @@ namespace LearningXNA
 
                 // Update moving platforms
                 UpdateMovableTiles(gameTime);
-                
+
                 UpdateCookies(gameTime);
 
                 // Falling off the bottom of the level kills the player.
                 if (Player.BoundingRectangle.Top >= Height * Tile.Height)
                     OnPlayerKilled(null);
 
+                UpdateDisappearingTile(gameTime);
                 UpdateEnemies(gameTime);
                 UpdateAnimals(gameTime);
 
@@ -477,6 +483,24 @@ namespace LearningXNA
             }
         }
 
+        ////DISAPPEARING PLATFORM
+        public void UpdateDisappearingTile(GameTime gameTime)
+        {
+            int seconds = gameTime.TotalRealTime.Seconds;
+            if ((seconds / 5) % 2 == 0)
+            {
+                //System.Console.WriteLine("true " + seconds);
+                changeCollider = true;
+            }
+            else
+            {
+                //System.Console.WriteLine("false " + seconds);
+                changeCollider = false;
+            }
+               
+        }
+        ////END OF DISAPPEARING PLATFORM
+
         /// <summary>
         /// Animates each Cookie and checks to allows the player to collect them.
         /// </summary>
@@ -485,7 +509,7 @@ namespace LearningXNA
             for (int i = 0; i < cookies.Count; ++i)
             {
                 Cookie cookie = cookies[i];
-
+               
                 cookie.Update(gameTime);
 
                 if (cookie.BoundingCircle.Intersects(Player.BoundingRectangle))
