@@ -15,3 +15,4 @@
 - Spikes							'╩'
 - Moving platform (Horizontal)		'<'
 - Platform Collider					'|'
+- Bouncy Platform					'§'
