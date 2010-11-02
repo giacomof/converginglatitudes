@@ -49,6 +49,9 @@ namespace LearningXNA
         private Animation monsterCatDieAnimation;
         private Animation monsterCatClimbAnimation;
         private Animation monsterCatClimbIdleAnimation;
+        private Animation monsterCatClimbOnCeilingAnimation;
+        private Animation monsterCatClimbOnCeilingIdleAnimation;
+
 
 
         private SpriteEffects flip = SpriteEffects.None;
@@ -135,10 +138,6 @@ namespace LearningXNA
         private float MaxFallSpeed = 600.0f;
         private float JumpControlPower = 0.14f;
 
-        // Input configuration
-        private const float MoveStickScale = 1.0f;
-        private const Buttons JumpButton = Buttons.A;
-
         /// <summary>
         /// Gets whether or not the player's feet are on the ground.
         /// </summary>
@@ -176,6 +175,11 @@ namespace LearningXNA
 
         private bool wasClimbing;
 
+        private bool isClimbingOnCeiling;
+        public bool IsClimbingOnCeiling
+        {
+            get { return isClimbingOnCeiling; }
+        }
 
         private bool isDead;
 
@@ -239,6 +243,8 @@ namespace LearningXNA
             monsterCatDieAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/catDie"), 0.1f, false);
             monsterCatClimbAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/catClimb"), 0.1f, true);
             monsterCatClimbIdleAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/catClimbIdle"), 0.1f, false);
+            monsterCatClimbOnCeilingAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/catClimbOnCeiling"), 0.1f, true);
+            monsterCatClimbOnCeilingIdleAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/catClimbOnCeilingIdle"), 0.1f, false);
 
             // Load sounds.            
             killedSound = Level.Content.Load<SoundEffect>("Sounds/PlayerKilled");
@@ -306,6 +312,17 @@ namespace LearningXNA
                         }
                     }
                 }
+                else if (isClimbingOnCeiling)
+                {
+                    if (Math.Abs(Velocity.X) > 0)
+                    {
+                        sprite.PlayAnimation(monsterCatClimbOnCeilingAnimation);
+                    }
+                    else
+                    {
+                        sprite.PlayAnimation(monsterCatClimbOnCeilingIdleAnimation);
+                    }
+                }
                 else if (isClimbing)
                 {
                     if (Math.Abs(Velocity.Y) > 0)
@@ -334,6 +351,7 @@ namespace LearningXNA
             if(!isDoingSpecialAction)
             {
                 isClimbing = false;
+                isClimbingOnCeiling = false;
                 switch (animalShape)
                 {
                     case MONSTER:
@@ -355,6 +373,7 @@ namespace LearningXNA
             KeyboardState keyboardState = Keyboard.GetState();
 
             isClimbing = false;
+            isClimbingOnCeiling = false;
             isDoingSpecialAction = false;
 
             if (keyboardState.IsKeyDown(Keys.Space))
@@ -363,9 +382,16 @@ namespace LearningXNA
 
                 if (animalShape == MONSTER_CAT)
                 {
-                    if (canClimbOnCeiling() || canClimb())
+                    if ( canClimb())
                     {
                         isClimbing = true;
+                        isJumping = false;
+                        isOnGround = false;
+                    }
+                    else if (canClimbOnCeiling())
+                    {
+                        isClimbing = true;
+                        isClimbingOnCeiling = true;
                         isJumping = false;
                         isOnGround = false;
                     }
@@ -882,14 +908,14 @@ namespace LearningXNA
 
             Rectangle bounds = BoundingRectangle;
             int topTile = (int)Math.Round((float)bounds.Top / Tile.Height)-1;
-
             int centralTile = (int)Math.Floor((float)bounds.Center.X / Tile.Width);
-            
-            // Debug writing
-            //Console.WriteLine("topTile: " + topTile + "| centralTile: " + centralTile);
+            int distance;
+
+            distance = Math.Abs(bounds.Top - (topTile+1)*Tile.Height);
+            Console.WriteLine(distance);
 
             TileCollision collision = Level.GetCollision(centralTile, topTile);
-            if (collision == TileCollision.Impassable)
+            if (collision == TileCollision.Impassable && distance == 0)
             {
                 return true;
             }
