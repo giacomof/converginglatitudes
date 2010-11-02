@@ -182,7 +182,6 @@ namespace LearningXNA
 
         // Jumping state
         private bool isBouncing;
-        private bool wasBouncing;
         private bool isJumping;
         private bool wasJumping;
         private float jumpTime;
@@ -334,10 +333,10 @@ namespace LearningXNA
 
             if(!isDoingSpecialAction)
             {
+                isClimbing = false;
                 switch (animalShape)
                 {
                     case MONSTER:
-                        isClimbing = false;
                         break;
 
                     default:
@@ -632,7 +631,7 @@ namespace LearningXNA
             // Reset flag to search for ground collision.
             isOnGround = false;
 
-            //NEW STUFF ABOUT MOVING PLATFORM 
+            // Moving platform collision code 
             //For each potentially colliding movable tile.  
             foreach (var movableTile in level.movableTiles)
             {
@@ -649,7 +648,6 @@ namespace LearningXNA
 
                 bounds = HandleCollision(bounds, movableTile.Collision, movableTile.BoundingRectangle);
             } 
-            //END OF MOVING PLATFORM
 
             //only checking for bouncy objects underneath the monster
             for (int x = leftTile; x <= rightTile; x++)
@@ -683,7 +681,10 @@ namespace LearningXNA
                         this.OnKilled(null);
                     }
                    
-                    if (collision != TileCollision.Passable && collision != TileCollision.PlatformCollider && collision != TileCollision.KillerTile)
+                    if (collision != TileCollision.Passable && 
+                        collision != TileCollision.PlatformCollider && 
+                        collision != TileCollision.KillerTile &&
+                        collision != TileCollision.Checkpoint)
                     {
                         // Determine collision depth (with direction) and magnitude.
                         Rectangle tileBounds = Level.GetBounds(x, y);
@@ -693,35 +694,35 @@ namespace LearningXNA
                             float absDepthX = Math.Abs(depth.X);
                             float absDepthY = Math.Abs(depth.Y);
 
-                            //start destroy tile
-                            // RIGHT
-                            float previousLeft = bounds.Left;
-                            float previousRight = bounds.Right;
-                            KeyboardState keyboardState = Keyboard.GetState();
-                            if (collision == TileCollision.Impassable &&
-                                keyboardState.IsKeyDown(Keys.Z) &&
-                                keyboardState.IsKeyDown(Keys.Right) &&
-                                    previousRight >= tileBounds.Right)
-                            {
-                                x++;
-                                y--;
-                                Level.tiles[x, y].Texture = null;
-                                Level.tiles[x, y].Collision = TileCollision.Passable;
-                            }
-                            // LEFT
-                            if (collision == TileCollision.Impassable &&
-                            keyboardState.IsKeyDown(Keys.Z) &&
-                            keyboardState.IsKeyDown(Keys.Left) &&
-                                previousLeft <= tileBounds.Left)
-                            {
+                           // //start destroy tile
+                           // // RIGHT
+                           // float previousLeft = bounds.Left;
+                           // float previousRight = bounds.Right;
+                           // KeyboardState keyboardState = Keyboard.GetState();
+                           // if (collision == TileCollision.Impassable &&
+                           //     keyboardState.IsKeyDown(Keys.Z) &&
+                           //     keyboardState.IsKeyDown(Keys.Right) &&
+                           //         previousRight >= tileBounds.Right)
+                           // {
+                           //     x++;
+                           //     y--;
+                           //     Level.tiles[x, y].Texture = null;
+                           //     Level.tiles[x, y].Collision = TileCollision.Passable;
+                           // }
+                           // // LEFT
+                           // if (collision == TileCollision.Impassable &&
+                           // keyboardState.IsKeyDown(Keys.Z) &&
+                           // keyboardState.IsKeyDown(Keys.Left) &&
+                           //     previousLeft <= tileBounds.Left)
+                           // {
 
-                                x--;
-                                y--;
-                                Level.tiles[x--, y--].Texture = null;
-                                Level.tiles[x--, y--].Collision = TileCollision.Passable;
-                            }
+                           //     x--;
+                           //     y--;
+                           //     Level.tiles[x--, y--].Texture = null;
+                           //     Level.tiles[x--, y--].Collision = TileCollision.Passable;
+                           // }
 
-                           //end destroy tile
+                           ////end destroy tile
 
                             // Resolve the collision along the shallow axis.
                             if (absDepthY < absDepthX || collision == TileCollision.Platform)
@@ -759,43 +760,43 @@ namespace LearningXNA
         }
 
 
-private Rectangle HandleCollision(Rectangle bounds, TileCollision collision, Rectangle tileBounds)
-{
-    Vector2 depth = RectangleExtensions.GetIntersectionDepth(bounds, tileBounds);
-    if (depth != Vector2.Zero)
-    {
-        float absDepthX = Math.Abs(depth.X);
-        float absDepthY = Math.Abs(depth.Y);
-
-        // Resolve the collision along the shallow axis.  
-        if (absDepthY < absDepthX || collision == TileCollision.Platform)
+        private Rectangle HandleCollision(Rectangle bounds, TileCollision collision, Rectangle tileBounds)
         {
-            // If we crossed the top of a tile, we are on the ground.  
-            if (previousBottom <= tileBounds.Top)
-                isOnGround = true;
-
-            // Ignore platforms, unless we are on the ground.  
-            if (collision == TileCollision.Impassable || IsOnGround)
+            Vector2 depth = RectangleExtensions.GetIntersectionDepth(bounds, tileBounds);
+            if (depth != Vector2.Zero)
             {
-                // Resolve the collision along the Y axis.  
-                Position = new Vector2(Position.X, Position.Y + depth.Y);
+                float absDepthX = Math.Abs(depth.X);
+                float absDepthY = Math.Abs(depth.Y);
 
-                // Perform further collisions with the new bounds.  
-                bounds = BoundingRectangle;
+                // Resolve the collision along the shallow axis.  
+                if (absDepthY < absDepthX || collision == TileCollision.Platform)
+                {
+                    // If we crossed the top of a tile, we are on the ground.  
+                    if (previousBottom <= tileBounds.Top)
+                        isOnGround = true;
+
+                    // Ignore platforms, unless we are on the ground.  
+                    if (collision == TileCollision.Impassable || IsOnGround)
+                    {
+                        // Resolve the collision along the Y axis.  
+                        Position = new Vector2(Position.X, Position.Y + depth.Y);
+
+                        // Perform further collisions with the new bounds.  
+                        bounds = BoundingRectangle;
+                    }
+                }
+                else if (collision == TileCollision.Impassable) // Ignore platforms.  
+                {
+                    // Resolve the collision along the X axis.  
+                    Position = new Vector2(Position.X + depth.X, Position.Y);
+
+                    // Perform further collisions with the new bounds.  
+                    bounds = BoundingRectangle;
+                }
             }
-        }
-        else if (collision == TileCollision.Impassable) // Ignore platforms.  
-        {
-            // Resolve the collision along the X axis.  
-            Position = new Vector2(Position.X + depth.X, Position.Y);
+            return bounds;
+        } 
 
-            // Perform further collisions with the new bounds.  
-            bounds = BoundingRectangle;
-        }
-    }
-    return bounds;
-} 
-//// END OF MOVING PLATFORM STUFF
         /// <summary>
         /// Called to check if the player can climb.
         /// </summary>
