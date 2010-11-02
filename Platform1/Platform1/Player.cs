@@ -715,7 +715,11 @@ namespace LearningXNA
                     }
                     //End of Disappearing platform
 
-                    if (collision != TileCollision.Passable && collision != TileCollision.PlatformCollider && collision != TileCollision.KillerTile && collision != TileCollision.Disappearing)
+                    if (collision != TileCollision.Passable && 
+                        collision != TileCollision.PlatformCollider && 
+                        collision != TileCollision.KillerTile && 
+                        collision != TileCollision.Disappearing &&
+                        collision != TileCollision.Checkpoint)
                     {
                         // Determine collision depth (with direction) and magnitude.
                         Rectangle tileBounds = Level.GetBounds(x, y);
