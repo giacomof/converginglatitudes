@@ -655,7 +655,7 @@ namespace LearningXNA
                 TileCollision collision = Level.GetCollision(x, bottomTile);
                 if (collision == TileCollision.Bouncy && isAlive)
                 {
-                    this.isBouncing = true;
+                    isBouncing = true;
                 }
                 
              }
@@ -857,9 +857,6 @@ namespace LearningXNA
             {
                 return false;
             }
-
-            // Debug writing
-            //Console.WriteLine("Side: " + side + "| top: " + topTile + "| bottom: " + bottomTile + "| distance: " + distance + "| MovementX: " + lastMovementX);
 
             for (int y = topTile+1; y <= bottomTile; y++)
             {
