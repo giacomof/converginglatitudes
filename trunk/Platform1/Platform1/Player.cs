@@ -674,6 +674,7 @@ namespace LearningXNA
                     if (collision == TileCollision.Checkpoint)
                     {
                         level.checkpoint = new Vector2(x, y) * Tile.Size;
+                        level.checkpoint.X += Tile.Width / 2;
                     }
                     //end Checkpoint
 
@@ -756,7 +757,8 @@ namespace LearningXNA
             // Save the new bounds bottom.
             previousBottom = bounds.Bottom;
         }
-//// MOVING PLATFORM STUFF
+
+
 private Rectangle HandleCollision(Rectangle bounds, TileCollision collision, Rectangle tileBounds)
 {
     Vector2 depth = RectangleExtensions.GetIntersectionDepth(bounds, tileBounds);
