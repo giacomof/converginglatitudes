@@ -43,10 +43,10 @@ namespace LearningXNA
         /// </summary>
         KillerTile = 5,
 
-        //start checkpoint
+        /// <summary>
+        /// Checkpoint Tile
+        /// </summary>
         Checkpoint = 6,
-        //end checkpoint
-
 
         /// <summary>
         /// Tile that will make the player jump twice as high
