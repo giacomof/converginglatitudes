@@ -11,7 +11,6 @@ M- Look into mooving platforms (in ALL directions!!)
 - water tiles
 - monster call when close to animals
 - animal behaviour
-- disappearing and appearing blocks
 - ladder
 - dog's impact on monster cat
 - bouncy blocks for jumping higher
@@ -28,4 +27,6 @@ The Done List:
 (done)- invisible collision boxes for moving platforms
 (done)- spikes
 (done)- checkpoints
+(done)- disappearing and appearing blocks
+(done)
 

@@ -659,6 +659,7 @@ namespace LearningXNA
                 }
                 
              }
+            //end of checking bouncy object
 
             // For each potentially colliding tile,
             for (int y = topTile; y <= bottomTile; ++y)
@@ -680,11 +681,41 @@ namespace LearningXNA
                     {
                         this.OnKilled(null);
                     }
-                   
+      
                     if (collision != TileCollision.Passable && 
                         collision != TileCollision.PlatformCollider && 
                         collision != TileCollision.KillerTile &&
-                        collision != TileCollision.Checkpoint)
+                        collision != TileCollision.Checkpoint &&
+                        collision == TileCollision.Disappearing)
+                    {
+                        if (Level.changeCollider == true)
+                        {
+                            //NOTHING
+                            
+                        }
+                        else if (Level.changeCollider == false)
+                        {
+                            
+
+                            Rectangle tileBounds = Level.GetBounds(x, y);
+                            Vector2 depth = RectangleExtensions.GetIntersectionDepth(bounds, tileBounds);
+                            // If we crossed the top of a tile, we are on the ground.
+                            if (previousBottom <= tileBounds.Top)
+                                isOnGround = true;
+                            // Ignore platforms, unless we are on the ground.
+                            if ((collision == TileCollision.Impassable || collision == TileCollision.LevelFrame || collision == TileCollision.Bouncy) || IsOnGround)
+                            {
+                                // Resolve the collision along the Y axis.
+                                Position = new Vector2(Position.X, Position.Y + depth.Y);
+
+                                // Perform further collisions with the new bounds.
+                                bounds = BoundingRectangle;
+                            }
+                        }
+                    }
+                    //End of Disappearing platform
+
+                    if (collision != TileCollision.Passable && collision != TileCollision.PlatformCollider && collision != TileCollision.KillerTile && collision != TileCollision.Disappearing)
                     {
                         // Determine collision depth (with direction) and magnitude.
                         Rectangle tileBounds = Level.GetBounds(x, y);
@@ -723,6 +754,8 @@ namespace LearningXNA
                            // }
 
                            ////end destroy tile
+
+                           
 
                             // Resolve the collision along the shallow axis.
                             if (absDepthY < absDepthX || collision == TileCollision.Platform)

@@ -51,7 +51,13 @@ namespace LearningXNA
         /// <summary>
         /// Tile that will make the player jump twice as high
         /// </summary>
-        Bouncy = 7
+        Bouncy = 7,
+
+        /// <summary>
+        /// Disappearing and re-appearing tile
+        /// </summary>
+        Disappearing =8
+
         
     }
 
