@@ -433,10 +433,9 @@ namespace LearningXNA
 
                 Player.Update(gameTime);
 
-                ////MOVING PLATFORM STUFF
+                // Update moving platforms
                 UpdateMovableTiles(gameTime);
-                ////END OF MOVING PLATFORM STUFF
-                ///
+                
                 UpdateCookies(gameTime);
 
                 // Falling off the bottom of the level kills the player.
@@ -462,7 +461,7 @@ namespace LearningXNA
                 timeRemaining = TimeSpan.Zero;
         }
 
-        ////MOVING PLATFORM STUFF
+        // Moving platform code
         private void UpdateMovableTiles(GameTime gameTime)
         {
             for (int i = 0; i < movableTiles.Count; ++i)
@@ -477,7 +476,6 @@ namespace LearningXNA
                 }
             }
         }
-        ////END OF MOVING PLATFORM STUFF
 
         /// <summary>
         /// Animates each Cookie and checks to allows the player to collect them.

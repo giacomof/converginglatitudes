@@ -258,7 +258,11 @@ namespace LearningXNA
             Velocity = Vector2.Zero;
             isAlive = true;
             isDead = false;
-            sprite.PlayAnimation(monsterIdleAnimation);
+
+            // Get beck to MONSTER when killed
+            changeShape(MONSTER);
+
+            sprite.PlayAnimation(monsterIdleAnimation);            
         }
 
         /// <summary>
@@ -886,9 +890,6 @@ private Rectangle HandleCollision(Rectangle bounds, TileCollision collision, Rec
                     sprite.PlayAnimation(monsterCatDieAnimation);
                     break;
             }
-
-            // Get beck to MONSTER when killed
-            changeShape(MONSTER);
         }
 
         /// <summary>

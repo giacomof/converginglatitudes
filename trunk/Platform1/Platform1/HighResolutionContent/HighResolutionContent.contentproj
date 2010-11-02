@@ -36,11 +36,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sprites\Gem.png">
-      <Name>Gem</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Tiles\Exit.png">
       <Name>Exit</Name>
       <Importer>TextureImporter</Importer>
