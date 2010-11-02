@@ -2,7 +2,7 @@
 
 - Blank space 						'.'
 - Exit								'X'
-- Gem 								'G'
+- Cookie							'°'
 - Floating platform 				'-'
 - Various enemies -					'A'
 									'B'

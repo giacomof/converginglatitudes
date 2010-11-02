@@ -11,7 +11,7 @@ using System.IO;
 namespace LearningXNA
 {
     /// <summary>
-    /// A uniform grid of tiles with collections of gems and enemies.
+    /// A uniform grid of tiles with collections of Cookies and enemies.
     /// The level owns the player and controls the game's win and lose
     /// conditions as well as scoring.
     /// </summary>
@@ -33,7 +33,7 @@ namespace LearningXNA
         }
         Player player;
 
-        private List<Gem> gems = new List<Gem>();
+        private List<Cookie> cookies = new List<Cookie>();
         private List<Enemy> enemies = new List<Enemy>();
         private List<Animal> animals = new List<Animal>();
 
@@ -184,9 +184,9 @@ namespace LearningXNA
                 case 'X':
                     return LoadExitTile(x, y);
 
-                // Gem
-                case 'G':
-                    return LoadGemTile(x, y);
+                // Cookie
+                case '°':
+                    return LoadCookieTile(x, y);
 
                 // Floating platform
                 case '-':
@@ -339,12 +339,12 @@ namespace LearningXNA
         }
 
         /// <summary>
-        /// Instantiates a gem and puts it in the level.
+        /// Instantiates a Cookie and puts it in the level.
         /// </summary>
-        private Tile LoadGemTile(int x, int y)
+        private Tile LoadCookieTile(int x, int y)
         {
             Point position = GetBounds(x, y).Center;
-            gems.Add(new Gem(this, new Vector2(position.X, position.Y)));
+            cookies.Add(new Cookie(this, new Vector2(position.X, position.Y)));
 
             return new Tile(null, TileCollision.Passable);
         }
@@ -437,7 +437,7 @@ namespace LearningXNA
                 UpdateMovableTiles(gameTime);
                 ////END OF MOVING PLATFORM STUFF
                 ///
-                UpdateGems(gameTime);
+                UpdateCookies(gameTime);
 
                 // Falling off the bottom of the level kills the player.
                 if (Player.BoundingRectangle.Top >= Height * Tile.Height)
@@ -448,7 +448,7 @@ namespace LearningXNA
 
                 // The player has reached the exit if they are standing on the ground and
                 // his bounding rectangle contains the center of the exit tile. They can only
-                // exit when they have collected all of the gems.
+                // exit when they have collected all of the Cookies.
                 if (Player.IsAlive &&
                     Player.IsOnGround &&
                     Player.BoundingRectangle.Contains(exit))
@@ -480,20 +480,20 @@ namespace LearningXNA
         ////END OF MOVING PLATFORM STUFF
 
         /// <summary>
-        /// Animates each gem and checks to allows the player to collect them.
+        /// Animates each Cookie and checks to allows the player to collect them.
         /// </summary>
-        private void UpdateGems(GameTime gameTime)
+        private void UpdateCookies(GameTime gameTime)
         {
-            for (int i = 0; i < gems.Count; ++i)
+            for (int i = 0; i < cookies.Count; ++i)
             {
-                Gem gem = gems[i];
+                Cookie cookie = cookies[i];
 
-                gem.Update(gameTime);
+                cookie.Update(gameTime);
 
-                if (gem.BoundingCircle.Intersects(Player.BoundingRectangle))
+                if (cookie.BoundingCircle.Intersects(Player.BoundingRectangle))
                 {
-                    gems.RemoveAt(i--);
-                    OnGemCollected(gem, Player);
+                    cookies.RemoveAt(i--);
+                    OnCookieCollected(cookie, Player);
                 }
             }
         }
@@ -535,15 +535,15 @@ namespace LearningXNA
         }
 
         /// <summary>
-        /// Called when a gem is collected.
+        /// Called when a Cookie is collected.
         /// </summary>
-        /// <param name="gem">The gem that was collected.</param>
-        /// <param name="collectedBy">The player who collected this gem.</param>
-        private void OnGemCollected(Gem gem, Player collectedBy)
+        /// <param name="cookie">The Cookie that was collected.</param>
+        /// <param name="collectedBy">The player who collected this Cookie.</param>
+        private void OnCookieCollected(Cookie cookie, Player collectedBy)
         {
-            score += Gem.PointValue;
+            score += Cookie.PointValue;
 
-            gem.OnCollected(collectedBy);
+            cookie.OnCollected(collectedBy);
         }
 
         /// <summary>
@@ -618,8 +618,8 @@ namespace LearningXNA
                 tile.Draw(gameTime, spriteBatch);
             ////END OF MOVING PLATFORM STUFF
 
-            foreach (Gem gem in gems)
-                gem.Draw(gameTime, spriteBatch);
+            foreach (Cookie cookie in cookies)
+                cookie.Draw(gameTime, spriteBatch);
 
             Player.Draw(gameTime, spriteBatch);
 
