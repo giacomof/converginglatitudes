@@ -516,7 +516,7 @@ namespace LearningXNA
 
                         // Apply velocity.
                         Position += velocity * elapsed;
-                        Position = new Vector2((float)Math.Round(Position.X + movementX * 2), (float)Math.Round(Position.Y));
+                        Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
                     }
                     else
                     {
@@ -1054,9 +1054,9 @@ namespace LearningXNA
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             // Flip the sprite to face the way we are moving.
-            if (Velocity.X > 0)
+            if (lastMovementX > 0)
                 flip = SpriteEffects.FlipHorizontally;
-            else if (Velocity.X < 0)
+            else if (lastMovementX < 0)
                 flip = SpriteEffects.None;
 
             // Draw that sprite.
