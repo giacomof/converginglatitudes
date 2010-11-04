@@ -18,8 +18,15 @@ namespace LearningXNA
     /// </summary>
     class Level : IDisposable
     {
-       public double elapsedTime = 0;
-       public bool changeCollider = false;
+        // Shape state of the character; starting from 0 as a monster
+        const short MONSTER = 0;
+        const short MONSTER_CAT = 1;
+        const short MONSTER_DUCK = 2;
+
+
+
+        public double elapsedTime = 0;
+        public bool changeCollider = false;
         // Physical structure of the level.
         public Tile[,] tiles;
         private Layer[] layers;
@@ -583,9 +590,8 @@ namespace LearningXNA
             {
                 dogPosition = dog.getPosition();
                 distance = Vector2.Distance(dogPosition, playerPosition);
-                if (distance < 200 && !player.isScared)
+                if (distance < 200 && !player.isScared && player.animalShape == MONSTER_CAT )
                 {
-                    System.Console.WriteLine("Warning distance");
                     player.isScared = true;
                     if (dogPosition.X - playerPosition.X < 0)
                     {

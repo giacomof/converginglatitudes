@@ -15,7 +15,7 @@ namespace LearningXNA
         const short MONSTER             = 0;
         const short MONSTER_CAT         = 1;
         const short MONSTER_DUCK        = 2;
-        private short animalShape = MONSTER;
+        public short animalShape = MONSTER;
 
         // Define if the player can shape change to monster cat
         public bool CanBeCat
@@ -290,7 +290,6 @@ namespace LearningXNA
 
             if (isScared)
             {
-                Console.WriteLine("I'm fucking scared");
                 scaredTimerClock += gameTime.ElapsedGameTime.Milliseconds;
                 if (scaredTimerClock >= scaredTimerMilliseconds)
                 {
@@ -298,12 +297,6 @@ namespace LearningXNA
                     scaredTimerClock = 0;
                 }
             }
-            else
-            {
-                Console.WriteLine("I'm not scared: fuck you");
-                
-            }
-            
 
             if (IsAlive)
             {
@@ -1026,6 +1019,8 @@ namespace LearningXNA
         public void changeShape(short shapeFlag)
         {
             animalShape = shapeFlag;
+            isScared = false;
+            scaredTimerClock = 0;
 
             // Calculate standard bounding box dimension
             int width = (int)(monsterIdleAnimation.FrameWidth * 0.4);
