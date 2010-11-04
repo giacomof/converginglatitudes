@@ -331,13 +331,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tiles\Spikes.png">
-      <Name>Spikes</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Sprites\Cookie.png">
       <Name>Cookie</Name>
       <Importer>TextureImporter</Importer>
@@ -361,6 +354,25 @@
   <ItemGroup>
     <Compile Include="Sprites\EnemyDog\Idle.png">
       <Name>Idle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Tiles\checkPoint.png">
+      <Name>checkPoint</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Tiles\Cactus0.png">
+      <Name>Cactus0</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Tiles\Cactus1.png">
+      <Name>Cactus1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

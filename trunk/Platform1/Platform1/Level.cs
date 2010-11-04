@@ -244,10 +244,10 @@ namespace LearningXNA
                     return LoadTile("Platform", TileCollision.Bouncy);
                 // Spikes
                 case '╩':
-                    return LoadTile("Spikes", TileCollision.KillerTile);
+                    return LoadVarietyTile("Cactus", 2, TileCollision.KillerTile);
                 // Checkpoint
                 case '¤':
-                    return LoadTile("BlockA0", TileCollision.Checkpoint);
+                    return LoadTile("checkPoint", TileCollision.Checkpoint);
 
 
                 //MOVING PLATFORM STUFF
