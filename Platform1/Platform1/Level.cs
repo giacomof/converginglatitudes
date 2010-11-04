@@ -46,6 +46,7 @@ namespace LearningXNA
         private List<Enemy> enemies = new List<Enemy>();
         private List<Animal> animals = new List<Animal>();
         private List<DogEnemy> dogEnemies = new List<DogEnemy>();
+        private List<FallingObject> fallingObjects = new List<FallingObject>();
 
         // Key locations in the level.        
         private Vector2 start;
@@ -198,6 +199,10 @@ namespace LearningXNA
                 case '°':
                     return LoadCookieTile(x, y);
 
+                // Falling object
+                case 'f':
+                    return LoadFallingObjectTile(x, y);
+
                 // Floating platform
                 case '-':
                     return LoadTile("Platform", TileCollision.Platform);
@@ -245,13 +250,14 @@ namespace LearningXNA
                     return LoadTile("BlockA0", TileCollision.Checkpoint);
 
 
-                    ////MOVING PLATFORM STUFF
-                    // Moving platform - Horizontal
+                //MOVING PLATFORM STUFF
+                // Moving platform - Horizontal
                 case '<':
                     return LoadMovableTile(x, y, TileCollision.Platform);
                 case '|':
                     return LoadTile("Platform", TileCollision.PlatformCollider);
-                    ////END OF MOVING PLATFORM STUFF
+                //END OF MOVING PLATFORM STUFF
+
                 case '*':
                     return LoadTile("Platform", TileCollision.Disappearing);
 
@@ -260,15 +266,28 @@ namespace LearningXNA
                     throw new NotSupportedException(String.Format("Unsupported tile type character '{0}' at position {1}, {2}.", tileType, x, y));
             }
         }
-        ////MOVING PLATFORM STUFF
+
+
+        /// <summary>
+        /// Loads a moving tile.
+        /// </summary>
         private Tile LoadMovableTile(int x, int y, TileCollision collision)
         {
-        Point position = GetBounds(x, y).Center;
-        movableTiles.Add(new MovableTile(this, new Vector2(position.X, position.Y), collision));
+            Point position = GetBounds(x, y).Center;
+            movableTiles.Add(new MovableTile(this, new Vector2(position.X, position.Y), collision));
 
-        return new Tile(null, TileCollision.Passable);
+            return new Tile(null, TileCollision.Passable);
         }
-        ////END OF MOVING PLATFORM STUFF
+
+        /// <summary>
+        /// Loads a falling object.
+        /// </summary>
+        private Tile LoadFallingObjectTile(int x, int y)
+        {
+            Point position = GetBounds(x, y).Center;
+            fallingObjects.Add(new FallingObject(this, new Vector2(position.X, position.Y)));
+            return new Tile(null, TileCollision.Passable);
+        }
 
 
         /// <summary>
@@ -466,6 +485,8 @@ namespace LearningXNA
 
                 UpdateCookies(gameTime);
 
+                UpdateFallingObjects(gameTime);
+
                 // Falling off the bottom of the level kills the player.
                 if (Player.BoundingRectangle.Top >= Height * Tile.Height)
                     OnPlayerKilled(null);
@@ -490,6 +511,21 @@ namespace LearningXNA
             if (timeRemaining < TimeSpan.Zero)
                 timeRemaining = TimeSpan.Zero;
         }
+
+        // Update falling objects
+        private void UpdateFallingObjects(GameTime gameTime)
+        {
+            for (int i = 0; i < fallingObjects.Count; ++i)
+            {
+                FallingObject fallingObject = fallingObjects[i];
+                if (fallingObject.BoundingCircle.Intersects(Player.BoundingRectangle))
+                {
+                    OnPlayerKilled(null);
+                } 
+                fallingObject.Update(gameTime);
+            }
+        }
+
 
         // Moving platform code
         private void UpdateMovableTiles(GameTime gameTime)
@@ -694,6 +730,9 @@ namespace LearningXNA
 
             foreach (Cookie cookie in cookies)
                 cookie.Draw(gameTime, spriteBatch);
+
+            foreach (FallingObject fallingObject in fallingObjects)
+                fallingObject.Draw(gameTime, spriteBatch);
 
             Player.Draw(gameTime, spriteBatch);
 

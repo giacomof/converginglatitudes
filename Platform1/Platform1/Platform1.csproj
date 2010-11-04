@@ -94,6 +94,7 @@
     <Compile Include="DogEnemy.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Cookie.cs" />
+    <Compile Include="FallingObject.cs" />
     <Compile Include="Layer.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="MovableTile.cs" />
