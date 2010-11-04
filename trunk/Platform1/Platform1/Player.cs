@@ -960,7 +960,7 @@ namespace LearningXNA
         {
             isAlive = false;
 
-            if (true)
+            if (something)
                 killedSound.Play();
             else if (!isDead)
             {
