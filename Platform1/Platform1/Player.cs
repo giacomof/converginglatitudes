@@ -1019,8 +1019,6 @@ namespace LearningXNA
         public void changeShape(short shapeFlag)
         {
             animalShape = shapeFlag;
-            isScared = false;
-            scaredTimerClock = 0;
 
             // Calculate standard bounding box dimension
             int width = (int)(monsterIdleAnimation.FrameWidth * 0.4);
@@ -1043,6 +1041,9 @@ namespace LearningXNA
                     GravityAcceleration = monsterGravityAcceleration;
                     MaxFallSpeed = monsterMaxFallSpeed;
                     JumpControlPower = monsterJumpControlPower;
+
+                    isScared = false;
+                    scaredTimerClock = 0;
 
                     break;
 
