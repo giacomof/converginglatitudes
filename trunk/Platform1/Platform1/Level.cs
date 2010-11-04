@@ -44,6 +44,7 @@ namespace LearningXNA
         public List<MovableTile> movableTiles = new List<MovableTile>();
         private List<Cookie> cookies = new List<Cookie>();
         private List<Enemy> enemies = new List<Enemy>();
+        private List<FlyingEnemy> flyingenemies = new List<FlyingEnemy>();
         private List<Animal> animals = new List<Animal>();
         private List<DogEnemy> dogEnemies = new List<DogEnemy>();
         private List<FallingObject> fallingObjects = new List<FallingObject>();
@@ -215,6 +216,9 @@ namespace LearningXNA
                 case 'D':
                     return LoadEnemyTile(x, y, "MonsterD");
 
+                case 'F':
+                    return LoadFlyingEnemyTile(x, y, "MonsterA");
+
                 // Various animals
                 case 'C':
                     return LoadAnimalTile(x, y, "Cat");
@@ -385,6 +389,17 @@ namespace LearningXNA
         }
 
         /// <summary>
+        /// Instantiates a flying enemy and puts him in the level.
+        /// </summary>
+        private Tile LoadFlyingEnemyTile(int x, int y, string spriteSet)
+        {
+            Vector2 position = RectangleExtensions.GetBottomCenter(GetBounds(x, y));
+            flyingenemies.Add(new FlyingEnemy(this, position, spriteSet));
+
+            return new Tile(null, TileCollision.Passable);
+        }
+
+        /// <summary>
         /// Instantiates a Cookie and puts it in the level.
         /// </summary>
         private Tile LoadCookieTile(int x, int y)
@@ -489,10 +504,11 @@ namespace LearningXNA
 
                 // Falling off the bottom of the level kills the player.
                 if (Player.BoundingRectangle.Top >= Height * Tile.Height)
-                    OnPlayerKilled(null);
+                    OnPlayerKilled(false);
 
                 UpdateDisappearingTile(gameTime);
                 UpdateEnemies(gameTime);
+                UpdateFlyingEnemies(gameTime);
                 UpdateAnimals(gameTime);
                 UpdateDogEnemy(gameTime);
 
@@ -520,7 +536,7 @@ namespace LearningXNA
                 FallingObject fallingObject = fallingObjects[i];
                 if (fallingObject.BoundingCircle.Intersects(Player.BoundingRectangle))
                 {
-                    OnPlayerKilled(null);
+                    OnPlayerKilled(false);
                 } 
                 fallingObject.Update(gameTime);
             }
@@ -590,7 +606,24 @@ namespace LearningXNA
                 // Touching an enemy instantly kills the player
                 if (enemy.BoundingRectangle.Intersects(Player.BoundingRectangle))
                 {
-                    OnPlayerKilled(enemy);
+                    OnPlayerKilled(true);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Animates each enemy and allow them to kill the player.
+        /// </summary>
+        private void UpdateFlyingEnemies(GameTime gameTime)
+        {
+            foreach (FlyingEnemy flyingenemy in flyingenemies)
+            {
+                flyingenemy.Update(gameTime);
+
+                // Touching an enemy instantly kills the player
+                if (flyingenemy.BoundingRectangle.Intersects(Player.BoundingRectangle))
+                {
+                    OnPlayerKilled(true);
                 }
             }
         }
@@ -663,9 +696,9 @@ namespace LearningXNA
         /// The enemy who killed the player. This is null if the player was not killed by an
         /// enemy, such as when a player falls into a hole.
         /// </param>
-        private void OnPlayerKilled(Enemy killedBy)
+        private void OnPlayerKilled(bool someone)
         {
-            Player.OnKilled(killedBy);
+            Player.OnKilled(true);
         }
 
         /// <summary>
@@ -738,6 +771,9 @@ namespace LearningXNA
 
             foreach (Enemy enemy in enemies)
                 enemy.Draw(gameTime, spriteBatch);
+
+            foreach (FlyingEnemy flyingenemy in flyingenemies)
+                flyingenemy.Draw(gameTime, spriteBatch);
 
             foreach (Animal animal in animals)
                 animal.Draw(gameTime, spriteBatch);

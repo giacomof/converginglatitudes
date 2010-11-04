@@ -729,7 +729,7 @@ namespace LearningXNA
 
                     if (collision == TileCollision.KillerTile)
                     {
-                        this.OnKilled(null);
+                        this.OnKilled(false);
                     }
       
                     if (collision != TileCollision.Passable && 
@@ -956,11 +956,11 @@ namespace LearningXNA
         /// The enemy who killed the player. This parameter is null if the player was
         /// not killed by an enemy (fell into a hole).
         /// </param>
-        public void OnKilled(Enemy killedBy)
+        public void OnKilled(bool something)
         {
             isAlive = false;
 
-            if (killedBy != null)
+            if (true)
                 killedSound.Play();
             else if (!isDead)
             {
