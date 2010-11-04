@@ -27,18 +27,18 @@ namespace LearningXNA
         private const int EntityLayer = 2;
 
         // Entities in the level.
-        //MOVING PLATFORM STUFF
-        public List<MovableTile> movableTiles = new List<MovableTile>();
-        //END OF MOVING PLATFORM STUFF
+        
         public Player Player
         {
             get { return player; }
         }
         Player player;
 
+        public List<MovableTile> movableTiles = new List<MovableTile>();
         private List<Cookie> cookies = new List<Cookie>();
         private List<Enemy> enemies = new List<Enemy>();
         private List<Animal> animals = new List<Animal>();
+        private List<DogEnemy> dogEnemies = new List<DogEnemy>();
 
         // Key locations in the level.        
         private Vector2 start;
@@ -207,6 +207,10 @@ namespace LearningXNA
                 case 'C':
                     return LoadAnimalTile(x, y, "Cat");
 
+                // Various enemy animals
+                case 'd':
+                    return LoadDogEnemyTile(x, y);
+
                 // Platform block
                 case '~':
                     return LoadVarietyTile("BlockB", 2, TileCollision.Platform);
@@ -344,6 +348,17 @@ namespace LearningXNA
         }
 
         /// <summary>
+        /// Instantiates a dog and puts him in the level.
+        /// </summary>
+        private Tile LoadDogEnemyTile(int x, int y)
+        {
+            Vector2 position = RectangleExtensions.GetBottomCenter(GetBounds(x, y));
+            dogEnemies.Add(new DogEnemy(this, position));
+
+            return new Tile(null, TileCollision.Passable);
+        }
+
+        /// <summary>
         /// Instantiates a Cookie and puts it in the level.
         /// </summary>
         private Tile LoadCookieTile(int x, int y)
@@ -450,6 +465,7 @@ namespace LearningXNA
                 UpdateDisappearingTile(gameTime);
                 UpdateEnemies(gameTime);
                 UpdateAnimals(gameTime);
+                UpdateDogEnemy(gameTime);
 
                 // The player has reached the exit if they are standing on the ground and
                 // his bounding rectangle contains the center of the exit tile. They can only
@@ -557,6 +573,18 @@ namespace LearningXNA
         }
 
         /// <summary>
+        /// Animates each dog enemy.
+        /// </summary>
+        private void UpdateDogEnemy(GameTime gameTime)
+        {
+            foreach (DogEnemy dog in dogEnemies)
+            {
+                dog.Update(gameTime);
+            }
+        }
+
+
+        /// <summary>
         /// Called when a Cookie is collected.
         /// </summary>
         /// <param name="cookie">The Cookie that was collected.</param>
@@ -651,6 +679,9 @@ namespace LearningXNA
             foreach (Animal animal in animals)
                 animal.Draw(gameTime, spriteBatch);
 
+            foreach (DogEnemy dog in dogEnemies)
+                dog.Draw(gameTime, spriteBatch);
+
             spriteBatch.End();
 
             spriteBatch.Begin();
@@ -680,7 +711,6 @@ namespace LearningXNA
             float maxCameraPosition = Tile.Width * Width - viewport.Width;
             cameraPosition = MathHelper.Clamp(cameraPosition + cameraMovement, 0.0f, maxCameraPosition);
         }
-
 
 
         /// <summary>
