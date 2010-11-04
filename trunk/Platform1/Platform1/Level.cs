@@ -451,6 +451,7 @@ namespace LearningXNA
             {
                 timeRemaining -= gameTime.ElapsedGameTime;
 
+
                 Player.Update(gameTime);
 
                 // Update moving platforms
@@ -505,12 +506,10 @@ namespace LearningXNA
             int seconds = gameTime.TotalRealTime.Seconds;
             if ((seconds / 5) % 2 == 0)
             {
-                //System.Console.WriteLine("true " + seconds);
                 changeCollider = true;
             }
             else
             {
-                //System.Console.WriteLine("false " + seconds);
                 changeCollider = false;
             }
                
@@ -577,9 +576,28 @@ namespace LearningXNA
         /// </summary>
         private void UpdateDogEnemy(GameTime gameTime)
         {
+            Vector2 playerPosition = Player.getPosition();
+            Vector2 dogPosition;
+            float distance;
             foreach (DogEnemy dog in dogEnemies)
             {
+                dogPosition = dog.getPosition();
+                distance = Vector2.Distance(dogPosition, playerPosition);
+                if (distance < 200 && !player.isScared)
+                {
+                    System.Console.WriteLine("Warning distance");
+                    player.isScared = true;
+                    if (dogPosition.X - playerPosition.X < 0)
+                    {
+                        player.scaredDirection = 1;
+                    }
+                    else
+                    {
+                        player.scaredDirection = -1;
+                    }
+                }
                 dog.Update(gameTime);
+
             }
         }
 

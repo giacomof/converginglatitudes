@@ -127,5 +127,13 @@ namespace LearningXNA
             SpriteEffects flip = direction > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             sprite.Draw(gameTime, spriteBatch, Position, flip);
         }
+
+        /// <summary>
+        /// Get the position of the dog.
+        /// </summary>
+        public Vector2 getPosition()
+        {
+            return Position;
+        }
     }
 }

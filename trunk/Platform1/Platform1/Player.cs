@@ -183,6 +183,12 @@ namespace LearningXNA
 
         private bool wasClimbingOnCeiling;
 
+
+        public bool isScared;
+        public int scaredDirection;
+        int scaredTimerMilliseconds = 2000;
+        float scaredTimerClock;
+
         private bool isDead;
 
 
@@ -265,6 +271,8 @@ namespace LearningXNA
             Velocity = Vector2.Zero;
             isAlive = true;
             isDead = false;
+            isScared = false;
+            scaredTimerClock = 0;
 
             // Get beck to MONSTER when killed
             changeShape(MONSTER);
@@ -278,8 +286,24 @@ namespace LearningXNA
         public void Update(GameTime gameTime)
         {
             GetInput();
-
             ApplyPhysics(gameTime);
+
+            if (isScared)
+            {
+                Console.WriteLine("I'm fucking scared");
+                scaredTimerClock += gameTime.ElapsedGameTime.Milliseconds;
+                if (scaredTimerClock >= scaredTimerMilliseconds)
+                {
+                    isScared = false;
+                    scaredTimerClock = 0;
+                }
+            }
+            else
+            {
+                Console.WriteLine("I'm not scared: fuck you");
+                
+            }
+            
 
             if (IsAlive)
             {
@@ -404,17 +428,14 @@ namespace LearningXNA
 
             if (keyboardState.IsKeyDown(Keys.Left))
             {
-
                 movementX = -1.0f;
                 lastMovementX = -1.0f;
-
 
             }
             else if (keyboardState.IsKeyDown(Keys.Right))
             {
                 movementX = 1.0f;
                 lastMovementX = 1.0f;
-
             }
 
             if (keyboardState.IsKeyDown(Keys.Up))
@@ -427,10 +448,16 @@ namespace LearningXNA
                 movementY = 1.0f;
             }
 
+            if (isScared)
+            {
+                movementX = scaredDirection;
+                lastMovementX = scaredDirection;
+            }
+
             // Key press used for debug reasons
             if (keyboardState.IsKeyDown(Keys.S))
             {
-                //movementY = movementY;
+                movementY = movementY;
                 //position.X = 2004;
                 //position.Y = 673;
             }
@@ -1065,6 +1092,15 @@ namespace LearningXNA
 
             // Draw that sprite.
             sprite.Draw(gameTime, spriteBatch, Position, flip);
+
+        }
+
+        /// <summary>
+        /// Get the position of player.
+        /// </summary>
+        public Vector2 getPosition()
+        {
+            return position;
         }
     }
 }
