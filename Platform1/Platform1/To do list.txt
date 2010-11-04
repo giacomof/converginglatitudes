@@ -12,11 +12,10 @@ M- Look into mooving platforms (in ALL directions!!)
 + monster call when close to animals
 + animal behaviour
 - ladder
-+ dog's impact on monster cat
 - bouncy blocks for jumping higher
 + falling objects
 + flying enemies
-+ birdcage and impact monstercat
++ birdcage
 + level
 - extend monster cat climb algorithm
      

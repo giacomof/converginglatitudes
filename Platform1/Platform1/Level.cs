@@ -759,9 +759,12 @@ namespace LearningXNA
                     TileCollision collision = this.GetCollision(x, y);
                     if (texture != null && collision != TileCollision.PlatformCollider)
                     {
-                        // Draw it in screen space.
-                        Vector2 position = new Vector2(x, y) * Tile.Size;
-                        spriteBatch.Draw(texture, position, Color.White);
+                        if (!(collision == TileCollision.Disappearing && changeCollider))
+                        {
+                            // Draw it in screen space.
+                            Vector2 position = new Vector2(x, y) * Tile.Size;
+                            spriteBatch.Draw(texture, position, Color.White);
+                        }
                     }
                 }
             }
