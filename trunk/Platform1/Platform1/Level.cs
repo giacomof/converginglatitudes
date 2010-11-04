@@ -58,7 +58,7 @@ namespace LearningXNA
         private static readonly Point InvalidPosition = new Point(-1, -1);
 
         // Level game state.
-        private Random random = new Random(354668); // Arbitrary, but constant seed
+        private Random random = new Random(790786); // Arbitrary, but constant seed
         private float cameraPosition;
 
 

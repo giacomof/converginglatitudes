@@ -10,10 +10,12 @@ namespace LearningXNA
     /// </summary>
     class FallingObject
     {
+        static Random random = new Random();
+
         private Texture2D texture;
         private Vector2 origin;
 
-        public readonly Color Color = Color.Green;
+        public readonly Color Color = Color.White;
 
         // The FallingObject is animated from a base position along the Y axis.
         private Vector2 basePosition;
@@ -77,7 +79,8 @@ namespace LearningXNA
         /// </summary>
         public void LoadContent()
         {
-            texture = Level.Content.Load<Texture2D>("Sprites/Cookie");
+            int index = random.Next(4);
+            texture = Level.Content.Load<Texture2D>("Sprites/FallingObject/lego"+index);
             origin = new Vector2(texture.Width / 2.0f, texture.Height / 2.0f);
         }
 
@@ -98,6 +101,7 @@ namespace LearningXNA
             ApplyPhysics(gameTime);
             if (basePosition.Y > 15 * Tile.Height)
             {
+                LoadContent();
                 basePosition = originalPosition;
             }
 

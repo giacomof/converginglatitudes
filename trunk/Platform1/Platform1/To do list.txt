@@ -10,14 +10,15 @@ M- Look into mooving platforms (in ALL directions!!)
 28/10-10
 - water tiles
 + monster call when close to animals
-+ animal behaviour
 - ladder
 - bouncy blocks for jumping higher
-+ flying enemies
+- final flying enemies bb fix
 + birdcage
 + level
 - extend monster cat climb algorithm
 - fix the jump near wall bug
++ 4 lives per checkpoint
++ bounce on enemies
      
 
 
@@ -27,5 +28,5 @@ The Done List:
 (done)- spikes
 (done)- checkpoints
 (done)- disappearing and appearing blocks
-(done)
+(done)- flying enemies
 
