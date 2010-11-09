@@ -129,6 +129,7 @@ namespace LearningXNA
             layers[2] = new Layer(Content, "Backgrounds/Layer2", 1.0f);
 
             actualLives = maxLives;
+            checkpoint = Vector2.Zero;
 
             // Load sounds.
             exitReachedSound = Content.Load<SoundEffect>("Sounds/ExitReached");
