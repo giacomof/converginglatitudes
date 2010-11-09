@@ -37,6 +37,10 @@ namespace LearningXNA
         }
         Vector2 position;
 
+        private bool isCalled;
+        private const float GravityAcceleration = 300.0f;
+        private const float MaxFallSpeed = 600.0f;
+
         private Rectangle localBounds;
         /// <summary>
         /// Gets a rectangle which bounds this animal in world space.
@@ -118,8 +122,9 @@ namespace LearningXNA
         /// <summary>
         /// Paces back and forth along a platform, waiting at either end.
         /// </summary>
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, bool isBeingCalled, Vector2 playerPosition)
         {
+            isCalled = isBeingCalled;
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             // Calculate tile position based on the side we are walking towards.
@@ -127,31 +132,73 @@ namespace LearningXNA
             int tileX = (int)Math.Floor(posX / Tile.Width) - (int)direction;
             int tileY = (int)Math.Floor(Position.Y / Tile.Height);
 
-            if (waitTime > 0)
+
+            //velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
+            //basePosition += velocity * elapsed;
+            if (!isBeingCalled)
             {
-                // Wait for some amount of time.
-                waitTime = Math.Max(0.0f, waitTime - (float)gameTime.ElapsedGameTime.TotalSeconds);
-                if (waitTime <= 0.0f)
+                
+                if (waitTime > 0)
                 {
-                    // Then turn around.
-                    direction = (FaceDirection)(-(int)direction);
+                    // Wait for some amount of time.
+                    waitTime = Math.Max(0.0f, waitTime - (float)gameTime.ElapsedGameTime.TotalSeconds);
+                    if (waitTime <= 0.0f)
+                    {
+                        // Then turn around.
+                        direction = (FaceDirection)(-(int)direction);
+                    }
+                }
+                else
+                {
+                    // If we are about to run into a wall or off a cliff, start waiting.
+                    if (Level.GetCollision(tileX + (int)direction, tileY - 1) == TileCollision.Impassable ||
+                        Level.GetCollision(tileX + (int)direction, tileY - 1) == TileCollision.LevelFrame ||
+                        Level.GetCollision(tileX + (int)direction, tileY) == TileCollision.Passable)
+                    {
+                        waitTime = MaxWaitTime;
+                    }
+                    else
+                    {
+                        // Move in the current direction.
+                        Vector2 velocity = new Vector2((int)direction * MoveSpeed * elapsed, 0.0f);
+                        position = position + velocity;
+                    }
                 }
             }
             else
             {
-                // If we are about to run into a wall or off a cliff, start waiting.
-                if (Level.GetCollision(tileX + (int)direction, tileY - 1) == TileCollision.Impassable ||
-                    Level.GetCollision(tileX + (int)direction, tileY - 1) == TileCollision.LevelFrame ||
-                    Level.GetCollision(tileX + (int)direction, tileY) == TileCollision.Passable)
+                if (playerPosition.X > position.X)
                 {
-                    waitTime = MaxWaitTime;
+                    direction = FaceDirection.Right;
                 }
                 else
                 {
-                    // Move in the current direction.
-                    Vector2 velocity = new Vector2((int)direction * MoveSpeed * elapsed, 0.0f);
+                    direction = FaceDirection.Left;
+                }
+
+                Vector2 velocity;
+
+                // If we are about to run into a wall or off a cliff, start waiting.
+                if (Level.GetCollision(tileX + (int)direction, tileY - 1) == TileCollision.Impassable ||
+                    Level.GetCollision(tileX + (int)direction, tileY - 1) == TileCollision.LevelFrame)
+                {
+                    //// Move in the current direction.
+                    velocity = new Vector2(0, 0);
+                    //velocity = new Vector2((int)direction * MoveSpeed * elapsed, 0.0f);
+                    //position = position + velocity;
+                }
+                else
+                {
+                    velocity = new Vector2(0, 0) ;
+                    velocity.X = (int)direction * MoveSpeed * elapsed;
+                    if (Level.GetCollision(tileX + (int)direction, tileY) == TileCollision.Passable)
+                    {
+                        velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
+                    }
                     position = position + velocity;
                 }
+
+
             }
         }
 
@@ -161,10 +208,10 @@ namespace LearningXNA
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             // Stop running when the game is paused or before turning around.
-            if (!Level.Player.IsAlive ||
+            if ((!Level.Player.IsAlive ||
                 Level.ReachedExit ||
                 Level.TimeRemaining == TimeSpan.Zero ||
-                waitTime > 0)
+                waitTime > 0 )&& !isCalled)
             {
                 sprite.PlayAnimation(idleAnimation);
             }
