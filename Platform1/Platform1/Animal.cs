@@ -132,6 +132,12 @@ namespace LearningXNA
             int tileX = (int)Math.Floor(posX / Tile.Width) - (int)direction;
             int tileY = (int)Math.Floor(Position.Y / Tile.Height);
 
+            int groundTileX = (int)Math.Floor((float)Position.X / Tile.Width);
+            int groundTileY = (int)Math.Floor((float)Position.Y / Tile.Height);
+
+            Console.WriteLine(groundTileX + " " + groundTileY + " " + (Level.GetCollision(groundTileX, groundTileY) == TileCollision.Passable));
+
+            Vector2 velocity;
 
             //velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
             //basePosition += velocity * elapsed;
@@ -148,7 +154,7 @@ namespace LearningXNA
                         direction = (FaceDirection)(-(int)direction);
                     }
                 }
-                else
+                else if (Level.GetCollision(groundTileX, groundTileY) != TileCollision.Passable)
                 {
                     // If we are about to run into a wall or off a cliff, start waiting.
                     if (Level.GetCollision(tileX + (int)direction, tileY - 1) == TileCollision.Impassable ||
@@ -160,9 +166,16 @@ namespace LearningXNA
                     else
                     {
                         // Move in the current direction.
-                        Vector2 velocity = new Vector2((int)direction * MoveSpeed * elapsed, 0.0f);
+                        velocity = new Vector2((int)direction * MoveSpeed * elapsed, 0.0f);
                         position = position + velocity;
                     }
+                }
+                else
+                {
+                    velocity = new Vector2(0, 0);
+                    velocity.X = (int)direction * MoveSpeed * elapsed;
+                    velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
+                    position = position + velocity;
                 }
             }
             else
@@ -176,7 +189,7 @@ namespace LearningXNA
                     direction = FaceDirection.Left;
                 }
 
-                Vector2 velocity;
+                
 
                 // If we are about to run into a wall or off a cliff, start waiting.
                 if (Level.GetCollision(tileX + (int)direction, tileY - 1) == TileCollision.Impassable ||
