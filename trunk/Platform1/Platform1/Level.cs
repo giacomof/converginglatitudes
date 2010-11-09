@@ -67,8 +67,16 @@ namespace LearningXNA
         public int Score
         {
             get { return score; }
+            set { score = value; }
         }
         int score;
+
+        public int ScoreAtBeginning
+        {
+            get { return scoreAtBeginning; }
+            set { scoreAtBeginning = value; }
+        }
+        int scoreAtBeginning;
 
         public bool ReachedExit
         {
@@ -119,6 +127,8 @@ namespace LearningXNA
             layers[0] = new Layer(Content, "Backgrounds/Layer0", 0.1f);
             layers[1] = new Layer(Content, "Backgrounds/Layer1", 0.5f);
             layers[2] = new Layer(Content, "Backgrounds/Layer2", 1.0f);
+
+            actualLives = maxLives;
 
             // Load sounds.
             exitReachedSound = Content.Load<SoundEffect>("Sounds/ExitReached");
@@ -700,7 +710,7 @@ namespace LearningXNA
         /// </param>
         private void OnPlayerKilled(bool someone)
         {
-            Player.OnKilled(true);
+            Player.OnKilled(someone);
         }
 
         /// <summary>
@@ -731,7 +741,12 @@ namespace LearningXNA
         //start checkpoint
         public void StartNewLife()
         {
-            if (checkpoint != Vector2.Zero && actualLives != 0)
+            if (actualLives == 0)
+            {
+                Player.Reset(start);
+                timeRemaining = TimeSpan.Zero;
+            }
+            else if (checkpoint != Vector2.Zero)
             {
                 Player.Reset(checkpoint);
                 actualLives -= 1;
@@ -739,8 +754,7 @@ namespace LearningXNA
             else
             {
                 Player.Reset(start);
-                actualLives = maxLives;
-                timeRemaining = TimeSpan.Zero;
+                actualLives -= 1;
             }
         }
         //end checkpoint

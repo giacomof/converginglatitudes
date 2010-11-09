@@ -54,6 +54,8 @@ namespace LearningXNA
         public bool canBeCat = true; //DEBUG REASON
         public bool canBeDuck = false;
 
+        public int totalScore = 0;
+
         public PlatformerGame()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -124,9 +126,15 @@ namespace LearningXNA
                 else if (level.TimeRemaining == TimeSpan.Zero)
                 {
                     if (level.ReachedExit)
+                    {
+                        totalScore += level.Score - totalScore;
                         LoadNextLevel();
+                    }
                     else
+                    {
+                        totalScore = level.ScoreAtBeginning;
                         ReloadCurrentLevel();
+                    }
                 }
             }
 
@@ -165,6 +173,8 @@ namespace LearningXNA
             }
             // Load the level.
             level = new Level(Services, levelPath);
+            level.ScoreAtBeginning = totalScore;
+            level.Score = totalScore;
             // Apply the old change shape abilities after loading the new level
             level.Player.CanBeCat = canBeCat;
             level.Player.CanBeDuck = canBeDuck;
