@@ -242,7 +242,7 @@ namespace LearningXNA
 
                 // Platform block
                 case '~':
-                    return LoadVarietyTile("BlockB", 2, TileCollision.Platform);
+                    return LoadVarietyTile("bookshelf", 3, TileCollision.Platform);
 
                 // Passable block
                 case ':':
@@ -254,7 +254,11 @@ namespace LearningXNA
 
                 // Impassable block
                 case '#':
-                    return LoadVarietyTile("BlockA", 7, TileCollision.Impassable);
+                    return LoadVarietyTile("BlockA", 3, TileCollision.Impassable);
+
+                // Impassable block
+                case '=':
+                    return LoadVarietyTile("Tile", 2, TileCollision.Impassable);
 
                 // Bouncing Object
                 case '§':
