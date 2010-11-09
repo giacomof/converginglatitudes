@@ -184,6 +184,13 @@ namespace LearningXNA
         private bool wasClimbingOnCeiling;
 
 
+        public bool IsCallingAnimal
+        {
+            get { return isCallingAnimal; }
+        }
+        private bool isCallingAnimal;
+
+
         public bool isScared;
         public int scaredDirection;
         int scaredTimerMilliseconds = 2000;
@@ -394,13 +401,19 @@ namespace LearningXNA
 
             isClimbing = false;
             isClimbingOnCeiling = false;
+            isCallingAnimal = false;
             isDoingSpecialAction = false;
 
             if (keyboardState.IsKeyDown(Keys.Space))
             {
                 isDoingSpecialAction = true;
 
-                if (animalShape == MONSTER_CAT)
+                if (animalShape == MONSTER)
+                {
+                    isCallingAnimal = true;
+                }
+
+                else if (animalShape == MONSTER_CAT)
                 {
                     if ( canClimb())
                     {

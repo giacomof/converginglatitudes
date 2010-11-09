@@ -117,7 +117,7 @@ namespace LearningXNA
             // Create a new content manager to load content used just by this level.
             content = new ContentManager(serviceProvider, "Content");
 
-            timeRemaining = TimeSpan.FromMinutes(2.0);
+            timeRemaining = TimeSpan.FromMinutes(4.0);
 
             LoadTiles(path);
 
@@ -650,9 +650,11 @@ namespace LearningXNA
         /// </summary>
         private void UpdateAnimals(GameTime gameTime)
         {
+            bool playerIsCalling = Player.IsCallingAnimal;
+
             foreach (Animal animal in animals)
             {
-                animal.Update(gameTime);
+                animal.Update(gameTime, playerIsCalling, player.getPosition());
 
                 // Touching an enemy instantly kills the player
                 if (animal.BoundingRectangle.Intersects(Player.BoundingRectangle))
