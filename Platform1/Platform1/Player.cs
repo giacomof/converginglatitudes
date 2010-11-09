@@ -614,7 +614,7 @@ namespace LearningXNA
                         break;
 
                     case MONSTER_CAT:
-                        if ((!wasJumping && IsOnGround && !canClimb()) || isBouncing || jumpTime > 0.0f)
+                        if ((!wasJumping && IsOnGround ) || isBouncing || jumpTime > 0.0f)
                         {
                             if (jumpTime == 0.0f)
                                 jumpSound.Play();

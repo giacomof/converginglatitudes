@@ -16,8 +16,6 @@ M- Look into mooving platforms (in ALL directions!!)
 + birdcage
 + level
 - extend monster cat climb algorithm
-- fix the jump near wall bug
-+ 4 lives per checkpoint
 + bounce on enemies
      
 
