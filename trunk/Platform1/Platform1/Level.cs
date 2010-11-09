@@ -53,6 +53,8 @@ namespace LearningXNA
         private Vector2 start;
         //start checkpoint
         public Vector2 checkpoint;
+        public int maxLives = 4;
+        public int actualLives = 0;
         //end checkpoint
         private Point exit = InvalidPosition;
         private static readonly Point InvalidPosition = new Point(-1, -1);
@@ -729,9 +731,17 @@ namespace LearningXNA
         //start checkpoint
         public void StartNewLife()
         {
-            if (checkpoint != Vector2.Zero) Player.Reset(checkpoint);
+            if (checkpoint != Vector2.Zero && actualLives != 0)
+            {
+                Player.Reset(checkpoint);
+                actualLives -= 1;
+            }
             else
+            {
                 Player.Reset(start);
+                actualLives = maxLives;
+                timeRemaining = TimeSpan.Zero;
+            }
         }
         //end checkpoint
 
