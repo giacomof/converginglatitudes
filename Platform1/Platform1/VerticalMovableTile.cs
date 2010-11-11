@@ -118,14 +118,14 @@ namespace LearningXNA
                 }
             }
 
-            if (level.movableTiles.Count > 0)
+            if (level.verticalMovableTiles.Count > 0)
             {
                 //If we're about to run into a MovableTile move in other direction.  
-                foreach (var movableTile in level.movableTiles)
+                foreach (var verticalMovableTile in level.verticalMovableTiles)
                 {
-                    if (BoundingRectangle != movableTile.BoundingRectangle)
+                    if (BoundingRectangle != verticalMovableTile.BoundingRectangle)
                     {
-                        if (BoundingRectangle.Intersects(movableTile.BoundingRectangle))
+                        if (BoundingRectangle.Intersects(verticalMovableTile.BoundingRectangle))
                         {
                             direction = (FaceDirection)(-(int)direction);
                             velocity = new Vector2(0.0f, (int)direction * MoveSpeed * elapsed);

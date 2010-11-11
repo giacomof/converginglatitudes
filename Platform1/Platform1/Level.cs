@@ -294,7 +294,7 @@ namespace LearningXNA
         private Tile LoadVerticalMovableTile(int x, int y, TileCollision collision)
         {
             Point position = GetBounds(x, y).Center;
-            movableTiles.Add(new MovableTile(this, new Vector2(position.X, position.Y), collision));
+            verticalMovableTiles.Add(new VerticalMovableTile(this, new Vector2(position.X, position.Y), collision));
 
             return new Tile(null, TileCollision.Passable);
         }
@@ -588,15 +588,15 @@ namespace LearningXNA
 
         private void UpdateVerticalMovableTiles(GameTime gameTime)
         {
-            for (int i = 0; i < movableTiles.Count; ++i)
+            for (int i = 0; i < verticalMovableTiles.Count; ++i)
             {
-                MovableTile movableTile = movableTiles[i];
-                movableTile.Update(gameTime);
+                VerticalMovableTile verticalMovableTile = verticalMovableTiles[i];
+                verticalMovableTile.Update(gameTime);
 
-                if (movableTile.PlayerIsOn)
+                if (verticalMovableTile.PlayerIsOn)
                 {
                     //Make player move with tile if the player is on top of tile  
-                    player.Position += movableTile.Velocity;
+                    player.Position += verticalMovableTile.Velocity;
                 }
             }
         }
