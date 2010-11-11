@@ -36,6 +36,24 @@ namespace LearningXNA
         private Texture2D loseOverlay;
         private Texture2D diedOverlay;
 
+        private Texture2D tutorialOverlay0;
+        private Texture2D tutorialOverlay1;
+        private Texture2D tutorialOverlay2;
+        private Texture2D tutorialOverlay3;
+        private Texture2D tutorialOverlay4;
+        private Texture2D tutorialOverlay5;
+        private Texture2D tutorialOverlay6;
+        private Texture2D tutorialOverlay7;
+        private Texture2D tutorialOverlay8;
+        private Texture2D tutorialOverlay9;
+        private Texture2D tutorialOverlay10;
+        private Texture2D tutorialOverlay11;
+        private Texture2D tutorialOverlay12;
+        private Texture2D tutorialOverlay13;
+        private Texture2D tutorialOverlay14;
+
+        private bool[] tutorialOverlays;
+
         // Meta-level game state.
         private int levelIndex = -1;
         private Level level;
@@ -66,6 +84,12 @@ namespace LearningXNA
 
             // Framerate differs between platforms.
             TargetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / TargetFrameRate);
+
+            tutorialOverlays = new bool[5];
+            for (int i = 0; i < tutorialOverlays.Length; i++)
+            {
+                tutorialOverlays[i] = false;
+            }
         }
 
         /// <summary>
@@ -84,6 +108,7 @@ namespace LearningXNA
             winOverlay = Content.Load<Texture2D>("Overlays/you_win");
             loseOverlay = Content.Load<Texture2D>("Overlays/you_lose");
             diedOverlay = Content.Load<Texture2D>("Overlays/you_died");
+
 
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(Content.Load<Song>("Sounds/Music"));
