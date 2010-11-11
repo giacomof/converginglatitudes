@@ -98,8 +98,6 @@ namespace LearningXNA
             else
                 tileY = (int)Math.Floor((posY + (localBounds.Height * (int)direction)) / Tile.Height)-1;
 
-            System.Console.WriteLine(direction + ": x:" + tileX + " y:" + tileY);
-
             if (waitTime > 0)
             {
                 // Wait for some amount of time.  
@@ -117,7 +115,6 @@ namespace LearningXNA
                     Level.GetCollision(tileX, tileY) == TileCollision.Platform ||
                     Level.GetCollision(tileX, tileY) == TileCollision.PlatformCollider)
                 {
-                    System.Console.WriteLine("I COLLIDED WITH: x:" + tileX + " y:" + tileY);
                     velocity = new Vector2(0.0f, 0.0f);
                     waitTime = MaxWaitTime;
                 }

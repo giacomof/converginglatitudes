@@ -274,7 +274,7 @@ namespace LearningXNA
 
                 //MOVING PLATFORM STUFF
                 case '^':
-                    return LoadVerticalMovableTile(x, y, TileCollision.Platform);
+                    return LoadVerticalMovableTile(x, y, TileCollision.Impassable);
                 // Moving platform - Horizontal
                 case '<':
                     return LoadMovableTile(x, y, TileCollision.Platform);
