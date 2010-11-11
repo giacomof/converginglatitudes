@@ -38,7 +38,9 @@ namespace LearningXNA
         Vector2 position;
 
         private bool isCalled;
-        private const float GravityAcceleration = 300.0f;
+        int calledTimerMilliseconds = 2000;
+        float calledTimerClock;
+        private const float GravityAcceleration = 600.0f;
         private const float MaxFallSpeed = 600.0f;
 
         private Rectangle localBounds;
@@ -89,6 +91,7 @@ namespace LearningXNA
         {
             this.level = level;
             this.position = position;
+            calledTimerClock = 0;
 
             // Change the flag of the actual animal in relation to the sprite set requested by the parser in the level loader
             if (spriteSet == "Cat")
@@ -124,7 +127,13 @@ namespace LearningXNA
         /// </summary>
         public void Update(GameTime gameTime, bool isBeingCalled, Vector2 playerPosition)
         {
-            isCalled = isBeingCalled;
+            float distance = Vector2.Distance(position, playerPosition);
+            if (!isCalled && isBeingCalled && distance <= 500)
+            {
+                isCalled = isBeingCalled;
+                calledTimerClock = 0;
+            }
+
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             // Calculate tile position based on the side we are walking towards.
@@ -135,13 +144,9 @@ namespace LearningXNA
             int groundTileX = (int)Math.Floor((float)Position.X / Tile.Width);
             int groundTileY = (int)Math.Floor((float)Position.Y / Tile.Height);
 
-            Console.WriteLine(groundTileX + " " + groundTileY + " " + (Level.GetCollision(groundTileX, groundTileY) == TileCollision.Passable));
-
             Vector2 velocity;
 
-            //velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
-            //basePosition += velocity * elapsed;
-            if (!isBeingCalled)
+            if (!isCalled)
             {
                 
                 if (waitTime > 0)
@@ -180,6 +185,13 @@ namespace LearningXNA
             }
             else
             {
+
+                calledTimerClock += gameTime.ElapsedGameTime.Milliseconds;
+                if (calledTimerClock >= calledTimerMilliseconds)
+                {
+                    isCalled = false;
+                }
+
                 if (playerPosition.X > position.X)
                 {
                     direction = FaceDirection.Right;
@@ -188,8 +200,6 @@ namespace LearningXNA
                 {
                     direction = FaceDirection.Left;
                 }
-
-                
 
                 // If we are about to run into a wall or off a cliff, start waiting.
                 if (Level.GetCollision(tileX + (int)direction, tileY - 1) == TileCollision.Impassable ||
