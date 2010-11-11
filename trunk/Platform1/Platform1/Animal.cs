@@ -40,6 +40,7 @@ namespace LearningXNA
         private bool isCalled;
         int calledTimerMilliseconds = 2000;
         float calledTimerClock;
+        int maxCallingDistance = 500;
         private const float GravityAcceleration = 600.0f;
         private const float MaxFallSpeed = 600.0f;
 
@@ -128,7 +129,7 @@ namespace LearningXNA
         public void Update(GameTime gameTime, bool isBeingCalled, Vector2 playerPosition)
         {
             float distance = Vector2.Distance(position, playerPosition);
-            if (!isCalled && isBeingCalled && distance <= 500)
+            if (!isCalled && isBeingCalled && distance <= maxCallingDistance)
             {
                 isCalled = isBeingCalled;
                 calledTimerClock = 0;
