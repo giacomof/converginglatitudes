@@ -49,10 +49,6 @@ namespace LearningXNA
         private Texture2D tutorialOverlay10;
         private Texture2D tutorialOverlay11;
         private Texture2D tutorialOverlay12;
-        private Texture2D tutorialOverlay13;
-        private Texture2D tutorialOverlay14;
-
-        private bool[] tutorialOverlays;
 
         // Meta-level game state.
         private int levelIndex = -1;
@@ -84,12 +80,6 @@ namespace LearningXNA
 
             // Framerate differs between platforms.
             TargetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / TargetFrameRate);
-
-            tutorialOverlays = new bool[5];
-            for (int i = 0; i < tutorialOverlays.Length; i++)
-            {
-                tutorialOverlays[i] = false;
-            }
         }
 
         /// <summary>
@@ -108,6 +98,20 @@ namespace LearningXNA
             winOverlay = Content.Load<Texture2D>("Overlays/you_win");
             loseOverlay = Content.Load<Texture2D>("Overlays/you_lose");
             diedOverlay = Content.Load<Texture2D>("Overlays/you_died");
+
+            tutorialOverlay0 = Content.Load<Texture2D>("Overlays/tutorial0");
+            tutorialOverlay1 = Content.Load<Texture2D>("Overlays/tutorial1");
+            tutorialOverlay2 = Content.Load<Texture2D>("Overlays/tutorial2");
+            tutorialOverlay3 = Content.Load<Texture2D>("Overlays/tutorial3");
+            tutorialOverlay4 = Content.Load<Texture2D>("Overlays/tutorial4");
+            tutorialOverlay5 = Content.Load<Texture2D>("Overlays/tutorial5");
+            tutorialOverlay6 = Content.Load<Texture2D>("Overlays/tutorial6");
+            tutorialOverlay7 = Content.Load<Texture2D>("Overlays/tutorial7");
+            tutorialOverlay8 = Content.Load<Texture2D>("Overlays/tutorial8");
+            tutorialOverlay9 = Content.Load<Texture2D>("Overlays/tutorial9");
+            tutorialOverlay10 = Content.Load<Texture2D>("Overlays/tutorial10");
+            tutorialOverlay11 = Content.Load<Texture2D>("Overlays/tutorial11");
+            tutorialOverlay12 = Content.Load<Texture2D>("Overlays/tutorial12");
 
 
             MediaPlayer.IsRepeating = true;
@@ -275,6 +279,52 @@ namespace LearningXNA
             else if (!level.Player.IsAlive)
             {
                 status = diedOverlay;
+            }
+
+            if (Player.needTutorial != -1)
+            {
+                switch (Player.needTutorial)
+                {
+                    case 0:
+                        status = tutorialOverlay0;
+                        break;
+                    case 1:
+                        status = tutorialOverlay1;
+                        break;
+                    case 2:
+                        status = tutorialOverlay2;
+                        break;
+                    case 3:
+                        status = tutorialOverlay3;
+                        break;
+                    case 4:
+                        status = tutorialOverlay4;
+                        break;
+                    case 5:
+                        status = tutorialOverlay5;
+                        break;
+                    case 6:
+                        status = tutorialOverlay6;
+                        break;
+                    case 7:
+                        status = tutorialOverlay7;
+                        break;
+                    case 8:
+                        status = tutorialOverlay8;
+                        break;
+                    case 9:
+                        status = tutorialOverlay9;
+                        break;
+                    case 10:
+                        status = tutorialOverlay10;
+                        break;
+                    case 11:
+                        status = tutorialOverlay11;
+                        break;
+                    case 12:
+                        status = tutorialOverlay12;
+                        break;
+                }
             }
 
             if (status != null)

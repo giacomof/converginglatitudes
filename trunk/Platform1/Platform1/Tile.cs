@@ -58,15 +58,10 @@ namespace LearningXNA
         /// </summary>
         Disappearing = 8,
 
-        Tutorial0 = 9,
-
-        Tutorial1 = 10,
-
-        Tutorial2 = 11,
-
-        Tutorial3 = 12,
-
-        Tutorial4 = 13
+        /// <summary>
+        /// Tile that shows tutorial overlay
+        /// </summary>
+        TutorialTile = 9
 
         
     }
@@ -80,6 +75,7 @@ namespace LearningXNA
         public TileCollision Collision;
         public const int Width = 64;
         public const int Height = 48;
+        public int tutorialFlag;
 
         public static readonly Vector2 Size = new Vector2(Width, Height);
 
@@ -90,6 +86,13 @@ namespace LearningXNA
         {
             Texture = texture;
             Collision = collision;
+            tutorialFlag = -1;
+        }
+        public Tile(Texture2D texture, TileCollision collision, int tutorial)
+        {
+            Texture = texture;
+            Collision = collision;
+            tutorialFlag = tutorial;
         }
     }
 }

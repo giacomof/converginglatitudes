@@ -17,6 +17,10 @@ namespace LearningXNA
         const short MONSTER_DUCK        = 2;
         public short animalShape = MONSTER;
 
+
+        // Tutorial variables
+        static public int needTutorial;
+
         // Define if the player can shape change to monster cat
         public bool CanBeCat
         {
@@ -239,6 +243,8 @@ namespace LearningXNA
 
             isIdle = true;
 
+            needTutorial = -1;
+
             Reset(position);
         }
 
@@ -286,6 +292,8 @@ namespace LearningXNA
 
             isIdle = true;
 
+            needTutorial = -1;
+
             // Get beck to MONSTER when killed
             changeShape(MONSTER);
 
@@ -297,6 +305,7 @@ namespace LearningXNA
         /// </summary>
         public void Update(GameTime gameTime)
         {
+            needTutorial = -1;
             GetInput();
             ApplyPhysics(gameTime);
 
@@ -694,10 +703,6 @@ namespace LearningXNA
             int topTile = (int)Math.Floor((float)bounds.Top / Tile.Height);
             int bottomTile = (int)Math.Ceiling(((float)bounds.Bottom / Tile.Height)) - 1;
 
-            // Debug stuff
-            //Console.WriteLine("leftTile: " + leftTile + "| rightTile: " + rightTile + "| topTile: " + topTile + "| bottomTile: " + bottomTile);
-            //Console.WriteLine("x: " + position.X + "| y: " + position.Y);
-
             // Reset flag to search for ground collision.
             isOnGround = false;
 
@@ -755,6 +760,14 @@ namespace LearningXNA
                     // If this tile is collidable,
                     TileCollision collision = Level.GetCollision(x, y);
 
+
+                    if (collision == TileCollision.TutorialTile)
+                    {
+                        needTutorial = level.tiles[x, y].tutorialFlag;
+                    }
+                    
+
+
                     //start Checkpoint
                     if (collision == TileCollision.Checkpoint)
                     {
@@ -776,7 +789,7 @@ namespace LearningXNA
                         collision != TileCollision.PlatformCollider && 
                         collision != TileCollision.KillerTile &&
                         collision != TileCollision.Checkpoint &&
-                        collision == TileCollision.Disappearing)
+                        collision == TileCollision.Disappearing )
                     {
                         if (Level.changeCollider == true)
                         {
@@ -809,7 +822,8 @@ namespace LearningXNA
                         collision != TileCollision.PlatformCollider && 
                         collision != TileCollision.KillerTile && 
                         collision != TileCollision.Disappearing &&
-                        collision != TileCollision.Checkpoint)
+                        collision != TileCollision.Checkpoint &&
+                        collision != TileCollision.TutorialTile )
                     {
                         // Determine collision depth (with direction) and magnitude.
                         Rectangle tileBounds = Level.GetBounds(x, y);
