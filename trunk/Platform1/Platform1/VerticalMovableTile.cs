@@ -92,7 +92,11 @@ namespace LearningXNA
             float posY = Position.Y + localBounds.Height / 2;
 
             int tileX = (int)Math.Floor(posX / Tile.Width)-1;
-            int tileY = (int)Math.Floor((posY + (localBounds.Height/2)*(int)direction) / Tile.Height);
+            int tileY;
+            if((int)direction< 0)
+                tileY = (int)Math.Floor((posY + (localBounds.Height * (int)direction)) / Tile.Height);
+            else
+                tileY = (int)Math.Floor((posY + (localBounds.Height * (int)direction)) / Tile.Height)-1;
 
             System.Console.WriteLine(direction + ": x:" + tileX + " y:" + tileY);
 
