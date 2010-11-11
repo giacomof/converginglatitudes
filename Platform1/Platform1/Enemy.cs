@@ -105,8 +105,12 @@ namespace LearningXNA
 
             // Calculate tile position based on the side we are walking towards.
             float posX = Position.X + localBounds.Width / 2 * (int)direction;
-            int tileX = (int)Math.Floor(posX / Tile.Width) - (int)direction;
+            int tileX;
             int tileY = (int)Math.Floor(Position.Y / Tile.Height);
+            if (direction == FaceDirection.Left)
+                tileX = (int)Math.Floor((posX-(runAnimation.FrameWidth)) / Tile.Width)+2 ;
+            else
+                tileX = (int)Math.Floor((posX+(runAnimation.FrameWidth)) / Tile.Width)-2;
 
             if (waitTime > 0)
             {
