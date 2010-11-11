@@ -49,6 +49,7 @@ namespace LearningXNA
             set { direction = value; }
         }
         FaceDirection direction = FaceDirection.Left;
+        
 
         public TileCollision Collision
         {
@@ -83,12 +84,17 @@ namespace LearningXNA
 
         public void Update(GameTime gameTime)
         {
+
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             // Calculate tile position based on the side we are moving towards.  
-            float posX = Position.X + localBounds.Width / 2 * (int)direction;
-            int tileX = (int)Math.Floor(posX / Tile.Width) - (int)direction;
-            int tileY = (int)Math.Floor(Position.Y / Tile.Height);
+            float posX = Position.X + localBounds.Width / 2;
+            float posY = Position.Y + localBounds.Height / 2;
+
+            int tileX = (int)Math.Floor(posX / Tile.Width)-1;
+            int tileY = (int)Math.Floor((posY + (localBounds.Height/2)*(int)direction) / Tile.Height);
+
+            System.Console.WriteLine(direction + ": x:" + tileX + " y:" + tileY);
 
             if (waitTime > 0)
             {
@@ -103,10 +109,11 @@ namespace LearningXNA
             else
             {
                 //If we're about to run into a wall that isn't a MovableTile move in other direction.  
-                if (Level.GetCollision(tileX + (int)direction, tileY) == TileCollision.Impassable ||
-                    Level.GetCollision(tileX + (int)direction, tileY) == TileCollision.Platform ||
-                    Level.GetCollision(tileX + (int)direction, tileY) == TileCollision.PlatformCollider)
+                if (Level.GetCollision(tileX, tileY) == TileCollision.Impassable ||
+                    Level.GetCollision(tileX, tileY) == TileCollision.Platform ||
+                    Level.GetCollision(tileX, tileY) == TileCollision.PlatformCollider)
                 {
+                    System.Console.WriteLine("I COLLIDED WITH: x:" + tileX + " y:" + tileY);
                     velocity = new Vector2(0.0f, 0.0f);
                     waitTime = MaxWaitTime;
                 }
