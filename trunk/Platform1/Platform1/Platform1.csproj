@@ -105,6 +105,7 @@
     <Compile Include="PlatformerGame.cs" />
     <Compile Include="RectangleExtensions.cs" />
     <Compile Include="Tile.cs" />
+    <Compile Include="VerticalMovableTile.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace LearningXNA
 {
-    class MovableTile
+    class VerticalMovableTile
     {
         private Texture2D texture;
         private Vector2 origin;
@@ -62,7 +62,7 @@ namespace LearningXNA
         private const float MaxWaitTime = 0.1f;
         private const float MoveSpeed = 120.0f;
 
-        public MovableTile(Level level, Vector2 position, TileCollision collision)
+        public VerticalMovableTile(Level level, Vector2 position, TileCollision collision)
         {
             this.level = level;
             this.position = position;
@@ -113,7 +113,7 @@ namespace LearningXNA
                 else
                 {
                     // Move in the current direction.  
-                    velocity = new Vector2((int)direction * MoveSpeed * elapsed, 0.0f);
+                    velocity = new Vector2(0.0f, (int)direction * MoveSpeed * elapsed);
                     position = position + velocity;
                 }
             }
@@ -128,7 +128,7 @@ namespace LearningXNA
                         if (BoundingRectangle.Intersects(movableTile.BoundingRectangle))
                         {
                             direction = (FaceDirection)(-(int)direction);
-                            velocity = new Vector2((int)direction * MoveSpeed * elapsed, 0.0f);
+                            velocity = new Vector2(0.0f, (int)direction * MoveSpeed * elapsed);
                         }
                     }
                 }
@@ -137,7 +137,7 @@ namespace LearningXNA
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture,Position,null,Color.White,0.0f,origin,1.0f,SpriteEffects.None,0.0f);
+            spriteBatch.Draw(texture, Position, null, Color.White, 0.0f, origin, 1.0f, SpriteEffects.None, 0.0f);
         }
     }
 }
