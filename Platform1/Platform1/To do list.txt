@@ -9,7 +9,6 @@ M- Look into mooving platforms (in ALL directions!!)
 
 28/10-10
 - water tiles
-+ monster call when close to animals
 - ladder
 - bouncy blocks for jumping higher
 - final flying enemies bb fix
@@ -27,4 +26,5 @@ The Done List:
 (done)- checkpoints
 (done)- disappearing and appearing blocks
 (done)- flying enemies
+(done)- monster call when close to animals
 

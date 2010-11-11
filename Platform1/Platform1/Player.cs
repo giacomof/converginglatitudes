@@ -95,16 +95,16 @@ namespace LearningXNA
 
         //***********MONSTER SHAPE MOVEMENTS*****************
         // Constants for controling horizontal movement
-        private const float monsterMoveAcceleration = 10000.0f;
-        private const float monsterMaxMoveSpeed = 10000.0f;
+        private const float monsterMoveAcceleration = 14000.0f;
+        private const float monsterMaxMoveSpeed = 14000.0f;
         private const float monsterGroundDragFactor = 0.58f;
         private const float monsterAirDragFactor = 0.65f;
 
         // Constants for controlling vertical movement
         private const float monsterMaxJumpTime = 0.35f;
-        private const float monsterJumpLaunchVelocity = -2000.0f;
+        private const float monsterJumpLaunchVelocity = -4000.0f;
         private const float monsterGravityAcceleration = 3500.0f;
-        private const float monsterMaxFallSpeed = 1200.0f;
+        private const float monsterMaxFallSpeed = 600.0f;
         private const float monsterJumpControlPower = 0.14f;
         //****************************************************
 
@@ -197,6 +197,7 @@ namespace LearningXNA
         float scaredTimerClock;
 
         private bool isDead;
+        private bool isIdle;
 
 
         // Jumping state
@@ -235,6 +236,8 @@ namespace LearningXNA
             // Reset the shape changing abilities
             CanBeCat = false;
             CanBeDuck = false;
+
+            isIdle = true;
 
             Reset(position);
         }
@@ -281,6 +284,8 @@ namespace LearningXNA
             isScared = false;
             scaredTimerClock = 0;
 
+            isIdle = true;
+
             // Get beck to MONSTER when killed
             changeShape(MONSTER);
 
@@ -307,6 +312,7 @@ namespace LearningXNA
 
             if (IsAlive)
             {
+                isIdle = false;
                 if (isOnGround)
                 {
                     if (Math.Abs(Velocity.X) > 0)
@@ -326,6 +332,7 @@ namespace LearningXNA
                     }
                     else
                     {
+                        isIdle = true;
                         switch (animalShape)
                         {
                             case MONSTER:
@@ -1101,6 +1108,9 @@ namespace LearningXNA
             if (lastMovementX > 0)
                 flip = SpriteEffects.FlipHorizontally;
             else if (lastMovementX < 0)
+                flip = SpriteEffects.None;
+
+            if(isIdle)
                 flip = SpriteEffects.None;
 
             // Draw that sprite.
