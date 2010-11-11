@@ -105,9 +105,20 @@ namespace LearningXNA
 
             // Calculate tile position based on the side we are walking towards.
             float posY = Position.Y + localBounds.Height / 2 * (int)direction;
-            int tileY = (int)Math.Floor(posY / Tile.Height) - (int)direction;
+
+            int tileY;
             int tileX = (int)Math.Floor(Position.X / Tile.Width);
 
+            //to get the sprite collide with tiles in the right way
+            if (direction == FaceDirection.Left)
+            {
+                tileY = (int)Math.Floor(posY / Tile.Height) - (int)direction/2;
+            }
+            else
+            {
+                tileY = (int)Math.Floor(posY / Tile.Height) - (int)direction *2;
+
+            }
             if (waitTime > 0)
             {
                 // Wait for some amount of time.
