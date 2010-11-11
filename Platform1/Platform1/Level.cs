@@ -42,6 +42,7 @@ namespace LearningXNA
         Player player;
 
         public List<MovableTile> movableTiles = new List<MovableTile>();
+        public List<VerticalMovableTile> verticalMovableTiles = new List<VerticalMovableTile>();
         private List<Cookie> cookies = new List<Cookie>();
         private List<Enemy> enemies = new List<Enemy>();
         private List<FlyingEnemy> flyingenemies = new List<FlyingEnemy>();
@@ -272,6 +273,8 @@ namespace LearningXNA
 
 
                 //MOVING PLATFORM STUFF
+                case '^':
+                    return LoadVerticalMovableTile(x, y, TileCollision.Platform);
                 // Moving platform - Horizontal
                 case '<':
                     return LoadMovableTile(x, y, TileCollision.Platform);
@@ -288,7 +291,13 @@ namespace LearningXNA
             }
         }
 
+        private Tile LoadVerticalMovableTile(int x, int y, TileCollision collision)
+        {
+            Point position = GetBounds(x, y).Center;
+            movableTiles.Add(new MovableTile(this, new Vector2(position.X, position.Y), collision));
 
+            return new Tile(null, TileCollision.Passable);
+        }
         /// <summary>
         /// Loads a moving tile.
         /// </summary>
@@ -514,6 +523,7 @@ namespace LearningXNA
 
                 // Update moving platforms
                 UpdateMovableTiles(gameTime);
+                UpdateVerticalMovableTiles(gameTime);
 
                 UpdateCookies(gameTime);
 
@@ -562,6 +572,21 @@ namespace LearningXNA
 
         // Moving platform code
         private void UpdateMovableTiles(GameTime gameTime)
+        {
+            for (int i = 0; i < movableTiles.Count; ++i)
+            {
+                MovableTile movableTile = movableTiles[i];
+                movableTile.Update(gameTime);
+
+                if (movableTile.PlayerIsOn)
+                {
+                    //Make player move with tile if the player is on top of tile  
+                    player.Position += movableTile.Velocity;
+                }
+            }
+        }
+
+        private void UpdateVerticalMovableTiles(GameTime gameTime)
         {
             for (int i = 0; i < movableTiles.Count; ++i)
             {
@@ -789,6 +814,8 @@ namespace LearningXNA
 
             ////MOVING PLATFORM STUFF
             foreach (MovableTile tile in movableTiles)
+                tile.Draw(gameTime, spriteBatch);
+            foreach (VerticalMovableTile tile in verticalMovableTiles)
                 tile.Draw(gameTime, spriteBatch);
             ////END OF MOVING PLATFORM STUFF
 

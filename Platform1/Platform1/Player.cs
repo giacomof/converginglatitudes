@@ -717,6 +717,22 @@ namespace LearningXNA
                 }
 
                 bounds = HandleCollision(bounds, movableTile.Collision, movableTile.BoundingRectangle);
+            }
+
+            foreach (var verticalMovableTile in level.verticalMovableTiles)
+            {
+                // Reset flag to search for movable tile collision.  
+                verticalMovableTile.PlayerIsOn = false;
+
+                //check to see if player is on tile.  
+                if ((BoundingRectangle.Bottom == verticalMovableTile.BoundingRectangle.Top + 1) &&
+                    (BoundingRectangle.Left >= verticalMovableTile.BoundingRectangle.Left - (BoundingRectangle.Width / 2) &&
+                    BoundingRectangle.Right <= verticalMovableTile.BoundingRectangle.Right + (BoundingRectangle.Width / 2)))
+                {
+                    verticalMovableTile.PlayerIsOn = true;
+                }
+
+                bounds = HandleCollision(bounds, verticalMovableTile.Collision, verticalMovableTile.BoundingRectangle);
             } 
 
             //only checking for bouncy objects underneath the monster
