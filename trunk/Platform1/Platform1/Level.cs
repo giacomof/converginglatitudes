@@ -250,7 +250,7 @@ namespace LearningXNA
                     return LoadVarietyTile("BlockB", 2, TileCollision.Passable);
 
                 // Player 1 start point
-                case '1':
+                case 'P':
                     return LoadStartTile(x, y);
 
                 // Impassable block
