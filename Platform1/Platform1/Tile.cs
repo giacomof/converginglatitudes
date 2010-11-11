@@ -56,7 +56,17 @@ namespace LearningXNA
         /// <summary>
         /// Disappearing and re-appearing tile
         /// </summary>
-        Disappearing =8
+        Disappearing = 8,
+
+        Tutorial0 = 9,
+
+        Tutorial1 = 10,
+
+        Tutorial2 = 11,
+
+        Tutorial3 = 12,
+
+        Tutorial4 = 13
 
         
     }

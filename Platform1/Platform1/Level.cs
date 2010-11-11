@@ -285,6 +285,18 @@ namespace LearningXNA
                 case '*':
                     return LoadTile("Platform", TileCollision.Disappearing);
 
+
+                case '0':
+                    return LoadTile("Platform", TileCollision.Tutorial0);
+                case '1':
+                    return LoadTile("Platform", TileCollision.Tutorial1);
+                case '2':
+                    return LoadTile("Platform", TileCollision.Tutorial2);
+                case '3':
+                    return LoadTile("Platform", TileCollision.Tutorial3);
+                case '4':
+                    return LoadTile("Platform", TileCollision.Tutorial4);
+
                 // Unknown tile type character
                 default:
                     throw new NotSupportedException(String.Format("Unsupported tile type character '{0}' at position {1}, {2}.", tileType, x, y));
