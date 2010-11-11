@@ -23,8 +23,6 @@ namespace LearningXNA
         const short MONSTER_CAT = 1;
         const short MONSTER_DUCK = 2;
 
-
-
         public double elapsedTime = 0;
         public bool changeCollider = false;
         // Physical structure of the level.
@@ -286,16 +284,33 @@ namespace LearningXNA
                     return LoadTile("Platform", TileCollision.Disappearing);
 
 
-                case '0':
-                    return LoadTile("Platform", TileCollision.Tutorial0);
-                case '1':
-                    return LoadTile("Platform", TileCollision.Tutorial1);
-                case '2':
-                    return LoadTile("Platform", TileCollision.Tutorial2);
-                case '3':
-                    return LoadTile("Platform", TileCollision.Tutorial3);
-                case '4':
-                    return LoadTile("Platform", TileCollision.Tutorial4);
+                case 'ü':
+                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 0);
+                case 'é':
+                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 1);
+                case 'â':
+                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 2);
+                case 'ä':
+                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 3);
+                case 'ů':
+                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 4);
+                case 'ć':
+                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 5);
+                case 'ç':
+                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 6);
+                case 'ł':
+                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 7);
+                case 'ë':
+                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 8);
+                case 'Ő':
+                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 9);
+                case 'ő':
+                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 10);
+                case 'î':
+                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 11);
+                case 'Ź':
+                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 12);
+
 
                 // Unknown tile type character
                 default:
@@ -346,6 +361,11 @@ namespace LearningXNA
         private Tile LoadTile(string name, TileCollision collision)
         {
             return new Tile(Content.Load<Texture2D>("Tiles/" + name), collision);
+        }
+
+        private Tile LoadTutorialTile(string name, TileCollision collision, int flag)
+        {
+            return new Tile(Content.Load<Texture2D>("Tiles/" + name), collision, flag);
         }
 
 
