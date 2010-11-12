@@ -22,7 +22,7 @@ namespace LearningXNA
         private float bounce;
 
         private const float GravityAcceleration = 1000.0f;
-        private const float MaxFallSpeed = 450.0f;
+        private const float MaxFallSpeed = 300.0f;
 
         public Vector2 Velocity
         {
