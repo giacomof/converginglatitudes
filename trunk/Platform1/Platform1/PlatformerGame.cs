@@ -136,7 +136,8 @@ namespace LearningXNA
 
 
             MediaPlayer.IsRepeating = true;
-            MediaPlayer.Play(Content.Load<Song>("Sounds/Music"));
+            //MediaPlayer.Play(Content.Load<Song>("Sounds/Music"));
+            MediaPlayer.Play(Content.Load<Song>("Sounds/human_beat"));
 
             LoadNextLevel();
         }
