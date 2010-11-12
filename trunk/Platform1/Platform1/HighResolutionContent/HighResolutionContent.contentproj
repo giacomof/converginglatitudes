@@ -512,33 +512,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Overlays\hud\monster-active.png">
-      <Name>monster-active</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Overlays\hud\monster-available.png">
-      <Name>monster-available</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Overlays\hud\monstercat-active.png">
-      <Name>monstercat-active</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Overlays\hud\monstercat-available.png">
-      <Name>monstercat-available</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Overlays\hud\monstercat-notavailable.png">
-      <Name>monstercat-notavailable</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Overlays\hud\interface.png">
       <Name>interface</Name>
       <Importer>TextureImporter</Importer>
