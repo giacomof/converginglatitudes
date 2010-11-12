@@ -859,12 +859,6 @@ namespace LearningXNA
 
             DrawTiles(spriteBatch);
 
-            ////MOVING PLATFORM STUFF
-            foreach (MovableTile tile in movableTiles)
-                tile.Draw(gameTime, spriteBatch);
-            foreach (VerticalMovableTile tile in verticalMovableTiles)
-                tile.Draw(gameTime, spriteBatch);
-            ////END OF MOVING PLATFORM STUFF
 
             foreach (Cookie cookie in cookies)
                 cookie.Draw(gameTime, spriteBatch);
@@ -873,6 +867,14 @@ namespace LearningXNA
                 fallingObject.Draw(gameTime, spriteBatch);
 
             Player.Draw(gameTime, spriteBatch);
+
+            ////MOVING PLATFORM STUFF
+            foreach (MovableTile tile in movableTiles)
+                tile.Draw(gameTime, spriteBatch);
+            foreach (VerticalMovableTile tile in verticalMovableTiles)
+                tile.Draw(gameTime, spriteBatch);
+            ////END OF MOVING PLATFORM STUFF
+
 
             foreach (Enemy enemy in enemies)
                 enemy.Draw(gameTime, spriteBatch);
@@ -947,6 +949,7 @@ namespace LearningXNA
                         }
                     }
 
+                    // Write number of lives over the checkpoint
                     if (collision != TileCollision.Checkpoint && (x * Tile.Width + Tile.Width / 2) == checkpoint.X)
                     {
                         numberPos = new Vector2(checkpoint.X - 5, checkpoint.Y - 30);
