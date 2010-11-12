@@ -46,11 +46,6 @@
       <Importer>WmaImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="Sounds\Music.wma">
-      <Name>Music</Name>
-      <Importer>WmaImporter</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
     <Compile Include="Sounds\PlayerFall.wma">
       <Name>PlayerFall</Name>
       <Importer>WmaImporter</Importer>
