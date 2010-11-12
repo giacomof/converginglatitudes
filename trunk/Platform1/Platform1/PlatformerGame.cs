@@ -265,7 +265,7 @@ namespace LearningXNA
                                          titleSafeArea.Y + titleSafeArea.Height / 2.0f);
             
             // Positions for timer and cookie counter
-            Vector2 timerPos = new Vector2(55, 12);
+            Vector2 timerPos = new Vector2(53, 12);
             Vector2 cookiePos = new Vector2(190, 12);
             Vector2 monsterIconPos = new Vector2(262, 0);
             Vector2 catIconPos = new Vector2(328, 0);

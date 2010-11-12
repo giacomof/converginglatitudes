@@ -480,8 +480,6 @@ namespace LearningXNA
             if (keyboardState.IsKeyDown(Keys.S))
             {
                 movementY = movementY;
-                //position.X = 2004;
-                //position.Y = 673;
             }
 
             // Check if the player wants to jump.
