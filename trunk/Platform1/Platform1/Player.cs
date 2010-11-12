@@ -485,7 +485,7 @@ namespace LearningXNA
             }
 
             // Check if the player wants to jump.
-            if (!isClimbing)
+            if (!isClimbing && !isBouncing)
             {
                 isJumping = keyboardState.IsKeyDown(Keys.Up);
             }
@@ -667,8 +667,12 @@ namespace LearningXNA
                     else if (isJumping && !isBouncing)
                         velocityY = JumpLaunchVelocity * (1.0f - (float)Math.Pow(jumpTime / MaxJumpTime, JumpControlPower));
                     else if (isBouncing && !isJumping)
-                        velocityY = JumpLaunchVelocity * (1.0f - (float)Math.Pow(jumpTime / MaxJumpTime, JumpControlPower)) * 2;
-                    
+                    {
+                        if (animalShape == MONSTER)
+                            velocityY = JumpLaunchVelocity * (1.0f - (float)Math.Pow(jumpTime / MaxJumpTime, JumpControlPower)) * 2;
+                        else
+                            velocityY = JumpLaunchVelocity * (1.0f - (float)Math.Pow(jumpTime / MaxJumpTime, JumpControlPower));
+                    }
                 }
                 else
                 {
@@ -861,7 +865,7 @@ namespace LearningXNA
                            //     Level.tiles[x--, y--].Collision = TileCollision.Passable;
                            // }
 
-                           ////end destroy tile
+                           ////end destroy tile 
 
                            
 
