@@ -33,6 +33,7 @@ namespace LearningXNA
         // The layer which entities are drawn on top of.
         private const int EntityLayer = 2;
 
+
         // Entities in the level.
         
         public Player Player
@@ -91,7 +92,8 @@ namespace LearningXNA
         }
         TimeSpan timeRemaining;
 
-        private const int PointsPerSecond = 5;
+        private int secondsCounter = 0;
+        private const int PointsPer15Seconds = 1;
 
         // Level content.        
         public ContentManager Content
@@ -545,8 +547,13 @@ namespace LearningXNA
                 // Animate the time being converted into points.
                 int seconds = (int)Math.Round(gameTime.ElapsedGameTime.TotalSeconds * 100.0f);
                 seconds = Math.Min(seconds, (int)Math.Ceiling(TimeRemaining.TotalSeconds));
+                secondsCounter += seconds;
+                if (secondsCounter >= 15)
+                {
+                    secondsCounter -= 15;
+                    score += PointsPer15Seconds;
+                }
                 timeRemaining -= TimeSpan.FromSeconds(seconds);
-                score += seconds * PointsPerSecond;
             }
             else
             {

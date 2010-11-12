@@ -14,7 +14,7 @@ namespace LearningXNA
         private Vector2 origin;
         private SoundEffect collectedSound;
 
-        public const int PointValue = 30;
+        public const int PointValue = 1;
         public readonly Color Color = Color.BurlyWood;
 
         // The Cookie is animated from a base position along the Y axis.
