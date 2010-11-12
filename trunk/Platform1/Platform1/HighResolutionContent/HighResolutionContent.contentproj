@@ -512,11 +512,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Overlays\hud\interface.png">
-      <Name>interface</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Overlays\hud\monster-active.png">
       <Name>monster-active</Name>
       <Importer>TextureImporter</Importer>
