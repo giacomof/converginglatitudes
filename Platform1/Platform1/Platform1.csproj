@@ -115,7 +115,6 @@
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
     <Content Include="Level Components.txt" />
-    <None Include="Platform1_TemporaryKey.pfx" />
     <None Include="To do list.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

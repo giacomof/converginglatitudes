@@ -136,7 +136,6 @@ namespace LearningXNA
 
 
             MediaPlayer.IsRepeating = true;
-            //MediaPlayer.Play(Content.Load<Song>("Sounds/Music"));
             MediaPlayer.Play(Content.Load<Song>("Sounds/human_beat"));
 
             LoadNextLevel();
@@ -267,9 +266,10 @@ namespace LearningXNA
             
             // Positions for timer and cookie counter
             Vector2 timerPos = new Vector2(53, 12);
-            Vector2 cookiePos = new Vector2(190, 12);
-            Vector2 monsterIconPos = new Vector2(262, 0);
-            Vector2 catIconPos = new Vector2(328, 0);
+            Vector2 cookiePos = new Vector2(290, 12);
+            Vector2 livesPos = new Vector2(178, 12);
+            Vector2 monsterIconPos = new Vector2(0, 60);
+            Vector2 catIconPos = new Vector2(0, 125);
 
             spriteBatch.Draw(hud,hudLocation, Color.White);
 
@@ -311,6 +311,9 @@ namespace LearningXNA
             // Draw score
             float timeHeight = hudFont.MeasureString(timeString).Y;
             DrawShadowedString(hudFont, level.Score.ToString(), hudLocation + cookiePos, Color.Yellow);
+
+            // Draw Lives
+            DrawShadowedString(hudFont, level.actualLives.ToString(), hudLocation + livesPos, Color.Yellow);
 
             // Determine the status overlay message to show.
             Texture2D status = null;
