@@ -23,6 +23,8 @@ namespace LearningXNA
         const short MONSTER_CAT = 1;
         const short MONSTER_DUCK = 2;
 
+        int scaredDistance = 200;
+
         public double elapsedTime = 0;
         public bool changeCollider = false;
         // Physical structure of the level.
@@ -735,7 +737,7 @@ namespace LearningXNA
             {
                 dogPosition = dog.getPosition();
                 distance = Vector2.Distance(dogPosition, playerPosition);
-                if (distance < 200 && !player.isScared && player.animalShape == MONSTER_CAT )
+                if (distance < scaredDistance && !player.isScared && player.animalShape == MONSTER_CAT)
                 {
                     player.isScared = true;
                     if (dogPosition.X - playerPosition.X < 0)
