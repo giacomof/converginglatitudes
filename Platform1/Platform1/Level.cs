@@ -33,6 +33,10 @@ namespace LearningXNA
         // The layer which entities are drawn on top of.
         private const int EntityLayer = 2;
 
+        private SpriteBatch spriteBatch;
+        private SpriteFont hudFont;
+        Vector2 numberPos;
+
 
         // Entities in the level.
         
@@ -130,6 +134,8 @@ namespace LearningXNA
             layers[0] = new Layer(Content, "Backgrounds/Layer0", 0.1f);
             layers[1] = new Layer(Content, "Backgrounds/Layer1", 0.5f);
             layers[2] = new Layer(Content, "Backgrounds/Layer2", 1.0f);
+
+            hudFont = Content.Load<SpriteFont>("Fonts/Hud");
 
             actualLives = maxLives;
             checkpoint = Vector2.Zero;
@@ -939,6 +945,14 @@ namespace LearningXNA
                             Vector2 position = new Vector2(x, y) * Tile.Size;
                             spriteBatch.Draw(texture, position, Color.White);
                         }
+                    }
+
+                    if (collision != TileCollision.Checkpoint && (x * Tile.Width + Tile.Width / 2) == checkpoint.X)
+                    {
+                        numberPos = new Vector2(checkpoint.X - 5, checkpoint.Y - 30);
+                        
+                        spriteBatch.DrawString(hudFont, actualLives.ToString(), numberPos + new Vector2(1.0f, 1.0f), Color.Black);
+                        spriteBatch.DrawString(hudFont, actualLives.ToString(), numberPos, Color.Yellow);
                     }
                 }
             }
