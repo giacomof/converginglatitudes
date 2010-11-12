@@ -32,6 +32,7 @@ namespace LearningXNA
         // Global content.
         private SpriteFont hudFont;
         private Texture2D hud;
+        private Texture2D hud2;
         private Texture2D monsterAvailable;
         private Texture2D monsterActive;
         private Texture2D monsterCatNotAvailable;
@@ -108,6 +109,7 @@ namespace LearningXNA
 
             // Load HUD stuff
             hud = Content.Load<Texture2D>("Overlays/hud/interface");
+            hud2 = Content.Load<Texture2D>("Overlays/hud/interface2");
             monsterAvailable = Content.Load<Texture2D>("Overlays/hud/monster-available");
             monsterActive = Content.Load<Texture2D>("Overlays/hud/monster-active");
             monsterCatNotAvailable = Content.Load<Texture2D>("Overlays/hud/monstercat-notavailable");
@@ -136,7 +138,7 @@ namespace LearningXNA
 
 
             MediaPlayer.IsRepeating = true;
-            MediaPlayer.Play(Content.Load<Song>("Sounds/human_beat"));
+            //MediaPlayer.Play(Content.Load<Song>("Sounds/human_beat"));
 
             LoadNextLevel();
         }
@@ -268,10 +270,19 @@ namespace LearningXNA
             Vector2 timerPos = new Vector2(53, 12);
             Vector2 cookiePos = new Vector2(290, 12);
             Vector2 livesPos = new Vector2(178, 12);
-            Vector2 monsterIconPos = new Vector2(0, 60);
-            Vector2 catIconPos = new Vector2(0, 125);
+            Vector2 monsterIconPos = new Vector2(1016, 0);
+            Vector2 catIconPos = new Vector2(1080, 0);
 
-            spriteBatch.Draw(hud,hudLocation, Color.White);
+            spriteBatch.Draw(hud, hudLocation, Color.White);
+
+
+            //Vector2 timerPos = new Vector2(53, 12);
+            //Vector2 cookiePos = new Vector2(290, 12);
+            //Vector2 livesPos = new Vector2(178, 12);
+            //Vector2 monsterIconPos = new Vector2(-5, 60);
+            //Vector2 catIconPos = new Vector2(-5, 125);
+
+            //spriteBatch.Draw(hud2, hudLocation, Color.White);
 
             Texture2D monsterIcon = null;
             Texture2D catIcon = null;
