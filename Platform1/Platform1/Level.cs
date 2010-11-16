@@ -306,20 +306,18 @@ namespace LearningXNA
                     return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 2);
                 case 'ů':
                     return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 3);
-                case 'ć':
-                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 5);
                 case 'ç':
-                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 6);
+                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 4);
                 case 'ł':
-                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 7);
+                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 5);
                 case 'ë':
-                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 8);
+                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 6);
                 case 'ő':
-                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 10);
+                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 7);
                 case 'î':
-                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 11);
+                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 8);
                 case 'Ź':
-                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 12);
+                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 9);
 
 
                 // Unknown tile type character

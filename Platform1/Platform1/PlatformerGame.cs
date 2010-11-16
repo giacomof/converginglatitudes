@@ -55,9 +55,6 @@ namespace LearningXNA
         private Texture2D tutorialOverlay7;
         private Texture2D tutorialOverlay8;
         private Texture2D tutorialOverlay9;
-        private Texture2D tutorialOverlay10;
-        private Texture2D tutorialOverlay11;
-        private Texture2D tutorialOverlay12;
 
         // Meta-level game state.
         private int levelIndex = -1;
@@ -125,19 +122,17 @@ namespace LearningXNA
             tutorialOverlay0 = Content.Load<Texture2D>("Overlays/tutorial0");
             tutorialOverlay1 = Content.Load<Texture2D>("Overlays/tutorial1");
             tutorialOverlay2 = Content.Load<Texture2D>("Overlays/tutorial2");
-            tutorialOverlay4 = Content.Load<Texture2D>("Overlays/tutorial3");
+            tutorialOverlay3 = Content.Load<Texture2D>("Overlays/tutorial3");
+            tutorialOverlay4 = Content.Load<Texture2D>("Overlays/tutorial4");
             tutorialOverlay5 = Content.Load<Texture2D>("Overlays/tutorial5");
             tutorialOverlay6 = Content.Load<Texture2D>("Overlays/tutorial6");
             tutorialOverlay7 = Content.Load<Texture2D>("Overlays/tutorial7");
             tutorialOverlay8 = Content.Load<Texture2D>("Overlays/tutorial8");
-            //tutorialOverlay9 = Content.Load<Texture2D>("Overlays/tutorial9");
-            tutorialOverlay10 = Content.Load<Texture2D>("Overlays/tutorial10");
-            tutorialOverlay11 = Content.Load<Texture2D>("Overlays/tutorial11");
-            tutorialOverlay12 = Content.Load<Texture2D>("Overlays/tutorial12");
+            tutorialOverlay9 = Content.Load<Texture2D>("Overlays/tutorial9");
 
 
             MediaPlayer.IsRepeating = true;
-            //MediaPlayer.Play(Content.Load<Song>("Sounds/human_beat"));
+            MediaPlayer.Play(Content.Load<Song>("Sounds/human_beat"));
 
             LoadNextLevel();
         }
@@ -381,15 +376,6 @@ namespace LearningXNA
                         break;
                     case 9:
                         status = tutorialOverlay9;
-                        break;
-                    case 10:
-                        status = tutorialOverlay10;
-                        break;
-                    case 11:
-                        status = tutorialOverlay11;
-                        break;
-                    case 12:
-                        status = tutorialOverlay12;
                         break;
                 }
             }
