@@ -77,7 +77,7 @@ namespace LearningXNA
         /// <summary>
         /// How long to wait before turning around.
         /// </summary>
-        private const float MaxWaitTime = 0.5f;
+        private const float MaxWaitTime = 1.5f;
 
         /// <summary>
         /// The speed at which this animal moves along the X axis.
