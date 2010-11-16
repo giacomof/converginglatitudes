@@ -626,8 +626,9 @@ namespace LearningXNA
 
                 if (movableTile.PlayerIsOn)
                 {
-                    //Make player move with tile if the player is on top of tile  
-                    player.Position += movableTile.Velocity;
+                    //Make player move with tile if the player is on top of tile 
+                    if (!player.IsClimbing)
+                        player.Position += movableTile.Velocity;
                 }
             }
         }
@@ -642,7 +643,8 @@ namespace LearningXNA
                 if (verticalMovableTile.PlayerIsOn)
                 {
                     //Make player move with tile if the player is on top of tile
-                    player.Position += verticalMovableTile.Velocity;
+                    if(!player.IsClimbing)
+                        player.Position += verticalMovableTile.Velocity;
                 }
             }
         }
