@@ -577,13 +577,13 @@ namespace LearningXNA
 
                 UpdateFallingObjects(gameTime);
 
-                // Falling off the bottom of the level kills the player.
-                if (Player.BoundingRectangle.Top >= Height * Tile.Height)
-                    OnPlayerKilled(false);
-
                 // Update moving platforms
                 UpdateMovableTiles(gameTime);
                 UpdateVerticalMovableTiles(gameTime);
+
+                // Falling off the bottom of the level kills the player.
+                if (Player.BoundingRectangle.Top >= Height * Tile.Height)
+                    OnPlayerKilled(false);
 
                 UpdateDisappearingTile(gameTime);
                 UpdateEnemies(gameTime);
@@ -647,7 +647,7 @@ namespace LearningXNA
 
                 if (verticalMovableTile.PlayerIsOn)
                 {
-                    //Make player move with tile if the player is on top of tile  
+                    //Make player move with tile if the player is on top of tile
                     player.Position += verticalMovableTile.Velocity;
                 }
             }

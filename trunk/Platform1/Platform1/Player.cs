@@ -147,6 +147,7 @@ namespace LearningXNA
         public bool IsOnGround
         {
             get { return isOnGround; }
+            set { isOnGround = value; }
         }
         bool isOnGround;
 
@@ -418,6 +419,13 @@ namespace LearningXNA
             isCallingAnimal = false;
             isDoingSpecialAction = false;
 
+
+            // Key press used for debug reasons
+            if (keyboardState.IsKeyDown(Keys.S))
+            {
+                movementY = movementY; // added just for having a line for debugging
+            }
+
             if (keyboardState.IsKeyDown(Keys.Space))
             {
                 isDoingSpecialAction = true;
@@ -472,12 +480,6 @@ namespace LearningXNA
             {
                 movementX = scaredDirection;
                 lastMovementX = scaredDirection;
-            }
-
-            // Key press used for debug reasons
-            if (keyboardState.IsKeyDown(Keys.S))
-            {
-                movementY = movementY; // added just for having a line for debugging
             }
 
             // Check if the player wants to jump.
@@ -622,7 +624,6 @@ namespace LearningXNA
             // If the player wants to jump
             if (isJumping || isBouncing)
             {
-                // Begin or continue a jump
                 switch (animalShape)
                 {
                     case MONSTER:
@@ -729,13 +730,11 @@ namespace LearningXNA
                 verticalMovableTile.PlayerIsOn = false;
 
                 //check to see if player is on tile.  
-                if ((BoundingRectangle.Bottom == verticalMovableTile.BoundingRectangle.Top + 1) &&
-                    (BoundingRectangle.Left >= verticalMovableTile.BoundingRectangle.Left - (BoundingRectangle.Width / 2) &&
-                    BoundingRectangle.Right <= verticalMovableTile.BoundingRectangle.Right + (BoundingRectangle.Width / 2)))
+                if (Math.Abs(BoundingRectangle.Bottom - verticalMovableTile.BoundingRectangle.Top) < 10)
                 {
                     verticalMovableTile.PlayerIsOn = true;
+                    IsOnGround = true;
                 }
-
                 bounds = HandleCollision(bounds, verticalMovableTile.Collision, verticalMovableTile.BoundingRectangle);
             } 
 
