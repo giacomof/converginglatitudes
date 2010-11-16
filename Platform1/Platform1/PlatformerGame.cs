@@ -73,7 +73,7 @@ namespace LearningXNA
         private const int BackBufferHeight = 720;
 
         // Used to store tha ability to change animal between levels
-        public bool canBeCat = true; //DEBUG REASON
+        public bool canBeCat = false; //DEBUG REASON
         public bool canBeDuck = false;
 
         // Shape state of the character; starting from 0 as a monster
