@@ -126,7 +126,7 @@ namespace LearningXNA
             // Create a new content manager to load content used just by this level.
             content = new ContentManager(serviceProvider, "Content");
 
-            timeRemaining = TimeSpan.FromMinutes(4.0);
+            timeRemaining = TimeSpan.FromMinutes(10.0);
 
             LoadTiles(path);
 
