@@ -186,6 +186,8 @@ namespace LearningXNA
                     {
                         totalScore = level.ScoreAtBeginning;
                         ReloadCurrentLevel();
+                        level.Player.CanBeCat = canBeCat;
+                        level.Player.CanBeDuck = canBeDuck;
                     }
                 }
             }
@@ -218,9 +220,12 @@ namespace LearningXNA
             // Unloads the content for the current level before loading the next one.
             if (level != null)
             {
-                // Save the change shape abilities before disposing the actual level
-                canBeCat = level.Player.CanBeCat;
-                canBeDuck = level.Player.CanBeDuck;
+                if (level.ReachedExit)
+                {
+                    // Save the change shape abilities before disposing the actual level
+                    canBeCat = level.Player.CanBeCat;
+                    canBeDuck = level.Player.CanBeDuck;
+                }
                 level.Dispose();
             }
             // Load the level.
