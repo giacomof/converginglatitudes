@@ -278,8 +278,8 @@ namespace LearningXNA
             //Vector2 timerPos = new Vector2(53, 12);
             //Vector2 cookiePos = new Vector2(290, 12);
             //Vector2 livesPos = new Vector2(178, 12);
-            //Vector2 monsterIconPos = new Vector2(-5, 60);
-            //Vector2 catIconPos = new Vector2(-5, 125);
+            //Vector2 monsterIconPos = new Vector2(0, 58);
+            //Vector2 catIconPos = new Vector2(0, 121);
 
             //spriteBatch.Draw(hud2, hudLocation, Color.White);
 
