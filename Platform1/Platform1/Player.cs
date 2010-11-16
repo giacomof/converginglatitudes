@@ -343,16 +343,19 @@ namespace LearningXNA
                     }
                     else
                     {
-                        isIdle = true;
-                        switch (animalShape)
+                        if (!isClimbing)
                         {
-                            case MONSTER:
-                                sprite.PlayAnimation(monsterIdleAnimation);
-                                break;
+                            isIdle = true;
+                            switch (animalShape)
+                            {
+                                case MONSTER:
+                                    sprite.PlayAnimation(monsterIdleAnimation);
+                                    break;
 
-                            case MONSTER_CAT:
-                                sprite.PlayAnimation(monsterCatIdleAnimation);
-                                break;
+                                case MONSTER_CAT:
+                                    sprite.PlayAnimation(monsterCatIdleAnimation);
+                                    break;
+                            }
                         }
                     }
                 }
