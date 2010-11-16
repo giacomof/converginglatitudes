@@ -303,9 +303,9 @@ namespace LearningXNA
                 case 'é':
                     return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 1);
                 case 'ä':
-                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 3);
+                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 2);
                 case 'ů':
-                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 4);
+                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 3);
                 case 'ć':
                     return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 5);
                 case 'ç':
