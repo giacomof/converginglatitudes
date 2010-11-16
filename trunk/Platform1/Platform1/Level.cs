@@ -38,6 +38,8 @@ namespace LearningXNA
         Vector2 numberPos;
 
 
+        private Texture2D disappearingTileOpen;
+
         // Entities in the level.
         
         public Player Player
@@ -136,6 +138,8 @@ namespace LearningXNA
             layers[2] = new Layer(Content, "Backgrounds/Layer2", 1.0f);
 
             hudFont = Content.Load<SpriteFont>("Fonts/Hud");
+
+            disappearingTileOpen = Content.Load<Texture2D>("Tiles/drawerOpen");
 
             actualLives = maxLives;
             checkpoint = Vector2.Zero;
@@ -291,7 +295,7 @@ namespace LearningXNA
                 //END OF MOVING PLATFORM STUFF
 
                 case '*':
-                    return LoadTile("Platform", TileCollision.Disappearing);
+                    return LoadTile("drawerClosed", TileCollision.Disappearing);
 
 
                 case 'ü':
@@ -941,11 +945,18 @@ namespace LearningXNA
                     TileCollision collision = this.GetCollision(x, y);
                     if (texture != null && collision != TileCollision.PlatformCollider)
                     {
-                        if (!(collision == TileCollision.Disappearing && changeCollider))
+
+                        if (!(collision == TileCollision.Disappearing) || (collision == TileCollision.Disappearing && changeCollider))
                         {
                             // Draw it in screen space.
                             Vector2 position = new Vector2(x, y) * Tile.Size;
                             spriteBatch.Draw(texture, position, Color.White);
+                        }
+                        else 
+                        {
+                            // Draw it in screen space.
+                            Vector2 position = new Vector2(x, y) * Tile.Size;
+                            spriteBatch.Draw(disappearingTileOpen, position, Color.White);
                         }
                     }
 
