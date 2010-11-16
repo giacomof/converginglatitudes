@@ -572,9 +572,6 @@ namespace LearningXNA
 
                 Player.Update(gameTime);
 
-                // Update moving platforms
-                UpdateMovableTiles(gameTime);
-                UpdateVerticalMovableTiles(gameTime);
 
                 UpdateCookies(gameTime);
 
@@ -583,6 +580,10 @@ namespace LearningXNA
                 // Falling off the bottom of the level kills the player.
                 if (Player.BoundingRectangle.Top >= Height * Tile.Height)
                     OnPlayerKilled(false);
+
+                // Update moving platforms
+                UpdateMovableTiles(gameTime);
+                UpdateVerticalMovableTiles(gameTime);
 
                 UpdateDisappearingTile(gameTime);
                 UpdateEnemies(gameTime);

@@ -17,7 +17,6 @@ namespace LearningXNA
         const short MONSTER_DUCK        = 2;
         public short animalShape = MONSTER;
 
-
         // Tutorial variables
         static public int needTutorial;
 
@@ -202,7 +201,6 @@ namespace LearningXNA
 
         private bool isDead;
         private bool isIdle;
-
 
         // Jumping state
         private bool isBouncing;
@@ -584,7 +582,6 @@ namespace LearningXNA
                         // Apply velocity.
                         Position += velocity * elapsed;
                         Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
-
                     }
                     break;
             }
