@@ -479,7 +479,7 @@ namespace LearningXNA
             // Key press used for debug reasons
             if (keyboardState.IsKeyDown(Keys.S))
             {
-                movementY = movementY;
+                movementY = movementY; // added just for having a line for debugging
             }
 
             // Check if the player wants to jump.
