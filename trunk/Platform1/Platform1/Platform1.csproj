@@ -114,6 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
+    <Content Include="GameThumbnail.png" />
     <Content Include="Level Components.txt" />
     <None Include="To do list.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
