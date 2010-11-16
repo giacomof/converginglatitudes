@@ -294,11 +294,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sprites\Cat\Die.png">
-      <Name>Die</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Sprites\Cat\Idle.png">
       <Name>Idle</Name>
       <Importer>TextureImporter</Importer>
