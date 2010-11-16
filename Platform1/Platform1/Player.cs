@@ -202,6 +202,7 @@ namespace LearningXNA
 
         private bool isDead;
         private bool isIdle;
+        private bool hasReachedExit;
 
         // Jumping state
         private bool isBouncing;
@@ -241,6 +242,7 @@ namespace LearningXNA
             CanBeDuck = false;
 
             isIdle = true;
+            hasReachedExit = false;
 
             needTutorial = -1;
 
@@ -290,6 +292,7 @@ namespace LearningXNA
             scaredTimerClock = 0;
 
             isIdle = true;
+            hasReachedExit = false;
 
             needTutorial = -1;
 
@@ -1054,6 +1057,7 @@ namespace LearningXNA
         /// </summary>
         public void OnReachedExit()
         {
+            hasReachedExit = true;
             switch (animalShape)
             {
                 case MONSTER:
@@ -1138,7 +1142,7 @@ namespace LearningXNA
             else if (lastMovementX < 0)
                 flip = SpriteEffects.None;
 
-            if(isIdle)
+            if(isIdle || hasReachedExit)
                 flip = SpriteEffects.None;
 
             // Draw that sprite.
