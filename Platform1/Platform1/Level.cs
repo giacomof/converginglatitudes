@@ -34,10 +34,13 @@ namespace LearningXNA
         private const int EntityLayer = 2;
 
         private SpriteFont hudFont;
-        Vector2 numberPos;
+        private Vector2 numberPos;
 
+        private bool rightCallingDistance;
 
         private Texture2D disappearingTileOpen;
+        private Texture2D lightBulb;
+        private Texture2D exclamationMark;
 
         // Entities in the level.
         
@@ -131,14 +134,20 @@ namespace LearningXNA
 
             // Load background layer textures. For now, all levels must
             // use the same backgrounds and only use the left-most part of them.
-            layers = new Layer[3];
+            layers = new Layer[4];
             layers[0] = new Layer(Content, "Backgrounds/Layer0", 0.1f);
             layers[1] = new Layer(Content, "Backgrounds/Layer1", 0.5f);
             layers[2] = new Layer(Content, "Backgrounds/Layer2", 0.8f);
+            layers[3] = new Layer(Content, "Backgrounds/Layer3", 1.0f);
 
             hudFont = Content.Load<SpriteFont>("Fonts/Hud");
 
             disappearingTileOpen = Content.Load<Texture2D>("Tiles/drawerOpen");
+
+            lightBulb = Content.Load<Texture2D>("EventIcons/lightBulb");
+            exclamationMark = Content.Load<Texture2D>("EventIcons/exclamation");
+
+            rightCallingDistance = false;
 
             actualLives = maxLives;
             checkpoint = Vector2.Zero;
@@ -539,6 +548,8 @@ namespace LearningXNA
         /// </summary>
         public void Update(GameTime gameTime)
         {
+            rightCallingDistance = false;
+
             // Pause while the player is dead or time is expired.
             if (!Player.IsAlive || TimeRemaining == TimeSpan.Zero)
             {
@@ -626,8 +637,7 @@ namespace LearningXNA
                 if (movableTile.PlayerIsOn)
                 {
                     //Make player move with tile if the player is on top of tile 
-                    if (!player.IsClimbing)
-                        player.Position += movableTile.Velocity;
+                    player.Position += movableTile.Velocity;
                 }
             }
         }
@@ -725,7 +735,8 @@ namespace LearningXNA
 
             foreach (Animal animal in animals)
             {
-                animal.Update(gameTime, playerIsCalling, player.getPosition());
+                if(animal.Update(gameTime, playerIsCalling, player.getPosition()))
+                    rightCallingDistance = true;
 
                 // Touching an enemy instantly kills the player
                 if (animal.BoundingRectangle.Intersects(Player.BoundingRectangle))
@@ -866,6 +877,14 @@ namespace LearningXNA
                 fallingObject.Draw(gameTime, spriteBatch);
 
             Player.Draw(gameTime, spriteBatch);
+            Vector2 eventIconPosition = player.Position + new Vector2(-10, -130);
+            if (player.isScared)
+            {
+                spriteBatch.Draw(exclamationMark, eventIconPosition, Color.White);
+            }
+            if(rightCallingDistance)
+                spriteBatch.Draw(lightBulb, eventIconPosition, Color.White);
+            
 
             ////MOVING PLATFORM STUFF
             foreach (MovableTile tile in movableTiles)

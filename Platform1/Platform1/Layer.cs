@@ -17,8 +17,8 @@ namespace LearningXNA
         public Layer(ContentManager content, string basePath, float scrollRate)
         {
             // Assumes each layer only has 3 segments.
-            Textures = new Texture2D[3];
-            for (int i = 0; i < 3; ++i)
+            Textures = new Texture2D[9];
+            for (int i = 0; i < 9; ++i)
                 Textures[i] = content.Load<Texture2D>(basePath + "_" + i);
 
             ScrollRate = scrollRate;
