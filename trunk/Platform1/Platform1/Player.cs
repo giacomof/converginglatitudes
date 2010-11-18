@@ -343,19 +343,16 @@ namespace LearningXNA
                     }
                     else
                     {
-                        if (!isClimbing)
+                        isIdle = true;
+                        switch (animalShape)
                         {
-                            isIdle = true;
-                            switch (animalShape)
-                            {
-                                case MONSTER:
-                                    sprite.PlayAnimation(monsterIdleAnimation);
-                                    break;
+                            case MONSTER:
+                                sprite.PlayAnimation(monsterIdleAnimation);
+                                break;
 
-                                case MONSTER_CAT:
-                                    sprite.PlayAnimation(monsterCatIdleAnimation);
-                                    break;
-                            }
+                            case MONSTER_CAT:
+                                sprite.PlayAnimation(monsterCatIdleAnimation);
+                                break;
                         }
                     }
                 }
@@ -735,8 +732,9 @@ namespace LearningXNA
                 // Reset flag to search for movable tile collision.  
                 verticalMovableTile.PlayerIsOn = false;
 
-                //check to see if player is on tile.  
-                if (Math.Abs(BoundingRectangle.Bottom - verticalMovableTile.BoundingRectangle.Top) < 10)
+                if ((Math.Abs(BoundingRectangle.Bottom - verticalMovableTile.BoundingRectangle.Top) < 20) &&
+                    (BoundingRectangle.Left > verticalMovableTile.BoundingRectangle.Left - (BoundingRectangle.Width / 2) &&
+                    BoundingRectangle.Right <= verticalMovableTile.BoundingRectangle.Right + (BoundingRectangle.Width / 2)))
                 {
                     verticalMovableTile.PlayerIsOn = true;
                     IsOnGround = true;

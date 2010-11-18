@@ -286,7 +286,7 @@ namespace LearningXNA
 
                 //MOVING PLATFORM STUFF
                 case '^':
-                    return LoadVerticalMovableTile(x, y, TileCollision.Impassable);
+                    return LoadVerticalMovableTile(x, y, TileCollision.Platform);
                 // Moving platform - Horizontal
                 case '<':
                     return LoadMovableTile(x, y, TileCollision.Platform);
@@ -643,8 +643,7 @@ namespace LearningXNA
                 if (verticalMovableTile.PlayerIsOn)
                 {
                     //Make player move with tile if the player is on top of tile
-                    if(!player.IsClimbing)
-                        player.Position += verticalMovableTile.Velocity;
+                    player.Position += verticalMovableTile.Velocity;
                 }
             }
         }
