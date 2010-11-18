@@ -1,5 +1,8 @@
 The to do list:
 
+check onground value for the changing animation problem
+add kazim
+
 20101116
 
 12/10-10
