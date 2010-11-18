@@ -33,7 +33,6 @@ namespace LearningXNA
         // The layer which entities are drawn on top of.
         private const int EntityLayer = 2;
 
-        private SpriteBatch spriteBatch;
         private SpriteFont hudFont;
         Vector2 numberPos;
 
