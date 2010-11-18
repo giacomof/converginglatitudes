@@ -1,8 +1,6 @@
 The to do list:
 
 20101116
--trampoline bug
--climbing bug
 
 12/10-10
 G- Implementing different monster behaviours, similar to state-machine way (monster and monsterCat for now)
