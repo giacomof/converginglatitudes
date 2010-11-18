@@ -38,6 +38,8 @@ namespace LearningXNA
         private Texture2D monsterCatNotAvailable;
         private Texture2D monsterCatAvailable;
         private Texture2D monsterCatActive;
+        private Texture2D monsterDuckNotAvailable;
+        private Texture2D monsterSomethingNotAvailable;
 
         
 
@@ -70,7 +72,7 @@ namespace LearningXNA
         private const int BackBufferHeight = 720;
 
         // Used to store tha ability to change animal between levels
-        public bool canBeCat = true; //DEBUG REASON
+        public bool canBeCat = false; //DEBUG REASON
         public bool canBeDuck = false;
 
         //DEBUG INTERFACE CHANGE
@@ -119,6 +121,9 @@ namespace LearningXNA
             monsterCatNotAvailable = Content.Load<Texture2D>("Overlays/hud/monstercat-notavailable");
             monsterCatAvailable = Content.Load<Texture2D>("Overlays/hud/monstercat-available");
             monsterCatActive = Content.Load<Texture2D>("Overlays/hud/monstercat-active");
+
+            monsterDuckNotAvailable = Content.Load<Texture2D>("Overlays/hud/monsterduck-notavailable");
+            monsterSomethingNotAvailable = Content.Load<Texture2D>("Overlays/hud/monstersomething-notavailable");
 
 
             // Load overlay textures
@@ -289,6 +294,8 @@ namespace LearningXNA
             Vector2 livesPos;
             Vector2 monsterIconPos;
             Vector2 catIconPos;
+            Vector2 duckIconPos;
+            Vector2 somethingIconPos;
 
             if (changeInterface)
             {
@@ -297,6 +304,8 @@ namespace LearningXNA
                 livesPos = new Vector2(178, 12);
                 monsterIconPos = new Vector2(1016, 0);
                 catIconPos = new Vector2(1080, 0);
+                duckIconPos = new Vector2(1144, 0);
+                somethingIconPos = new Vector2(1210, 0);
 
                 spriteBatch.Draw(hud, hudLocation, Color.White);
             }
@@ -307,12 +316,16 @@ namespace LearningXNA
                 livesPos = new Vector2(178, 12);
                 monsterIconPos = new Vector2(0, 58);
                 catIconPos = new Vector2(0, 121);
+                duckIconPos = new Vector2(0, 185);
+                somethingIconPos = new Vector2(0, 244);
 
                 spriteBatch.Draw(hud2, hudLocation, Color.White);
             }
 
             Texture2D monsterIcon = null;
             Texture2D catIcon = null;
+            Texture2D duckIcon = null;
+            Texture2D somethingIcon = null;
 
             if (level.Player.animalShape == MONSTER)
                 monsterIcon = monsterActive;
@@ -326,8 +339,15 @@ namespace LearningXNA
             else
                 catIcon = monsterCatNotAvailable;
 
+
+            duckIcon = monsterDuckNotAvailable;
+            somethingIcon = monsterSomethingNotAvailable; 
+            
+
             spriteBatch.Draw(monsterIcon, hudLocation + monsterIconPos, Color.White);
             spriteBatch.Draw(catIcon, hudLocation + catIconPos, Color.White);
+            spriteBatch.Draw(duckIcon, hudLocation + duckIconPos, Color.White);
+            spriteBatch.Draw(somethingIcon, hudLocation + somethingIconPos, Color.White);
 
 
             // Draw time remaining. Uses modulo division to cause blinking when the
