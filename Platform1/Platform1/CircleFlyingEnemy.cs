@@ -24,6 +24,9 @@ namespace LearningXNA
         }
         Vector2 position;
 
+        private Vector2 center;
+        private float elapsedTime;
+
         private Rectangle localBounds;
         /// <summary>
         /// Gets a rectangle which bounds this enemy in world space.
@@ -49,10 +52,6 @@ namespace LearningXNA
         /// </summary>
         private FaceDirection direction = FaceDirection.Left;
 
-        /// <summary>
-        /// How long this enemy has been waiting before turning around.
-        /// </summary>
-        private float waitTime;
 
         /// <summary>
         /// How long to wait before turning around.
@@ -71,7 +70,7 @@ namespace LearningXNA
         public CircleFlyingEnemy(Level level, Vector2 position, string spriteSet)
         {
             this.level = level;
-            this.position = position;
+            this.center = position;
 
             LoadContent(spriteSet);
         }
@@ -102,49 +101,11 @@ namespace LearningXNA
         public void Update(GameTime gameTime)
         {
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            elapsedTime += elapsed;
 
-            // Calculate tile position based on the side we are walking towards.
-            float posY = Position.Y + localBounds.Height / 2 * (int)direction;
-
-            int tileY;
-            int tileX = (int)Math.Floor(Position.X / Tile.Width);
-
-            //to get the sprite collide with tiles in the right way
-            if (direction == FaceDirection.Left)
-            {
-                tileY = (int)Math.Floor(posY / Tile.Height) - (int)direction/2;
-            }
-            else
-            {
-                tileY = (int)Math.Floor(posY / Tile.Height) - (int)direction *2;
-
-            }
-            if (waitTime > 0)
-            {
-                // Wait for some amount of time.
-                waitTime = Math.Max(0.0f, waitTime - (float)gameTime.ElapsedGameTime.TotalSeconds);
-                if (waitTime <= 0.0f)
-                {
-                    // Then turn around.
-                    direction = (FaceDirection)(-(int)direction);
-                }
-            }
-            else
-            {
-                // If we are about to run into a wall or off a cliff, start waiting.
-                if (Level.GetCollision(tileX, tileY + (int)direction) == TileCollision.Impassable ||
-                    Level.GetCollision(tileX, tileY + (int)direction) == TileCollision.LevelFrame ||
-                    Level.GetCollision(tileX, tileY + (int)direction) == TileCollision.PlatformCollider)
-                {
-                    waitTime = MaxWaitTime;
-                }
-                else
-                {
-                    // Move in the current direction.
-                    Vector2 velocity = new Vector2(0.0f, (int)direction * MoveSpeed * elapsed);
-                    position = position + velocity;
-                }
-            }
+            int x = (int)Math.Round(center.X + (Math.Cos(elapsedTime) * 100));
+            int y = (int)Math.Round(center.Y + (Math.Sin(elapsedTime) * 100));
+            position = new Vector2(x, y);
         }
 
         /// <summary>
@@ -152,19 +113,7 @@ namespace LearningXNA
         /// </summary>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            // Stop running when the game is paused or before turning around.
-            if (!Level.Player.IsAlive ||
-                Level.ReachedExit ||
-                Level.TimeRemaining == TimeSpan.Zero ||
-                waitTime > 0)
-            {
-                sprite.PlayAnimation(idleAnimation);
-            }
-            else
-            {
-                sprite.PlayAnimation(runAnimation);
-            }
-
+            sprite.PlayAnimation(runAnimation);
 
             // Draw facing the way the enemy is moving.
             SpriteEffects flip = direction > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
