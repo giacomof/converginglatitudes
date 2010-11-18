@@ -73,6 +73,10 @@ namespace LearningXNA
         public bool canBeCat = true; //DEBUG REASON
         public bool canBeDuck = false;
 
+        //DEBUG INTERFACE CHANGE
+        public bool changeInterface;
+        public bool wasChangedInterface;
+
         // Shape state of the character; starting from 0 as a monster
         const short MONSTER = 0;
         const short MONSTER_CAT = 1;
@@ -90,6 +94,9 @@ namespace LearningXNA
 
             // Framerate differs between platforms.
             TargetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / TargetFrameRate);
+
+            changeInterface = true;
+            wasChangedInterface = false;
         }
 
         /// <summary>
@@ -158,6 +165,17 @@ namespace LearningXNA
             // Exit the game when back is pressed.
             if (keyboardState.IsKeyDown(Keys.Escape))
                 Exit();
+
+            if (keyboardState.IsKeyDown(Keys.I))
+            {
+                if(!wasChangedInterface)
+                    changeInterface = !changeInterface;
+                wasChangedInterface = true;
+            }
+            else
+            {
+                wasChangedInterface = false;
+            }
 
             bool continuePressed = keyboardState.IsKeyDown(Keys.Space);
 
@@ -266,22 +284,32 @@ namespace LearningXNA
                                          titleSafeArea.Y + titleSafeArea.Height / 2.0f);
             
             // Positions for timer and cookie counter
-            Vector2 timerPos = new Vector2(53, 12);
-            Vector2 cookiePos = new Vector2(290, 12);
-            Vector2 livesPos = new Vector2(178, 12);
-            Vector2 monsterIconPos = new Vector2(1016, 0);
-            Vector2 catIconPos = new Vector2(1080, 0);
+            Vector2 timerPos;
+            Vector2 cookiePos;
+            Vector2 livesPos;
+            Vector2 monsterIconPos;
+            Vector2 catIconPos;
 
-            spriteBatch.Draw(hud, hudLocation, Color.White);
+            if (changeInterface)
+            {
+                timerPos = new Vector2(53, 12);
+                cookiePos = new Vector2(290, 12);
+                livesPos = new Vector2(178, 12);
+                monsterIconPos = new Vector2(1016, 0);
+                catIconPos = new Vector2(1080, 0);
 
+                spriteBatch.Draw(hud, hudLocation, Color.White);
+            }
+            else
+            {
+                timerPos = new Vector2(53, 12);
+                cookiePos = new Vector2(290, 12);
+                livesPos = new Vector2(178, 12);
+                monsterIconPos = new Vector2(0, 58);
+                catIconPos = new Vector2(0, 121);
 
-            //Vector2 timerPos = new Vector2(53, 12);
-            //Vector2 cookiePos = new Vector2(290, 12);
-            //Vector2 livesPos = new Vector2(178, 12);
-            //Vector2 monsterIconPos = new Vector2(0, 58);
-            //Vector2 catIconPos = new Vector2(0, 121);
-
-            //spriteBatch.Draw(hud2, hudLocation, Color.White);
+                spriteBatch.Draw(hud2, hudLocation, Color.White);
+            }
 
             Texture2D monsterIcon = null;
             Texture2D catIcon = null;
