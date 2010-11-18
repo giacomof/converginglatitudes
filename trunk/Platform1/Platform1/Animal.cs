@@ -126,10 +126,11 @@ namespace LearningXNA
         /// <summary>
         /// Paces back and forth along a platform, waiting at either end.
         /// </summary>
-        public void Update(GameTime gameTime, bool isBeingCalled, Vector2 playerPosition)
+        public bool Update(GameTime gameTime, bool isBeingCalled, Vector2 playerPosition)
         {
             float distance = Vector2.Distance(position, playerPosition);
-            if (!isCalled && isBeingCalled && distance <= maxCallingDistance)
+            bool rightDistance = distance <= maxCallingDistance;
+            if (!isCalled && isBeingCalled && rightDistance)
             {
                 isCalled = isBeingCalled;
                 calledTimerClock = 0;
@@ -224,6 +225,7 @@ namespace LearningXNA
 
 
             }
+            return rightDistance;
         }
 
         /// <summary>
