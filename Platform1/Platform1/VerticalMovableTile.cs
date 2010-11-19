@@ -74,9 +74,7 @@ namespace LearningXNA
 
         public void LoadContent()
         {
-            texture = collision == TileCollision.Platform ?
-                Level.Content.Load<Texture2D>("Tiles/Platform") :
-                Level.Content.Load<Texture2D>("Tiles/BlockB0");
+            texture = Level.Content.Load<Texture2D>("Tiles/verticalMovingPlatform");
             origin = new Vector2(texture.Width / 2.0f, texture.Height / 2.0f);
             // Calculate bounds within texture size.  
             localBounds = new Rectangle(0, 0, texture.Width, texture.Height);
