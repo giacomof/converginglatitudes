@@ -61,7 +61,12 @@ namespace LearningXNA
         /// <summary>
         /// Tile that shows tutorial overlay
         /// </summary>
-        TutorialTile = 9
+        TutorialTile = 9,
+
+        /// <summary>
+        /// Switch for activating the movement of horizontal moving platforms
+        /// </summary>
+        HorizontalSwitch = 10,
 
         
     }

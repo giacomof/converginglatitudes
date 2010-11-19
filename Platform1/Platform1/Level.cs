@@ -315,6 +315,8 @@ namespace LearningXNA
                     return LoadMovableTile(x, y, TileCollision.Platform, false);
                 case '≤':
                     return LoadMovableTile(x, y, TileCollision.Platform, true);
+                case '┤':
+                    return LoadTile("Switch", TileCollision.HorizontalSwitch);
 
                 case '|':
                     return LoadTile("Platform", TileCollision.PlatformCollider);
@@ -393,6 +395,11 @@ namespace LearningXNA
         /// </param>
         /// <returns>The new tile.</returns>
         private Tile LoadTile(string name, TileCollision collision)
+        {
+            return new Tile(Content.Load<Texture2D>("Tiles/" + name), collision);
+        }
+
+        private Tile LoadSwitchTile(string name, TileCollision collision)
         {
             return new Tile(Content.Load<Texture2D>("Tiles/" + name), collision);
         }
