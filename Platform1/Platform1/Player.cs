@@ -393,10 +393,6 @@ namespace LearningXNA
                         }
                     }
                 }
-                else
-                {
-                    isDead = true;
-                }
             }
 
             // Clear input.
@@ -1029,6 +1025,7 @@ namespace LearningXNA
 
             if (!isDead)
             {
+                isDead = true;
                 if (something)
                     killedSound.Play();
                 else
@@ -1162,8 +1159,6 @@ namespace LearningXNA
                 flip = SpriteEffects.FlipHorizontally;
             else if (lastMovementX < 0)
                 flip = SpriteEffects.None;
-
-            System.Console.WriteLine(flip);
 
             // Draw that sprite.
             sprite.Draw(gameTime, spriteBatch, Position, flip);
