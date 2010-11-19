@@ -56,6 +56,7 @@ namespace LearningXNA
         public List<VerticalMovableTile> verticalMovableTiles = new List<VerticalMovableTile>();
         private List<Cookie> cookies = new List<Cookie>();
         private List<Enemy> enemies = new List<Enemy>();
+        private List<JumpingEnemy> jumpingenemies = new List<JumpingEnemy>();
         private List<FlyingEnemy> flyingenemies = new List<FlyingEnemy>();
         private List<CircleFlyingEnemy> circleFlyingenemies = new List<CircleFlyingEnemy>();
         private List<Animal> animals = new List<Animal>();
@@ -255,6 +256,9 @@ namespace LearningXNA
 
                 case 'F':
                     return LoadFlyingEnemyTile(x, y, "FlyingEnemy");
+
+                case 'J':
+                    return LoadJumpingEnemyTile(x, y, "JumpingEnemy");
 
                 case 'Ǒ':
                     return LoadCircleFlyingEnemyTile(x, y, "FlyingEnemy");
@@ -471,6 +475,17 @@ namespace LearningXNA
         }
 
         /// <summary>
+        /// Instantiates a Jumpingenemy and puts him in the level.
+        /// </summary>
+        private Tile LoadJumpingEnemyTile(int x, int y, string spriteSet)
+        {
+            Vector2 position = RectangleExtensions.GetBottomCenter(GetBounds(x, y));
+            jumpingenemies.Add(new JumpingEnemy(this, position, spriteSet));
+
+            return new Tile(null, TileCollision.Passable);
+        }
+
+        /// <summary>
         /// Instantiates an animal and puts him in the level.
         /// </summary>
         private Tile LoadAnimalTile(int x, int y, string spriteSet)
@@ -631,6 +646,7 @@ namespace LearningXNA
                     OnPlayerKilled(false);
 
                 UpdateDisappearingTile(gameTime);
+                UpdateJumpingEnemies(gameTime);
                 UpdateEnemies(gameTime);
                 UpdateFlyingEnemies(gameTime);
                 UpdateCircleFlyingenemies(gameTime);
@@ -751,6 +767,22 @@ namespace LearningXNA
             }
         }
 
+        /// <summary>
+        /// Animates each jumpingenemy and allow them to kill the player.
+        /// </summary>
+        private void UpdateJumpingEnemies(GameTime gameTime)
+        {
+            foreach (JumpingEnemy jumpingenemy in jumpingenemies)
+            {
+                jumpingenemy.Update(gameTime);
+
+                // Touching an enemy instantly kills the player
+                if (jumpingenemy.BoundingRectangle.Intersects(Player.BoundingRectangle))
+                {
+                    OnPlayerKilled(true);
+                }
+            }
+        }
         /// <summary>
         /// Animates each enemy and allow them to kill the player.
         /// </summary>
@@ -957,6 +989,9 @@ namespace LearningXNA
 
             foreach (Enemy enemy in enemies)
                 enemy.Draw(gameTime, spriteBatch);
+
+            foreach (JumpingEnemy jumpingenemy in jumpingenemies)
+                jumpingenemy.Draw(gameTime, spriteBatch);
 
             foreach (FlyingEnemy flyingenemy in flyingenemies)
                 flyingenemy.Draw(gameTime, spriteBatch);
