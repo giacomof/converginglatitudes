@@ -712,11 +712,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Backgrounds\Layer3_6.png">
-      <Name>Layer3_6</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Backgrounds\Layer3_7.png">
       <Name>Layer3_7</Name>
       <Importer>TextureImporter</Importer>
@@ -750,6 +745,13 @@
   <ItemGroup>
     <Compile Include="Sprites\Player\transformation.png">
       <Name>transformation</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Backgrounds\Layer3_6.png">
+      <Name>Layer3_6</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
