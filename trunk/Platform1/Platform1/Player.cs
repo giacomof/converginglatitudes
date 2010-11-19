@@ -832,7 +832,8 @@ namespace LearningXNA
                         collision != TileCollision.KillerTile && 
                         collision != TileCollision.Disappearing &&
                         collision != TileCollision.Checkpoint &&
-                        collision != TileCollision.TutorialTile )
+                        collision != TileCollision.TutorialTile &&
+                        collision != TileCollision.HorizontalSwitch)
                     {
                         // Determine collision depth (with direction) and magnitude.
                         Rectangle tileBounds = Level.GetBounds(x, y);
