@@ -143,7 +143,7 @@ namespace LearningXNA
             // Apply velocity.
             position += velocity * elapsed;
             position = new Vector2(Position.X, (float)Math.Round(Position.Y));
-            Console.WriteLine(position.Y + " " + isJumping + " " + initialPosition);
+            //Console.WriteLine(position.Y + " " + isJumping + " " + initialPosition);
             if (position.Y >= initialPosition.Y)
             {
                 jumpTime = 0.0f;
