@@ -258,10 +258,12 @@ namespace LearningXNA
                     return LoadCircleFlyingEnemyTile(x, y, "FlyingEnemy");
 
                 // Various animals
+                // Load cat
                 case 'C':
                     return LoadAnimalTile(x, y, "Cat");
 
                 // Various enemy animals
+                // Load dog
                 case 'd':
                     return LoadDogEnemyTile(x, y);
 
@@ -272,6 +274,7 @@ namespace LearningXNA
                 // Passable block
                 case ':':
                     return LoadVarietyTile("BlockB", 2, TileCollision.Passable);
+
 
                 // Player 1 start point
                 case 'P':
@@ -285,12 +288,18 @@ namespace LearningXNA
                 case '=':
                     return LoadVarietyTile("Tile", 2, TileCollision.Impassable);
 
+                case '□':
+                    return LoadInvisibleTile(TileCollision.Impassable);
+
                 // Bouncing Object
                 case '§':
                     return LoadTile("Trampolin", TileCollision.Bouncy);
                 // Spikes
                 case '╩':
                     return LoadVarietyTile("Cactus", 2, TileCollision.KillerTile);
+                // Invisible killing tile
+                case '⌂':
+                    return LoadInvisibleTile(TileCollision.KillerTile);
                 // Checkpoint
                 case '¤':
                     return LoadTile("checkPoint", TileCollision.Checkpoint);
@@ -381,6 +390,11 @@ namespace LearningXNA
         private Tile LoadTile(string name, TileCollision collision)
         {
             return new Tile(Content.Load<Texture2D>("Tiles/" + name), collision);
+        }
+
+        private Tile LoadInvisibleTile(TileCollision collision)
+        {
+            return new Tile(null, collision);
         }
 
         private Tile LoadTutorialTile(string name, TileCollision collision, int flag)
