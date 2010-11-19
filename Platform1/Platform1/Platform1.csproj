@@ -22,10 +22,6 @@
     <SccLocalPath>Svn</SccLocalPath>
     <SccAuxPath>Svn</SccAuxPath>
     <SccProvider>SubversionScc</SccProvider>
-    <ManifestCertificateThumbprint>87210D2DFEE28E5E69F3CCA80387FCAF339E48CC</ManifestCertificateThumbprint>
-    <ManifestKeyFile>Platform1_TemporaryKey.pfx</ManifestKeyFile>
-    <GenerateManifests>true</GenerateManifests>
-    <SignManifests>true</SignManifests>
     <PublishUrl>C:\Users\telivyel\Desktop\test\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
