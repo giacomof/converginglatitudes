@@ -143,8 +143,8 @@ namespace LearningXNA
             tutorialOverlay9 = Content.Load<Texture2D>("Overlays/tutorial9");
 
 
-            MediaPlayer.IsRepeating = true;
-            MediaPlayer.Play(Content.Load<Song>("Sounds/human_beat"));
+           // MediaPlayer.IsRepeating = true;
+           // MediaPlayer.Play(Content.Load<Song>("Sounds/human_beat"));
 
             LoadNextLevel();
         }
