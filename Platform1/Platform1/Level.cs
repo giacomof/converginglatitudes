@@ -25,6 +25,8 @@ namespace LearningXNA
 
         int scaredDistance = 200;
 
+        bool movingPlatformsActive = false;
+
         public double elapsedTime = 0;
         public bool changeCollider = false;
         // Physical structure of the level.
@@ -310,7 +312,10 @@ namespace LearningXNA
                     return LoadVerticalMovableTile(x, y, TileCollision.Platform);
                 // Moving platform - Horizontal
                 case '<':
-                    return LoadMovableTile(x, y, TileCollision.Platform);
+                    return LoadMovableTile(x, y, TileCollision.Platform, false);
+                case '≤':
+                    return LoadMovableTile(x, y, TileCollision.Platform, true);
+
                 case '|':
                     return LoadTile("Platform", TileCollision.PlatformCollider);
                 //END OF MOVING PLATFORM STUFF
@@ -357,10 +362,10 @@ namespace LearningXNA
         /// <summary>
         /// Loads a moving tile.
         /// </summary>
-        private Tile LoadMovableTile(int x, int y, TileCollision collision)
+        private Tile LoadMovableTile(int x, int y, TileCollision collision, bool controllable)
         {
             Point position = GetBounds(x, y).Center;
-            movableTiles.Add(new MovableTile(this, new Vector2(position.X, position.Y), collision));
+            movableTiles.Add(new MovableTile(this, new Vector2(position.X, position.Y), collision, controllable));
 
             return new Tile(null, TileCollision.Passable);
         }
@@ -662,7 +667,7 @@ namespace LearningXNA
             for (int i = 0; i < movableTiles.Count; ++i)
             {
                 MovableTile movableTile = movableTiles[i];
-                movableTile.Update(gameTime);
+                movableTile.Update(gameTime, movingPlatformsActive);
 
                 if (movableTile.PlayerIsOn)
                 {

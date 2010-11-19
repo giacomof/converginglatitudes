@@ -61,12 +61,16 @@ namespace LearningXNA
         private float waitTime;
         private const float MaxWaitTime = 0.7f;
         private const float MoveSpeed = 120.0f;
+        public bool isControllable;
+        public bool isActive;
 
-        public MovableTile(Level level, Vector2 position, TileCollision collision)
+        public MovableTile(Level level, Vector2 position, TileCollision collision, bool controllable)
         {
             this.level = level;
             this.position = position;
             this.collision = collision;
+            isControllable = controllable;
+            isActive = false;
 
             LoadContent();
         }
@@ -79,54 +83,57 @@ namespace LearningXNA
             localBounds = new Rectangle(0, 0, texture.Width, texture.Height);
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, bool active)
         {
-            float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            // Calculate tile position based on the side we are moving towards.  
-            float posX = Position.X + localBounds.Width / 2 * (int)direction;
-            int tileX = (int)Math.Floor(posX / Tile.Width) - (int)direction;
-            int tileY = (int)Math.Floor(Position.Y / Tile.Height);
-
-            if (waitTime > 0)
+            if ((active && isControllable) || !isControllable)
             {
-                // Wait for some amount of time.  
-                waitTime = Math.Max(0.0f, waitTime - (float)gameTime.ElapsedGameTime.TotalSeconds);
-                if (waitTime <= 0.0f)
+                float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                // Calculate tile position based on the side we are moving towards.  
+                float posX = Position.X + localBounds.Width / 2 * (int)direction;
+                int tileX = (int)Math.Floor(posX / Tile.Width) - (int)direction;
+                int tileY = (int)Math.Floor(Position.Y / Tile.Height);
+
+                if (waitTime > 0)
                 {
-                    // Then turn around.  
-                    direction = (FaceDirection)(-(int)direction);
-                }
-            }
-            else
-            {
-                //If we're about to run into a wall that isn't a MovableTile move in other direction.  
-                if (Level.GetCollision(tileX + (int)direction, tileY) == TileCollision.Impassable ||
-                    Level.GetCollision(tileX + (int)direction, tileY) == TileCollision.Platform ||
-                    Level.GetCollision(tileX + (int)direction, tileY) == TileCollision.PlatformCollider)
-                {
-                    velocity = new Vector2(0.0f, 0.0f);
-                    waitTime = MaxWaitTime;
+                    // Wait for some amount of time.  
+                    waitTime = Math.Max(0.0f, waitTime - (float)gameTime.ElapsedGameTime.TotalSeconds);
+                    if (waitTime <= 0.0f)
+                    {
+                        // Then turn around.  
+                        direction = (FaceDirection)(-(int)direction);
+                    }
                 }
                 else
                 {
-                    // Move in the current direction.  
-                    velocity = new Vector2((int)direction * MoveSpeed * elapsed, 0.0f);
-                    position = position + velocity;
-                }
-            }
-
-            if (level.movableTiles.Count > 0)
-            {
-                //If we're about to run into a MovableTile move in other direction.  
-                foreach (var movableTile in level.movableTiles)
-                {
-                    if (BoundingRectangle != movableTile.BoundingRectangle)
+                    //If we're about to run into a wall that isn't a MovableTile move in other direction.  
+                    if (Level.GetCollision(tileX + (int)direction, tileY) == TileCollision.Impassable ||
+                        Level.GetCollision(tileX + (int)direction, tileY) == TileCollision.Platform ||
+                        Level.GetCollision(tileX + (int)direction, tileY) == TileCollision.PlatformCollider)
                     {
-                        if (BoundingRectangle.Intersects(movableTile.BoundingRectangle))
+                        velocity = new Vector2(0.0f, 0.0f);
+                        waitTime = MaxWaitTime;
+                    }
+                    else
+                    {
+                        // Move in the current direction.  
+                        velocity = new Vector2((int)direction * MoveSpeed * elapsed, 0.0f);
+                        position = position + velocity;
+                    }
+                }
+
+                if (level.movableTiles.Count > 0)
+                {
+                    //If we're about to run into a MovableTile move in other direction.  
+                    foreach (var movableTile in level.movableTiles)
+                    {
+                        if (BoundingRectangle != movableTile.BoundingRectangle)
                         {
-                            direction = (FaceDirection)(-(int)direction);
-                            velocity = new Vector2((int)direction * MoveSpeed * elapsed, 0.0f);
+                            if (BoundingRectangle.Intersects(movableTile.BoundingRectangle))
+                            {
+                                direction = (FaceDirection)(-(int)direction);
+                                velocity = new Vector2((int)direction * MoveSpeed * elapsed, 0.0f);
+                            }
                         }
                     }
                 }
