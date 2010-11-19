@@ -630,6 +630,7 @@ namespace LearningXNA
                 switch (animalShape)
                 {
                     case MONSTER:
+                        sprite.PlayAnimation(monsterJumpAnimation);
                         // Begin or continue a jump
                         if ((!wasJumping && IsOnGround) || isBouncing || jumpTime > 0.0f)
                         {
@@ -637,18 +638,17 @@ namespace LearningXNA
                                 jumpSound.Play();
 
                             jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                            sprite.PlayAnimation(monsterJumpAnimation);
                         }
                         break;
 
                     case MONSTER_CAT:
+                        sprite.PlayAnimation(monsterCatJumpAnimation);
                         if ((!wasJumping && IsOnGround ) || isBouncing || jumpTime > 0.0f)
                         {
                             if (jumpTime == 0.0f)
                                 jumpSound.Play();
 
                             jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                            sprite.PlayAnimation(monsterCatJumpAnimation);
                         }
                         break;
                 }
