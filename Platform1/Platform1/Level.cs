@@ -23,7 +23,7 @@ namespace LearningXNA
         const short MONSTER_CAT = 1;
         const short MONSTER_DUCK = 2;
 
-        int scaredDistance = 200;
+        int scaredDistance = 250;
 
         bool movingPlatformsActive = false;
 
