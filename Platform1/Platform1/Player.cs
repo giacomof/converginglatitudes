@@ -56,6 +56,9 @@ namespace LearningXNA
         private Animation monsterCatClimbOnCeilingIdleAnimation;
 
 
+        private Animation transformationAnimation;
+        private int transformationTimerMilliseconds = 100;
+        private float transformationTimerClock;
 
         private SpriteEffects flip = SpriteEffects.None;
         private AnimationPlayer sprite;
@@ -197,8 +200,8 @@ namespace LearningXNA
 
         public bool isScared;
         public int scaredDirection;
-        int scaredTimerMilliseconds = 2000;
-        float scaredTimerClock;
+        private int scaredTimerMilliseconds = 2000;
+        private float scaredTimerClock;
 
         private bool isDead;
         private bool isIdle;
@@ -271,6 +274,8 @@ namespace LearningXNA
             monsterCatClimbOnCeilingAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/catClimbOnCeiling"), 0.1f, true);
             monsterCatClimbOnCeilingIdleAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/catClimbOnCeilingIdle"), 0.1f, false);
 
+            transformationAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/transformation"), 0.1f, false);
+
             // Load sounds.            
             killedSound = Level.Content.Load<SoundEffect>("Sounds/PlayerKilled");
             jumpSound = Level.Content.Load<SoundEffect>("Sounds/PlayerJump");
@@ -311,77 +316,87 @@ namespace LearningXNA
             GetInput();
             ApplyPhysics(gameTime);
 
-            if (isScared)
+
+            if (transformationTimerClock > 0)
             {
-                scaredTimerClock += gameTime.ElapsedGameTime.Milliseconds;
-                if (scaredTimerClock >= scaredTimerMilliseconds)
-                {
-                    isScared = false;
-                    scaredTimerClock = 0;
-                }
-            }
-
-            if (IsAlive)
-            {
-                isIdle = false;
-                if (isOnGround)
-                {
-                    if (Math.Abs(Velocity.X) > 0)
-                    {
-                        switch (animalShape)
-                        {
-                            case MONSTER:
-                                sprite.PlayAnimation(monsterRunAnimation);
-                                break;
-
-                            case MONSTER_CAT:
-
-                                sprite.PlayAnimation(monsterCatRunAnimation);
-                                break;
-                        }
-
-                    }
-                    else
-                    {
-                        isIdle = true;
-                        switch (animalShape)
-                        {
-                            case MONSTER:
-                                sprite.PlayAnimation(monsterIdleAnimation);
-                                break;
-
-                            case MONSTER_CAT:
-                                sprite.PlayAnimation(monsterCatIdleAnimation);
-                                break;
-                        }
-                    }
-                }
-                else if (isClimbingOnCeiling)
-                {
-                    if (Math.Abs(Velocity.X) > 0)
-                    {
-                        sprite.PlayAnimation(monsterCatClimbOnCeilingAnimation);
-                    }
-                    else
-                    {
-                        sprite.PlayAnimation(monsterCatClimbOnCeilingIdleAnimation);
-                    }
-                }
-                else if (isClimbing)
-                {
-                    if (Math.Abs(Velocity.Y) > 0)
-                    {
-                        sprite.PlayAnimation(monsterCatClimbAnimation);
-                    }
-                    else
-                    {
-                        sprite.PlayAnimation(monsterCatClimbIdleAnimation);
-                    }
-                }
+                transformationTimerClock -= gameTime.ElapsedGameTime.Milliseconds;
+                sprite.PlayAnimation(transformationAnimation);
             }
             else
             {
-                isDead = true;
+
+                if (isScared)
+                {
+                    scaredTimerClock += gameTime.ElapsedGameTime.Milliseconds;
+                    if (scaredTimerClock >= scaredTimerMilliseconds)
+                    {
+                        isScared = false;
+                        scaredTimerClock = 0;
+                    }
+                }
+
+                if (IsAlive)
+                {
+                    isIdle = false;
+                    if (isOnGround)
+                    {
+                        if (Math.Abs(Velocity.X) > 0)
+                        {
+                            switch (animalShape)
+                            {
+                                case MONSTER:
+                                    sprite.PlayAnimation(monsterRunAnimation);
+                                    break;
+
+                                case MONSTER_CAT:
+
+                                    sprite.PlayAnimation(monsterCatRunAnimation);
+                                    break;
+                            }
+
+                        }
+                        else
+                        {
+                            isIdle = true;
+                            switch (animalShape)
+                            {
+                                case MONSTER:
+                                    sprite.PlayAnimation(monsterIdleAnimation);
+                                    break;
+
+                                case MONSTER_CAT:
+                                    sprite.PlayAnimation(monsterCatIdleAnimation);
+                                    break;
+                            }
+                        }
+                    }
+                    else if (isClimbingOnCeiling)
+                    {
+                        if (Math.Abs(Velocity.X) > 0)
+                        {
+                            sprite.PlayAnimation(monsterCatClimbOnCeilingAnimation);
+                        }
+                        else
+                        {
+                            sprite.PlayAnimation(monsterCatClimbOnCeilingIdleAnimation);
+                        }
+                    }
+                    else if (isClimbing)
+                    {
+                        if (Math.Abs(Velocity.Y) > 0)
+                        {
+                            sprite.PlayAnimation(monsterCatClimbAnimation);
+                        }
+                        else
+                        {
+                            sprite.PlayAnimation(monsterCatClimbIdleAnimation);
+                        }
+                    }
+                }
+                else
+                {
+                    isDead = true;
+                }
             }
 
             // Clear input.
@@ -625,7 +640,7 @@ namespace LearningXNA
         private float DoJump(float velocityY, GameTime gameTime)
         {
             // If the player wants to jump
-            if (isJumping || isBouncing)
+            if (isJumping || isBouncing || !isOnGround)
             {
                 switch (animalShape)
                 {
@@ -659,13 +674,9 @@ namespace LearningXNA
                 if (0.0f < jumpTime && jumpTime <= MaxJumpTime)
                 {
                     // Fully override the vertical velocity with a power curve that gives players more control over the top of the jump
-                    if (isBouncing && isJumping)
-                    {
+                   if (isJumping && !isBouncing)
                         velocityY = JumpLaunchVelocity * (1.0f - (float)Math.Pow(jumpTime / MaxJumpTime, JumpControlPower));
-                    }
-                    else if (isJumping && !isBouncing)
-                        velocityY = JumpLaunchVelocity * (1.0f - (float)Math.Pow(jumpTime / MaxJumpTime, JumpControlPower));
-                    else if (isBouncing && !isJumping)
+                    else if (isBouncing)
                     {
                         if (animalShape == MONSTER)
                             velocityY = JumpLaunchVelocity * (1.0f - (float)Math.Pow(jumpTime / MaxJumpTime, JumpControlPower)) * 2;
@@ -1016,11 +1027,12 @@ namespace LearningXNA
         {
             isAlive = false;
 
-            if (something)
-                killedSound.Play();
-            else if (!isDead)
+            if (!isDead)
             {
-                fallSound.Play();
+                if (something)
+                    killedSound.Play();
+                else
+                    fallSound.Play();
             }
 
             switch (animalShape)
@@ -1075,58 +1087,64 @@ namespace LearningXNA
         /// </summary>
         public void changeShape(short shapeFlag)
         {
-            animalShape = shapeFlag;
-
             // Calculate standard bounding box dimension
             int width = (int)(monsterIdleAnimation.FrameWidth * 0.4);
             int left = (monsterIdleAnimation.FrameWidth - width) / 2;
             int height = (int)(monsterIdleAnimation.FrameWidth * 0.8);
             int top = monsterIdleAnimation.FrameHeight - height;
 
-            switch(shapeFlag)
+            if (animalShape != shapeFlag)
             {
-                case MONSTER:
-                    // Constants for controling horizontal movement
-                    MoveAcceleration = monsterMoveAcceleration;
-                    MaxMoveSpeed = monsterMaxMoveSpeed;
-                    GroundDragFactor = monsterGroundDragFactor;
-                    AirDragFactor = monsterAirDragFactor;
+                transformationTimerClock = transformationTimerMilliseconds;
 
-                    // Constants for controlling vertical movement
-                    MaxJumpTime = monsterMaxJumpTime;
-                    JumpLaunchVelocity = monsterJumpLaunchVelocity;
-                    GravityAcceleration = monsterGravityAcceleration;
-                    MaxFallSpeed = monsterMaxFallSpeed;
-                    JumpControlPower = monsterJumpControlPower;
+                animalShape = shapeFlag;
 
-                    isScared = false;
-                    scaredTimerClock = 0;
+                
 
-                    break;
+                switch (shapeFlag)
+                {
+                    case MONSTER:
+                        // Constants for controling horizontal movement
+                        MoveAcceleration = monsterMoveAcceleration;
+                        MaxMoveSpeed = monsterMaxMoveSpeed;
+                        GroundDragFactor = monsterGroundDragFactor;
+                        AirDragFactor = monsterAirDragFactor;
 
-                case MONSTER_CAT:
-                    // Constants for controling horizontal movement
-                    MoveAcceleration = monsterCatMoveAcceleration;
-                    MaxMoveSpeed = monsterCatMaxMoveSpeed;
-                    GroundDragFactor = monsterCatGroundDragFactor;
-                    AirDragFactor = monsterCatAirDragFactor;
+                        // Constants for controlling vertical movement
+                        MaxJumpTime = monsterMaxJumpTime;
+                        JumpLaunchVelocity = monsterJumpLaunchVelocity;
+                        GravityAcceleration = monsterGravityAcceleration;
+                        MaxFallSpeed = monsterMaxFallSpeed;
+                        JumpControlPower = monsterJumpControlPower;
 
-                    // Constants for controlling vertical movement
-                    MaxJumpTime = monsterCatMaxJumpTime;
-                    JumpLaunchVelocity = monsterCatJumpLaunchVelocity;
-                    GravityAcceleration = monsterCatGravityAcceleration;
-                    MaxFallSpeed = monsterCatMaxFallSpeed;
-                    JumpControlPower = monsterCatJumpControlPower;
+                        isScared = false;
+                        scaredTimerClock = 0;
 
-                    // Calculate bounding box dimension
-                    width = (int)(monsterCatIdleAnimation.FrameWidth * 0.4);
-                    left = (monsterCatIdleAnimation.FrameWidth - width) / 2;
-                    height = (int)(monsterCatIdleAnimation.FrameWidth * 0.8);
-                    top = monsterCatIdleAnimation.FrameHeight - height;
+                        break;
 
-                    break;
+                    case MONSTER_CAT:
+                        // Constants for controling horizontal movement
+                        MoveAcceleration = monsterCatMoveAcceleration;
+                        MaxMoveSpeed = monsterCatMaxMoveSpeed;
+                        GroundDragFactor = monsterCatGroundDragFactor;
+                        AirDragFactor = monsterCatAirDragFactor;
+
+                        // Constants for controlling vertical movement
+                        MaxJumpTime = monsterCatMaxJumpTime;
+                        JumpLaunchVelocity = monsterCatJumpLaunchVelocity;
+                        GravityAcceleration = monsterCatGravityAcceleration;
+                        MaxFallSpeed = monsterCatMaxFallSpeed;
+                        JumpControlPower = monsterCatJumpControlPower;
+
+                        // Calculate bounding box dimension
+                        width = (int)(monsterCatIdleAnimation.FrameWidth * 0.4);
+                        left = (monsterCatIdleAnimation.FrameWidth - width) / 2;
+                        height = (int)(monsterCatIdleAnimation.FrameWidth * 0.8);
+                        top = monsterCatIdleAnimation.FrameHeight - height;
+
+                        break;
+                }
             }
-
             // Change bounding box dimension        
             localBounds = new Rectangle(left, top, width, height);
         }
@@ -1138,13 +1156,14 @@ namespace LearningXNA
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             // Flip the sprite to face the way we are moving.
-            if (lastMovementX > 0)
+            if (isIdle || hasReachedExit || transformationTimerClock > 0)
+                flip = SpriteEffects.None;
+            else if (lastMovementX > 0)
                 flip = SpriteEffects.FlipHorizontally;
             else if (lastMovementX < 0)
                 flip = SpriteEffects.None;
 
-            if(isIdle || hasReachedExit)
-                flip = SpriteEffects.None;
+            System.Console.WriteLine(flip);
 
             // Draw that sprite.
             sprite.Draw(gameTime, spriteBatch, Position, flip);
