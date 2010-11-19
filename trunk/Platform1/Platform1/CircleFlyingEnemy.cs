@@ -25,6 +25,7 @@ namespace LearningXNA
         Vector2 position;
 
         private Vector2 center;
+        private int radius = 100;
         private float elapsedTime;
 
         private Rectangle localBounds;
@@ -103,8 +104,8 @@ namespace LearningXNA
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
             elapsedTime += elapsed;
 
-            int x = (int)Math.Round(center.X + (Math.Cos(elapsedTime) * 100));
-            int y = (int)Math.Round(center.Y + (Math.Sin(elapsedTime) * 100));
+            int x = (int)Math.Round(center.X + (Math.Cos(elapsedTime) * radius));
+            int y = (int)Math.Round(center.Y + (Math.Sin(elapsedTime) * radius));
             position = new Vector2(x, y);
         }
 
