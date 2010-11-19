@@ -60,7 +60,7 @@ namespace LearningXNA
 
         private Rectangle localBounds;
         private float waitTime;
-        private const float MaxWaitTime = 0.1f;
+        private const float MaxWaitTime = 0.7f;
         private const float MoveSpeed = 120.0f;
 
         public VerticalMovableTile(Level level, Vector2 position, TileCollision collision)
