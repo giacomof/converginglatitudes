@@ -777,6 +777,8 @@ namespace LearningXNA
 
                     if (animalShape == MONSTER && collision == TileCollision.HorizontalSwitch && isDoingSpecialAction)
                         level.activateHorizontalSwitch();
+                    if (animalShape == MONSTER && collision == TileCollision.VerticalSwitch && isDoingSpecialAction)
+                        level.activateVerticalSwitch();
 
                     //start Checkpoint
                     if (collision == TileCollision.Checkpoint)
@@ -834,7 +836,8 @@ namespace LearningXNA
                         collision != TileCollision.Disappearing &&
                         collision != TileCollision.Checkpoint &&
                         collision != TileCollision.TutorialTile &&
-                        collision != TileCollision.HorizontalSwitch)
+                        collision != TileCollision.HorizontalSwitch &&
+                        collision != TileCollision.VerticalSwitch)
                     {
                         // Determine collision depth (with direction) and magnitude.
                         Rectangle tileBounds = Level.GetBounds(x, y);

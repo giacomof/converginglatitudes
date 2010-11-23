@@ -68,6 +68,10 @@ namespace LearningXNA
         /// </summary>
         HorizontalSwitch = 10,
 
+        /// <summary>
+        /// Switch for activating the movement of horizontal moving platforms
+        /// </summary>
+        VerticalSwitch = 11,
         
     }
 

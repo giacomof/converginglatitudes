@@ -25,9 +25,11 @@ namespace LearningXNA
 
         int scaredDistance = 250;
 
-        private bool horizontalMovingPlatformsActive = false;
         private int SwitchTimerMilliseconds = 100;
+        private bool horizontalMovingPlatformsActive = false;
         private float horizontalSwitchTimerClock;
+        private bool verticalMovingPlatformsActive = false;
+        private float verticalSwitchTimerClock;
 
         public double elapsedTime = 0;
         public bool changeCollider = false;
@@ -317,14 +319,18 @@ namespace LearningXNA
 
                 //MOVING PLATFORM STUFF
                 case '^':
-                    return LoadVerticalMovableTile(x, y, TileCollision.Platform);
-                // Moving platform - Horizontal
+                    return LoadVerticalMovableTile(x, y, TileCollision.Platform, false);
+                case '∆':
+                    return LoadVerticalMovableTile(x, y, TileCollision.Platform, true);
                 case '<':
                     return LoadMovableTile(x, y, TileCollision.Platform, false);
                 case '≤':
                     return LoadMovableTile(x, y, TileCollision.Platform, true);
+
                 case '┤':
                     return LoadTile("Switch", TileCollision.HorizontalSwitch);
+                case '┴':
+                    return LoadTile("Switch", TileCollision.VerticalSwitch);
 
                 case '|':
                     return LoadTile("Platform", TileCollision.PlatformCollider);
@@ -362,13 +368,14 @@ namespace LearningXNA
             }
         }
 
-        private Tile LoadVerticalMovableTile(int x, int y, TileCollision collision)
+        private Tile LoadVerticalMovableTile(int x, int y, TileCollision collision, bool controllable)
         {
             Point position = GetBounds(x, y).Center;
-            verticalMovableTiles.Add(new VerticalMovableTile(this, new Vector2(position.X, position.Y), collision));
+            verticalMovableTiles.Add(new VerticalMovableTile(this, new Vector2(position.X, position.Y), collision, controllable));
 
             return new Tile(null, TileCollision.Passable);
         }
+
         /// <summary>
         /// Loads a moving tile.
         /// </summary>
@@ -613,6 +620,9 @@ namespace LearningXNA
             if(horizontalSwitchTimerClock >= 0)
                 horizontalSwitchTimerClock -= gameTime.ElapsedGameTime.Milliseconds;
 
+            if (verticalSwitchTimerClock >= 0)
+                verticalSwitchTimerClock -= gameTime.ElapsedGameTime.Milliseconds;
+
             // Pause while the player is dead or time is expired.
             if (!Player.IsAlive || TimeRemaining == TimeSpan.Zero)
             {
@@ -712,7 +722,7 @@ namespace LearningXNA
             for (int i = 0; i < verticalMovableTiles.Count; ++i)
             {
                 VerticalMovableTile verticalMovableTile = verticalMovableTiles[i];
-                verticalMovableTile.Update(gameTime);
+                verticalMovableTile.Update(gameTime, verticalMovingPlatformsActive);
 
                 if (verticalMovableTile.PlayerIsOn)
                 {
@@ -936,6 +946,17 @@ namespace LearningXNA
             }
         }
 
+        /// <summary>
+        /// Called when activating the vertical switch
+        /// </summary>
+        public void activateVerticalSwitch()
+        {
+            if (verticalSwitchTimerClock <= 0)
+            {
+                verticalSwitchTimerClock = SwitchTimerMilliseconds;
+                verticalMovingPlatformsActive = !verticalMovingPlatformsActive;
+            }
+        }
 
         /// <summary>
         /// Restores the player to the starting point to try the level again.
