@@ -774,8 +774,9 @@ namespace LearningXNA
                     {
                         needTutorial = level.tiles[x, y].tutorialFlag;
                     }
-                    
 
+                    if (animalShape == MONSTER && collision == TileCollision.HorizontalSwitch && isDoingSpecialAction)
+                        level.activateHorizontalSwitch();
 
                     //start Checkpoint
                     if (collision == TileCollision.Checkpoint)
