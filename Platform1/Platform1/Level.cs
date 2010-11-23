@@ -344,11 +344,11 @@ namespace LearningXNA
                 case '˧':
                     return LoadTile("Switch", TileCollision.SwitchWall3);
                 case '░':
-                    return LoadTile("Switch", TileCollision.DestroyableWall1);
+                    return LoadTile("checkPoint", TileCollision.DestroyableWall1);
                 case '▒':
-                    return LoadTile("Switch", TileCollision.DestroyableWall2);
+                    return LoadTile("checkPoint", TileCollision.DestroyableWall2);
                 case '▓':
-                    return LoadTile("Switch", TileCollision.DestroyableWall3);
+                    return LoadTile("checkPoint", TileCollision.DestroyableWall3);
 
 
 
@@ -639,6 +639,9 @@ namespace LearningXNA
             if (verticalSwitchTimerClock >= 0)
                 verticalSwitchTimerClock -= gameTime.ElapsedGameTime.Milliseconds;
 
+            if(destroyableWall1SwitchTimerClock >= 0)
+                destroyableWall1SwitchTimerClock -= gameTime.ElapsedGameTime.Milliseconds;
+
             // Pause while the player is dead or time is expired.
             if (!Player.IsAlive || TimeRemaining == TimeSpan.Zero)
             {
@@ -725,8 +728,8 @@ namespace LearningXNA
                 MovableTile movableTile = movableTiles[i];
                 movableTile.Update(gameTime, horizontalMovingPlatformsActive);
 
-                if ((movableTile.PlayerIsOn && !movableTile.isControllable) || 
-                    (horizontalMovingPlatformsActive && movableTile.isControllable))
+                if (movableTile.PlayerIsOn && 
+                    ((!movableTile.isControllable) || (horizontalMovingPlatformsActive && movableTile.isControllable)))
                 {
                     //Make player move with tile if the player is on top of tile 
                     player.Position += movableTile.Velocity;
@@ -741,8 +744,8 @@ namespace LearningXNA
                 VerticalMovableTile verticalMovableTile = verticalMovableTiles[i];
                 verticalMovableTile.Update(gameTime, verticalMovingPlatformsActive);
 
-                if ((verticalMovableTile.PlayerIsOn && !verticalMovableTile.isControllable) || 
-                    (horizontalMovingPlatformsActive && verticalMovableTile.isControllable))
+                if (verticalMovableTile.PlayerIsOn &&
+                    ((!verticalMovableTile.isControllable) || (verticalMovingPlatformsActive && verticalMovableTile.isControllable)))
                 {
                     //Make player move with tile if the player is on top of tile
                     player.Position += verticalMovableTile.Velocity;
@@ -973,6 +976,18 @@ namespace LearningXNA
             {
                 verticalSwitchTimerClock = SwitchTimerMilliseconds;
                 verticalMovingPlatformsActive = !verticalMovingPlatformsActive;
+            }
+        }
+
+        /// <summary>
+        /// Called to destroy walls
+        /// </summary>
+        public void activateWall1Switch()
+        {
+            if (verticalSwitchTimerClock <= 0)
+            {
+                destroyableWall1SwitchTimerClock = SwitchTimerMilliseconds;
+                destroyableWall1Active = !destroyableWall1Active;
             }
         }
 
