@@ -1171,12 +1171,14 @@ namespace LearningXNA
                     // If there is a visible tile in that position
                     Texture2D texture = tiles[x, y].Texture;
 
-                    //Level.tiles[x, y].Texture = null;
+                    
+
                     TileCollision collision = this.GetCollision(x, y);
-                    if ((texture != null && collision != TileCollision.PlatformCollider) ||
-                        (collision == TileCollision.DestroyableWall1 || 
-                            collision == TileCollision.DestroyableWall2 || 
-                            collision == TileCollision.DestroyableWall3))
+                    if (texture != null && collision != TileCollision.PlatformCollider &&
+                        collision != TileCollision.DestroyableWall1 &&
+                        collision != TileCollision.DestroyableWall2 &&
+                        collision != TileCollision.DestroyableWall3) 
+                        
                     {
                         Vector2 position = new Vector2(x, y) * Tile.Size;
 
