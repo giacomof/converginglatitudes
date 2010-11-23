@@ -37,7 +37,7 @@ namespace LearningXNA
 
         int scaredDistance = 250;
 
-        private int SwitchTimerMilliseconds = 100;
+        private int SwitchTimerMilliseconds = 200;
         private bool horizontalMovingPlatformsActive = false;
         private float horizontalSwitchTimerClock = 0;
         private bool verticalMovingPlatformsActive = false;
@@ -45,6 +45,10 @@ namespace LearningXNA
 
         private bool destroyableWall1Active = true;
         private float destroyableWall1SwitchTimerClock = 0;
+        private bool destroyableWall2Active = true;
+        private float destroyableWall2SwitchTimerClock = 0;
+        private bool destroyableWall3Active = true;
+        private float destroyableWall3SwitchTimerClock = 0;
 
         public double elapsedTime = 0;
         public bool changeCollider = false;
@@ -670,12 +674,15 @@ namespace LearningXNA
 
             if(horizontalSwitchTimerClock >= 0)
                 horizontalSwitchTimerClock -= gameTime.ElapsedGameTime.Milliseconds;
-
             if (verticalSwitchTimerClock >= 0)
                 verticalSwitchTimerClock -= gameTime.ElapsedGameTime.Milliseconds;
-
             if(destroyableWall1SwitchTimerClock >= 0)
                 destroyableWall1SwitchTimerClock -= gameTime.ElapsedGameTime.Milliseconds;
+            if (destroyableWall2SwitchTimerClock >= 0)
+                destroyableWall2SwitchTimerClock -= gameTime.ElapsedGameTime.Milliseconds;
+            if (destroyableWall3SwitchTimerClock >= 0)
+                destroyableWall3SwitchTimerClock -= gameTime.ElapsedGameTime.Milliseconds;
+
 
             // Pause while the player is dead or time is expired.
             if (!Player.IsAlive || TimeRemaining == TimeSpan.Zero)
@@ -1030,6 +1037,38 @@ namespace LearningXNA
                         tiles[coordinate.x, coordinate.y].Collision = TileCollision.Impassable;
 
                 destroyableWall1Active = !destroyableWall1Active;
+            }
+        }
+
+        public void activateWall2Switch()
+        {
+            if (destroyableWall2SwitchTimerClock <= 0)
+            {
+                destroyableWall2SwitchTimerClock = SwitchTimerMilliseconds;
+                if (destroyableWall2Active)
+                    foreach (Coordinates coordinate in destroyableWalls2)
+                        tiles[coordinate.x, coordinate.y].Collision = TileCollision.DestroyableWall2;
+                else
+                    foreach (Coordinates coordinate in destroyableWalls2)
+                        tiles[coordinate.x, coordinate.y].Collision = TileCollision.Impassable;
+
+                destroyableWall2Active = !destroyableWall2Active;
+            }
+        }
+
+        public void activateWall3Switch()
+        {
+            if (destroyableWall3SwitchTimerClock <= 0)
+            {
+                destroyableWall3SwitchTimerClock = SwitchTimerMilliseconds;
+                if (destroyableWall3Active)
+                    foreach (Coordinates coordinate in destroyableWalls3)
+                        tiles[coordinate.x, coordinate.y].Collision = TileCollision.DestroyableWall3;
+                else
+                    foreach (Coordinates coordinate in destroyableWalls3)
+                        tiles[coordinate.x, coordinate.y].Collision = TileCollision.Impassable;
+
+                destroyableWall3Active = !destroyableWall3Active;
             }
         }
 

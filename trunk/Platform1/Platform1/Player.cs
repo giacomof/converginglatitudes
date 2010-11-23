@@ -781,6 +781,10 @@ namespace LearningXNA
                         level.activateVerticalSwitch();
                     if (animalShape == MONSTER && collision == TileCollision.SwitchWall1 && isDoingSpecialAction)
                         level.activateWall1Switch();
+                    if (animalShape == MONSTER && collision == TileCollision.SwitchWall2 && isDoingSpecialAction)
+                        level.activateWall2Switch();
+                    if (animalShape == MONSTER && collision == TileCollision.SwitchWall3 && isDoingSpecialAction)
+                        level.activateWall3Switch();
 
 
                     //start Checkpoint
