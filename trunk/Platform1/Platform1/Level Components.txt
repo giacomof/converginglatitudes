@@ -30,6 +30,9 @@
 - Switch destroy wall 1							'˥'
 - Switch destroy wall 2							'˦'
 - Switch destroy wall 3							'˧'
+- Destroyable wall 1							'░'
+- Destroyable wall 2							'▒'
+- Destroyable wall 3							'▓'
 
 
 
