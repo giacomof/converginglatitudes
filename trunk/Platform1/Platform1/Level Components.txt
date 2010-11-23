@@ -27,6 +27,13 @@
 - Coontrollable Moving platform Switch (V)		'┴'
 - Bouncy Platform								'§'
 - Dog											'd'
+- Switch destroy wall 1							'˥'
+- Switch destroy wall 2							'˦'
+- Switch destroy wall 3							'˧'
+
+
+
+
 
 
 

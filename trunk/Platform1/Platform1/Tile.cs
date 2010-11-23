@@ -72,7 +72,21 @@ namespace LearningXNA
         /// Switch for activating the movement of horizontal moving platforms
         /// </summary>
         VerticalSwitch = 11,
-        
+
+        /// <summary>
+        /// Switch for deactivating walls number 1
+        /// </summary>
+        SwitchWall1 = 12,
+
+        /// <summary>
+        /// Switch for deactivating walls number 2
+        /// </summary>
+        SwitchWall2 = 13,
+
+        /// <summary>
+        /// Switch for deactivating walls number 3
+        /// </summary>
+        SwitchWall3 = 14
     }
 
     /// <summary>
