@@ -27,9 +27,12 @@ namespace LearningXNA
 
         private int SwitchTimerMilliseconds = 100;
         private bool horizontalMovingPlatformsActive = false;
-        private float horizontalSwitchTimerClock;
+        private float horizontalSwitchTimerClock = 0;
         private bool verticalMovingPlatformsActive = false;
-        private float verticalSwitchTimerClock;
+        private float verticalSwitchTimerClock = 0;
+
+        private bool destroyableWall1Active = false;
+        private float destroyableWall1SwitchTimerClock = 0;
 
         public double elapsedTime = 0;
         public bool changeCollider = false;
@@ -159,8 +162,6 @@ namespace LearningXNA
 
             actualLives = maxLives;
             checkpoint = Vector2.Zero;
-
-            horizontalSwitchTimerClock = 0;
 
             // Load sounds.
             exitReachedSound = Content.Load<SoundEffect>("Sounds/ExitReached");
@@ -335,6 +336,21 @@ namespace LearningXNA
                 case '|':
                     return LoadTile("Platform", TileCollision.PlatformCollider);
                 //END OF MOVING PLATFORM STUFF
+
+                case '˥':
+                    return LoadTile("Switch", TileCollision.SwitchWall1);
+                case '˦':
+                    return LoadTile("Switch", TileCollision.SwitchWall2);
+                case '˧':
+                    return LoadTile("Switch", TileCollision.SwitchWall3);
+                case '░':
+                    return LoadTile("Switch", TileCollision.DestroyableWall1);
+                case '▒':
+                    return LoadTile("Switch", TileCollision.DestroyableWall2);
+                case '▓':
+                    return LoadTile("Switch", TileCollision.DestroyableWall3);
+
+
 
                 case '*':
                     return LoadTile("drawerClosed", TileCollision.Disappearing);
@@ -709,7 +725,7 @@ namespace LearningXNA
                 MovableTile movableTile = movableTiles[i];
                 movableTile.Update(gameTime, horizontalMovingPlatformsActive);
 
-                if (movableTile.PlayerIsOn && horizontalMovingPlatformsActive)
+                if (movableTile.PlayerIsOn && horizontalMovingPlatformsActive && movableTile.isControllable)
                 {
                     //Make player move with tile if the player is on top of tile 
                     player.Position += movableTile.Velocity;
@@ -724,7 +740,7 @@ namespace LearningXNA
                 VerticalMovableTile verticalMovableTile = verticalMovableTiles[i];
                 verticalMovableTile.Update(gameTime, verticalMovingPlatformsActive);
 
-                if (verticalMovableTile.PlayerIsOn && verticalMovingPlatformsActive)
+                if (verticalMovableTile.PlayerIsOn && verticalMovingPlatformsActive && verticalMovableTile.isControllable)
                 {
                     //Make player move with tile if the player is on top of tile
                     player.Position += verticalMovableTile.Velocity;

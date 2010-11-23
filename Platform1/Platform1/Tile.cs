@@ -86,7 +86,22 @@ namespace LearningXNA
         /// <summary>
         /// Switch for deactivating walls number 3
         /// </summary>
-        SwitchWall3 = 14
+        SwitchWall3 = 14,
+
+        /// <summary>
+        /// Destroyable wall number 1
+        /// </summary>
+        DestroyableWall1 = 15,
+
+        /// <summary>
+        /// Destroyable wall number 2
+        /// </summary>
+        DestroyableWall2 = 16,
+
+        /// <summary>
+        /// Destroyable wall number 3
+        /// </summary>
+        DestroyableWall3 = 17
     }
 
     /// <summary>
