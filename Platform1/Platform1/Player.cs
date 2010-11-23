@@ -780,7 +780,7 @@ namespace LearningXNA
                     //start Checkpoint
                     if (collision == TileCollision.Checkpoint)
                     {
-                        if (level.checkpoint.X < x*Tile.Width+(Tile.Width / 2))
+                        if (level.checkpoint.X != x*Tile.Width+(Tile.Width / 2))
                         {
                             level.actualLives = level.maxLives;
                             level.checkpoint = new Vector2(x, y) * Tile.Size;
