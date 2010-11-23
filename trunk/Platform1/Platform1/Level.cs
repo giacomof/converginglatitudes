@@ -18,6 +18,18 @@ namespace LearningXNA
     /// </summary>
     class Level : IDisposable
     {
+        public struct Coordinates
+        {
+            public int x;
+            public int y;
+
+            public Coordinates(int xCoord, int yCoord)
+            {
+                x = xCoord;
+                y = yCoord;
+            }
+        }
+
         // Shape state of the character; starting from 0 as a monster
         const short MONSTER = 0;
         const short MONSTER_CAT = 1;
@@ -31,13 +43,14 @@ namespace LearningXNA
         private bool verticalMovingPlatformsActive = false;
         private float verticalSwitchTimerClock = 0;
 
-        private bool destroyableWall1Active = false;
+        private bool destroyableWall1Active = true;
         private float destroyableWall1SwitchTimerClock = 0;
 
         public double elapsedTime = 0;
         public bool changeCollider = false;
         // Physical structure of the level.
         public Tile[,] tiles;
+
         private Layer[] layers;
         // The layer which entities are drawn on top of.
         private const int EntityLayer = 2;
@@ -59,6 +72,7 @@ namespace LearningXNA
         }
         Player player;
 
+        
         public List<MovableTile> movableTiles = new List<MovableTile>();
         public List<VerticalMovableTile> verticalMovableTiles = new List<VerticalMovableTile>();
         private List<Cookie> cookies = new List<Cookie>();
@@ -69,6 +83,9 @@ namespace LearningXNA
         private List<Animal> animals = new List<Animal>();
         private List<DogEnemy> dogEnemies = new List<DogEnemy>();
         private List<FallingObject> fallingObjects = new List<FallingObject>();
+        public List<Coordinates> destroyableWalls1 = new List<Coordinates>();
+        public List<Coordinates> destroyableWalls2 = new List<Coordinates>();
+        public List<Coordinates> destroyableWalls3 = new List<Coordinates>();
 
         // Key locations in the level.        
         private Vector2 start;
@@ -344,11 +361,11 @@ namespace LearningXNA
                 case '˧':
                     return LoadTile("Switch", TileCollision.SwitchWall3);
                 case '░':
-                    return LoadTile("checkPoint", TileCollision.DestroyableWall1);
+                    return LoadDestroyableTile("Tile0", 1, x, y);
                 case '▒':
-                    return LoadTile("checkPoint", TileCollision.DestroyableWall2);
+                    return LoadDestroyableTile("Tile0", 2, x, y);
                 case '▓':
-                    return LoadTile("checkPoint", TileCollision.DestroyableWall3);
+                    return LoadDestroyableTile("Tile0", 3, x, y);
 
 
 
@@ -428,6 +445,24 @@ namespace LearningXNA
         private Tile LoadTile(string name, TileCollision collision)
         {
             return new Tile(Content.Load<Texture2D>("Tiles/" + name), collision);
+        }
+
+        private Tile LoadDestroyableTile(string name, int destroyableWallIndex, int x, int y)
+        {
+            switch (destroyableWallIndex)
+            {
+                case 1:
+                    destroyableWalls1.Add(new Coordinates(x, y));
+                    return new Tile(Content.Load<Texture2D>("Tiles/" + name), TileCollision.Impassable);
+                case 2:
+                    destroyableWalls2.Add(new Coordinates(x, y));
+                    return new Tile(Content.Load<Texture2D>("Tiles/" + name), TileCollision.Impassable);
+                case 3:
+                    destroyableWalls3.Add(new Coordinates(x, y));
+                    return new Tile(Content.Load<Texture2D>("Tiles/" + name), TileCollision.Impassable);
+                default:
+                    return new Tile();
+            }
         }
 
         private Tile LoadSwitchTile(string name, TileCollision collision)
@@ -984,9 +1019,16 @@ namespace LearningXNA
         /// </summary>
         public void activateWall1Switch()
         {
-            if (verticalSwitchTimerClock <= 0)
+            if (destroyableWall1SwitchTimerClock <= 0)
             {
                 destroyableWall1SwitchTimerClock = SwitchTimerMilliseconds;
+                if(destroyableWall1Active)
+                    foreach (Coordinates coordinate in destroyableWalls1)
+                        tiles[coordinate.x, coordinate.y].Collision = TileCollision.DestroyableWall1;
+                else
+                    foreach (Coordinates coordinate in destroyableWalls1)
+                        tiles[coordinate.x, coordinate.y].Collision = TileCollision.Impassable;
+
                 destroyableWall1Active = !destroyableWall1Active;
             }
         }
@@ -1131,19 +1173,19 @@ namespace LearningXNA
 
                     //Level.tiles[x, y].Texture = null;
                     TileCollision collision = this.GetCollision(x, y);
-                    if (texture != null && collision != TileCollision.PlatformCollider)
+                    if ((texture != null && collision != TileCollision.PlatformCollider) ||
+                        (collision == TileCollision.DestroyableWall1 || 
+                            collision == TileCollision.DestroyableWall2 || 
+                            collision == TileCollision.DestroyableWall3))
                     {
+                        Vector2 position = new Vector2(x, y) * Tile.Size;
 
                         if (!(collision == TileCollision.Disappearing) || (collision == TileCollision.Disappearing && changeCollider))
                         {
-                            // Draw it in screen space.
-                            Vector2 position = new Vector2(x, y) * Tile.Size;
                             spriteBatch.Draw(texture, position, Color.White);
                         }
-                        else 
+                        else
                         {
-                            // Draw it in screen space.
-                            Vector2 position = new Vector2(x, y) * Tile.Size;
                             spriteBatch.Draw(disappearingTileOpen, position, Color.White);
                         }
                     }
