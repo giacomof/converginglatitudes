@@ -22,6 +22,7 @@
 - Moving platform (Vertical)					'^'
 - Controllable Moving platform (Horizontal)		'≤'
 - Platform Collider								'|'
+- Coontrollable Moving platform Switch (H)		'┤'
 - Bouncy Platform								'§'
 - Dog											'd'
 

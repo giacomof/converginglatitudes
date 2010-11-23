@@ -25,7 +25,9 @@ namespace LearningXNA
 
         int scaredDistance = 250;
 
-        bool movingPlatformsActive = false;
+        private bool horizontalMovingPlatformsActive = false;
+        private int SwitchTimerMilliseconds = 100;
+        private float horizontalSwitchTimerClock;
 
         public double elapsedTime = 0;
         public bool changeCollider = false;
@@ -155,6 +157,8 @@ namespace LearningXNA
 
             actualLives = maxLives;
             checkpoint = Vector2.Zero;
+
+            horizontalSwitchTimerClock = 0;
 
             // Load sounds.
             exitReachedSound = Content.Load<SoundEffect>("Sounds/ExitReached");
@@ -606,6 +610,9 @@ namespace LearningXNA
         {
             rightCallingDistance = false;
 
+            if(horizontalSwitchTimerClock >= 0)
+                horizontalSwitchTimerClock -= gameTime.ElapsedGameTime.Milliseconds;
+
             // Pause while the player is dead or time is expired.
             if (!Player.IsAlive || TimeRemaining == TimeSpan.Zero)
             {
@@ -690,7 +697,7 @@ namespace LearningXNA
             for (int i = 0; i < movableTiles.Count; ++i)
             {
                 MovableTile movableTile = movableTiles[i];
-                movableTile.Update(gameTime, movingPlatformsActive);
+                movableTile.Update(gameTime, horizontalMovingPlatformsActive);
 
                 if (movableTile.PlayerIsOn)
                 {
@@ -915,6 +922,20 @@ namespace LearningXNA
             exitReachedSound.Play();
             reachedExit = true;
         }
+
+
+        /// <summary>
+        /// Called when activating the horizontal switch
+        /// </summary>
+        public void activateHorizontalSwitch()
+        {
+            if (horizontalSwitchTimerClock <= 0)
+            {
+                horizontalSwitchTimerClock = SwitchTimerMilliseconds;
+                horizontalMovingPlatformsActive = !horizontalMovingPlatformsActive;
+            }
+        }
+
 
         /// <summary>
         /// Restores the player to the starting point to try the level again.
