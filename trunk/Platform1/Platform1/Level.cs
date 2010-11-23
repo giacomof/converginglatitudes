@@ -725,7 +725,8 @@ namespace LearningXNA
                 MovableTile movableTile = movableTiles[i];
                 movableTile.Update(gameTime, horizontalMovingPlatformsActive);
 
-                if (movableTile.PlayerIsOn && horizontalMovingPlatformsActive && movableTile.isControllable)
+                if ((movableTile.PlayerIsOn && !movableTile.isControllable) || 
+                    (horizontalMovingPlatformsActive && movableTile.isControllable))
                 {
                     //Make player move with tile if the player is on top of tile 
                     player.Position += movableTile.Velocity;
@@ -740,7 +741,8 @@ namespace LearningXNA
                 VerticalMovableTile verticalMovableTile = verticalMovableTiles[i];
                 verticalMovableTile.Update(gameTime, verticalMovingPlatformsActive);
 
-                if (verticalMovableTile.PlayerIsOn && verticalMovingPlatformsActive && verticalMovableTile.isControllable)
+                if ((verticalMovableTile.PlayerIsOn && !verticalMovableTile.isControllable) || 
+                    (horizontalMovingPlatformsActive && verticalMovableTile.isControllable))
                 {
                     //Make player move with tile if the player is on top of tile
                     player.Position += verticalMovableTile.Velocity;
