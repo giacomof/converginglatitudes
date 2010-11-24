@@ -613,7 +613,6 @@ namespace LearningXNA
 
             if (Position.Y == previousPosition.Y)
                 velocity.Y = 0;
-
         }
 
         /// <summary>
