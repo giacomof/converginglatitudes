@@ -304,6 +304,7 @@ namespace LearningXNA
             // Get beck to MONSTER when killed
             changeShape(MONSTER);
 
+            Console.WriteLine("Monster Idle Animation");
             sprite.PlayAnimation(monsterIdleAnimation);            
         }
 
@@ -345,11 +346,12 @@ namespace LearningXNA
                             switch (animalShape)
                             {
                                 case MONSTER:
+                                    Console.WriteLine("Monster Run Animation");
                                     sprite.PlayAnimation(monsterRunAnimation);
                                     break;
 
                                 case MONSTER_CAT:
-
+                                    Console.WriteLine("Cat Run Animation");
                                     sprite.PlayAnimation(monsterCatRunAnimation);
                                     break;
                             }
@@ -361,10 +363,12 @@ namespace LearningXNA
                             switch (animalShape)
                             {
                                 case MONSTER:
+                                    Console.WriteLine("Monster Idle Animation");
                                     sprite.PlayAnimation(monsterIdleAnimation);
                                     break;
 
                                 case MONSTER_CAT:
+                                    Console.WriteLine("Cat Idle Animation");
                                     sprite.PlayAnimation(monsterCatIdleAnimation);
                                     break;
                             }
@@ -602,8 +606,6 @@ namespace LearningXNA
                     break;
             }
 
-            
-
             // If the player is now colliding with the level, separate them.
             HandleCollisions();
 
@@ -635,11 +637,12 @@ namespace LearningXNA
         private float DoJump(float velocityY, GameTime gameTime)
         {
             // If the player wants to jump
-            if (isJumping || isBouncing || !isOnGround)
+            if (isJumping || isBouncing)
             {
                 switch (animalShape)
                 {
                     case MONSTER:
+                        Console.WriteLine("Monster Jump Animation");
                         sprite.PlayAnimation(monsterJumpAnimation);
                         // Begin or continue a jump
                         if ((!wasJumping && IsOnGround) || isBouncing || jumpTime > 0.0f)
@@ -652,6 +655,7 @@ namespace LearningXNA
                         break;
 
                     case MONSTER_CAT:
+                        Console.WriteLine("Cat Jump Animation");
                         sprite.PlayAnimation(monsterCatJumpAnimation);
                         if ((!wasJumping && IsOnGround ) || isBouncing || jumpTime > 0.0f)
                         {
@@ -1052,9 +1056,11 @@ namespace LearningXNA
             switch (animalShape)
             {
                 case MONSTER:
+                    Console.WriteLine("Monster Die Animation");
                     sprite.PlayAnimation(monsterDieAnimation);
                     break;
                 case MONSTER_CAT:
+                    Console.WriteLine("Cat Die Animation");
                     sprite.PlayAnimation(monsterCatDieAnimation);
                     break;
             }
