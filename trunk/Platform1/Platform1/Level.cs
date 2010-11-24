@@ -324,6 +324,8 @@ namespace LearningXNA
 
                 case '□':
                     return LoadInvisibleTile(TileCollision.Impassable);
+                case '¯':
+                    return LoadInvisibleTile(TileCollision.Platform);
 
                 // Bouncing Object
                 case '§':
