@@ -18,6 +18,7 @@
 - Impassable invisible block					'□'
 - Spikes										'╩'
 - Killing invisible block						'⌂'
+- Platform invisible block						'¯'
 - Moving platform (Horizontal)					'<'
 - Moving platform (Vertical)					'^'
 - Controllable Moving platform (Horizontal)		'≤'
