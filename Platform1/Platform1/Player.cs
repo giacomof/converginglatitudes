@@ -637,7 +637,7 @@ namespace LearningXNA
         private float DoJump(float velocityY, GameTime gameTime)
         {
             // If the player wants to jump
-            if (isJumping || isBouncing)
+            if (isJumping || isBouncing || !isOnGround)
             {
                 switch (animalShape)
                 {
