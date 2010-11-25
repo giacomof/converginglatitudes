@@ -8,6 +8,7 @@
 - Flying Enemy (Helicopter)						'F'	
 - Circle Flying Enemy (Helicopter)				'Ǒ'								
 - Enemy (Radio controlled car)					'A'
+- Jumping Enemy									'J'
 - Enemy Dog										'd'
 - Cat 											'C'
 - Platform block 								'~'
