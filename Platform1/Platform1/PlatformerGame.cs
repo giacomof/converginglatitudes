@@ -56,7 +56,6 @@ namespace LearningXNA
         private Texture2D tutorialOverlay6;
         private Texture2D tutorialOverlay7;
         private Texture2D tutorialOverlay8;
-        private Texture2D tutorialOverlay9;
 
         // Meta-level game state.
         private int levelIndex = 1;
@@ -140,7 +139,6 @@ namespace LearningXNA
             tutorialOverlay6 = Content.Load<Texture2D>("Overlays/tutorial6");
             tutorialOverlay7 = Content.Load<Texture2D>("Overlays/tutorial7");
             tutorialOverlay8 = Content.Load<Texture2D>("Overlays/tutorial8");
-            tutorialOverlay9 = Content.Load<Texture2D>("Overlays/tutorial9");
 
 
            MediaPlayer.IsRepeating = true;
@@ -421,9 +419,6 @@ namespace LearningXNA
                         break;
                     case 8:
                         status = tutorialOverlay8;
-                        break;
-                    case 9:
-                        status = tutorialOverlay9;
                         break;
                 }
             }

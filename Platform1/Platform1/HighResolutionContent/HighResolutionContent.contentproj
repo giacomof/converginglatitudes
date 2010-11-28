@@ -438,21 +438,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Overlays\tutorial10.png">
-      <Name>tutorial10</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Overlays\tutorial11.png">
-      <Name>tutorial11</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Overlays\tutorial12.png">
-      <Name>tutorial12</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Overlays\tutorial4.png">
       <Name>tutorial4</Name>
       <Importer>TextureImporter</Importer>
@@ -470,11 +455,6 @@
     </Compile>
     <Compile Include="Overlays\tutorial7.png">
       <Name>tutorial7</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Overlays\tutorial8.png">
-      <Name>tutorial8</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -566,8 +546,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Overlays\tutorial9.png">
-      <Name>tutorial9</Name>
+    <Compile Include="Overlays\tutorial8.png">
+      <Name>tutorial8</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
