@@ -109,7 +109,8 @@ namespace LearningXNA
                     //If we're about to run into a wall that isn't a MovableTile move in other direction.  
                     if (Level.GetCollision(tileX + (int)direction, tileY) == TileCollision.Impassable ||
                         Level.GetCollision(tileX + (int)direction, tileY) == TileCollision.Platform ||
-                        Level.GetCollision(tileX + (int)direction, tileY) == TileCollision.PlatformCollider)
+                        Level.GetCollision(tileX + (int)direction, tileY) == TileCollision.PlatformCollider ||
+                        Level.GetCollision(tileX, tileY) == TileCollision.LevelFrame)
                     {
                         velocity = new Vector2(0.0f, 0.0f);
                         waitTime = MaxWaitTime;
