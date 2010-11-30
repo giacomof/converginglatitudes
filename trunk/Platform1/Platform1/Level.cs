@@ -346,6 +346,10 @@ namespace LearningXNA
                     return LoadInvisibleTile(TileCollision.Platform);
 
                 // Bouncing Object
+                case '♣':
+                    return LoadTile("flower", TileCollision.Bouncy);
+                case 'Ω':
+                    return LoadTile("mushroom", TileCollision.Bouncy);
                 case '§':
                     return LoadTile("Trampolin", TileCollision.Bouncy);
                 case '≈':
