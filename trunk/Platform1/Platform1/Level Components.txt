@@ -54,3 +54,4 @@
 
 
 - Impassable ( random grass)					'„'
+- Bouncy ( random cloud )						'≈'
