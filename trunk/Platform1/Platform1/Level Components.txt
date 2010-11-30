@@ -65,6 +65,7 @@ New stuff for level 2
 - Killing ( spikes )										'Ѱ'
 - Impassable ( stone )										'H'
 - Platform ( treetrunk )									'Ǝ'
+- Killing ( water )											'∂'
 
 - Platform ( left big branch )								'À'
 - Platform ( left medium branch )							'Á'
@@ -73,5 +74,3 @@ New stuff for level 2
 - Platform ( right big branch )								'Ã'
 - Platform ( right medium branch )							'Ä'
 - Platform ( right small branch )							'Å'
-
-

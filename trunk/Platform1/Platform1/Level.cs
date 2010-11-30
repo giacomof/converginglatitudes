@@ -348,6 +348,8 @@ namespace LearningXNA
                     return LoadVarietyTile("rock", 3, TileCollision.Impassable);
                 case 'H':
                     return LoadVarietyTile("stones", 3, TileCollision.Impassable);
+                case '∂':
+                    return LoadVarietyTile("water", 3, TileCollision.KillerTile);
 
 
                 case '□':
