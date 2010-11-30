@@ -309,6 +309,9 @@ namespace LearningXNA
                 case '~':
                     return LoadVarietyTile("bookshelf", 3, TileCollision.Platform);
 
+                case 'Ǝ':
+                    return LoadVarietyTile("treetrunk", 3, TileCollision.Platform);
+
                 case 'À':
                     return LoadTile("branch0", TileCollision.Platform);
                 case 'Á':
