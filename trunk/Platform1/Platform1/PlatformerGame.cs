@@ -58,7 +58,7 @@ namespace LearningXNA
         private Texture2D tutorialOverlay8;
 
         // Meta-level game state.
-        private int levelIndex = 1;
+        private int levelIndex = -0;
         private Level level;
         private bool wasContinuePressed;
 
@@ -244,7 +244,7 @@ namespace LearningXNA
                 level.Dispose();
             }
             // Load the level.
-            level = new Level(Services, levelPath);
+            level = new Level(Services, levelPath, levelIndex);
             level.ScoreAtBeginning = totalScore;
             level.Score = totalScore;
             // Apply the old change shape abilities after loading the new level

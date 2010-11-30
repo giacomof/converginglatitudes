@@ -51,3 +51,6 @@
 - Tutorial overlay 7							'Ő'
 - Tutorial overlay 8							'Ź'
 
+
+
+- Impassable ( random grass)					'„'
