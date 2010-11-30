@@ -309,6 +309,20 @@ namespace LearningXNA
                 case '~':
                     return LoadVarietyTile("bookshelf", 3, TileCollision.Platform);
 
+                case 'À':
+                    return LoadTile("branch0", TileCollision.Platform);
+                case 'Á':
+                    return LoadTile("branch1", TileCollision.Platform);
+                case 'Â':
+                    return LoadTile("branch2", TileCollision.Platform);
+
+                case 'Ã':
+                    return LoadTile("branch5", TileCollision.Platform);
+                case 'Ä':
+                    return LoadTile("branch4", TileCollision.Platform);
+                case 'Å':
+                    return LoadTile("branch3", TileCollision.Platform);
+
                 // Passable block
                 case ':':
                     return LoadVarietyTile("BlockB", 2, TileCollision.Passable);
@@ -334,7 +348,6 @@ namespace LearningXNA
                 // Bouncing Object
                 case '§':
                     return LoadTile("Trampolin", TileCollision.Bouncy);
-
                 case '≈':
                     return LoadVarietyTile("cloud", 3, TileCollision.Bouncy);
                 // Spikes
