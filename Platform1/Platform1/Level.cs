@@ -299,7 +299,7 @@ namespace LearningXNA
                     return LoadCircleFlyingEnemyTile(x, y, "Bumblebee");
 
                 case 'W':
-                    return LoadEnemyOnCeilingTile(x, y, "EnemyOnCeiling");
+                    return LoadEnemyOnCeilingTile(x, y, "Spider");
 
                 // Various animals
                 // Load cat
