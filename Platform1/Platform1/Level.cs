@@ -291,7 +291,7 @@ namespace LearningXNA
                     return LoadFlyingEnemyTile(x, y, "Bumblebee");
 
                 case 'J':
-                    return LoadJumpingEnemyTile(x, y, "JumpingEnemy");
+                    return LoadJumpingEnemyTile(x, y, "Piranha");
 
                 case 'Ǒ':
                     return LoadCircleFlyingEnemyTile(x, y, "Helicopter");

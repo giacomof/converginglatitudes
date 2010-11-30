@@ -9,6 +9,8 @@ namespace LearningXNA
     /// </summary>
     class JumpingEnemy
     {
+        static Random random = new Random();
+
         public Level Level
         {
             get { return level; }
@@ -43,8 +45,7 @@ namespace LearningXNA
         }
 
         // Animations
-        private Animation runAnimation;
-        private Animation idleAnimation;
+        private Animation animation;
         private AnimationPlayer sprite;
 
         //Jumping stuff
@@ -84,17 +85,16 @@ namespace LearningXNA
         /// </summary>
         public void LoadContent(string spriteSet)
         {
+            int index = random.Next(3);
             // Load animations.
-            spriteSet = "Sprites/" + spriteSet + "/";
-            runAnimation = new Animation(Level.Content.Load<Texture2D>(spriteSet + "Run"), 0.1f, true);
-            idleAnimation = new Animation(Level.Content.Load<Texture2D>(spriteSet + "Idle"), 0.15f, true);
-            sprite.PlayAnimation(idleAnimation);
+            animation = new Animation(Level.Content.Load<Texture2D>("Sprites/" + spriteSet + "/" + spriteSet + index), 0.1f, true);
+            sprite.PlayAnimation(animation);
 
             // Calculate bounds within texture size.
-            int width = (int)(idleAnimation.FrameWidth * 0.35);
-            int left = (idleAnimation.FrameWidth - width) / 2;
-            int height = (int)(idleAnimation.FrameWidth * 0.7);
-            int top = idleAnimation.FrameHeight - height;
+            int width = (int)(animation.FrameWidth * 0.35);
+            int left = (animation.FrameWidth - width) / 2;
+            int height = (int)(animation.FrameWidth * 0.7);
+            int top = animation.FrameHeight - height;
             localBounds = new Rectangle(left, top, width, height);
         }
 
@@ -170,17 +170,7 @@ namespace LearningXNA
         /// </summary>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            // Stop running when the game is paused or before turning around.
-            if (!Level.Player.IsAlive ||
-                Level.ReachedExit ||
-                Level.TimeRemaining == TimeSpan.Zero)
-            {
-                sprite.PlayAnimation(idleAnimation);
-            }
-            else
-            {
-                sprite.PlayAnimation(runAnimation);
-            }
+            sprite.PlayAnimation(animation);
             sprite.Draw(gameTime, spriteBatch, Position, SpriteEffects.None);
 
 
