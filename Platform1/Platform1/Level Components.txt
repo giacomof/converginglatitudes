@@ -1,33 +1,51 @@
 ﻿This document is about the different level components there exist for making the levels.
 
-- Blank space 												'.'
+
+General stuff
+- Player 1 start point										'1'
 - Exit														'X'
 - Cookie													'°'
+- Cat 														'C'
+- Dog														'd'
+
+Tutorial
+- Tutorial overlay 0										'ü'
+- Tutorial overlay 1										'é'
+- Tutorial overlay 2										'ä'
+- Tutorial overlay 3										'ů'
+- Tutorial overlay 4										'ç'
+- Tutorial overlay 5										'ł'
+- Tutorial overlay 6										'ë'
+- Tutorial overlay 7										'Ő'
+- Tutorial overlay 8										'Ź'
+
+Enemies
 - Falling Object (lego tiles)								'f'
 - Flying Enemy (Helicopter)									'F'	
 - Circle Flying Enemy (Helicopter)							'Ǒ'								
 - Enemy (Radio controlled car)								'A'
 - Jumping Enemy	(piranhas)									'J'
-- Enemy Dog													'd'
-- Cat 														'C'
-- Platform block (Bookshelf with books)						'~'
-- Passable block 											':'
-- Player 1 start point										'1'
-- Impassable block Ground (Wooden floor)					'#'
-- Impassable block Wall (Brick wall)						'='
+
+Player independent tiles
+- Blank space 												'.'
 - Impassable invisible block								'□'
-- Spikes (Cactus)											'╩'
+- Impassable block Wall (Brick wall)						'='
+- Impassable block Ground (Wooden floor)					'#'
+- Killing block (Cactus)									'╩'
 - Killing invisible block									'⌂'
-- Platform invisible block									'¯'
 - Moving platform -Horizontal (bookshelf)					'<'
 - Moving platform -Vertical	(bookshelf)						'^'
-- Controllable Moving platform -Horizontal (bookshelf)		'≤'
-- Controllable Moving platform -Vertical (bookshelf)		'∆'
+- Passable block 											':'
 - Platform Collider											'|'
+- Platform invisible block									'¯'
+- Platform block (Bookshelf with books)						'~'
+
+Player dependent tiles
 - Coontrollable Moving platform Switch -H (switch)			'┤'
 - Coontrollable Moving platform Switch -V (switch)			'┴'
+- Controllable Moving platform -Horizontal (bookshelf)		'≤'
+- Controllable Moving platform -Vertical (bookshelf)		'∆'
 - Bouncy Platform (Tramboline)								'§'
-- Dog														'd'
 - Switch destroy wall 1 (switch)							'˥'
 - Switch destroy wall 2	(switch)							'˦'
 - Switch destroy wall 3	(switch)							'˧'
@@ -37,21 +55,6 @@
 
 
 
-
-
-
-
-- Tutorial overlay 0							'ü'
-- Tutorial overlay 1							'é'
-- Tutorial overlay 2							'ä'
-- Tutorial overlay 3							'ů'
-- Tutorial overlay 4							'ç'
-- Tutorial overlay 5							'ł'
-- Tutorial overlay 6							'ë'
-- Tutorial overlay 7							'Ő'
-- Tutorial overlay 8							'Ź'
-
-
-
-- Impassable ( random grass)					'„'
-- Bouncy ( random cloud )						'≈'
+New stuff for level 2
+- Impassable (grass)										'„'
+- Bouncy ( random cloud )									'≈'
