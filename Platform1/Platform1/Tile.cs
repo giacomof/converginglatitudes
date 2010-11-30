@@ -101,7 +101,12 @@ namespace LearningXNA
         /// <summary>
         /// Destroyable wall number 3
         /// </summary>
-        DestroyableWall3 = 17
+        DestroyableWall3 = 17,
+
+        /// <summary>
+        /// Y axxis level frame
+        /// </summary>
+        YAxisLevelFrame = 18
     }
 
     /// <summary>
