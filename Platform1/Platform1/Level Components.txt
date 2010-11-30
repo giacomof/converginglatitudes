@@ -89,3 +89,4 @@ New stuff for level 2
 - Bouncy ( flower )								'♣'
 - Impassable ( rock )							'∏'
 - Killing ( spikes )							'Ѱ'
+- Impassable ( stone )							'H'
