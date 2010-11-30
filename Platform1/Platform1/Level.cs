@@ -282,19 +282,21 @@ namespace LearningXNA
                 // Various enemies
                 case 'A':
                     return LoadEnemyTile(x, y, "RCCarEnemy");
-                case 'B':
-                    return LoadEnemyTile(x, y, "MonsterB");
                 case 'D':
                     return LoadEnemyTile(x, y, "MonsterD");
 
                 case 'F':
-                    return LoadFlyingEnemyTile(x, y, "FlyingEnemy");
+                    return LoadFlyingEnemyTile(x, y, "Helicopter");
+                case 'B':
+                    return LoadFlyingEnemyTile(x, y, "Bumblebee");
 
                 case 'J':
                     return LoadJumpingEnemyTile(x, y, "JumpingEnemy");
 
                 case 'Ǒ':
-                    return LoadCircleFlyingEnemyTile(x, y, "FlyingEnemy");
+                    return LoadCircleFlyingEnemyTile(x, y, "Helicopter");
+                case 'ß':
+                    return LoadFlyingEnemyTile(x, y, "Bumblebee");
 
                 case 'W':
                     return LoadEnemyOnCeilingTile(x, y, "EnemyOnCeiling");
