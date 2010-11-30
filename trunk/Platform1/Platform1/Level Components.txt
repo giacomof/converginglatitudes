@@ -83,7 +83,8 @@ Player dependent tiles
 
 
 New stuff for level 2
-- Impassable (grass)							'„'
+- Impassable ( grass )							'„'
 - Bouncy ( random cloud )						'≈'
 - Bouncy ( mushroom )							'Ω'
 - Bouncy ( flower )								'♣'
+- Impassable ( rock )							'∏'

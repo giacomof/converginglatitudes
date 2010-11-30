@@ -335,10 +335,11 @@ namespace LearningXNA
                 // Impassable block
                 case '#':
                     return LoadVarietyTile("BlockA", 3, TileCollision.Impassable);
-
-                // Impassable block
                 case '=':
                     return LoadVarietyTile("Tile", 2, TileCollision.Impassable);
+                case '∏':
+                    return LoadVarietyTile("rock", 3, TileCollision.Impassable);
+
 
                 case '□':
                     return LoadInvisibleTile(TileCollision.Impassable);
