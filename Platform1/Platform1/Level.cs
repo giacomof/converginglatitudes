@@ -52,6 +52,9 @@ namespace LearningXNA
 
         public double elapsedTime = 0;
         public bool changeCollider = false;
+
+        int levelIndex;
+
         // Physical structure of the level.
         public Tile[,] tiles;
 
@@ -155,12 +158,14 @@ namespace LearningXNA
         /// <param name="path">
         /// The absolute path to the level file to be loaded.
         /// </param>
-        public Level(IServiceProvider serviceProvider, string path)
+        public Level(IServiceProvider serviceProvider, string path, int level)
         {
             // Create a new content manager to load content used just by this level.
             content = new ContentManager(serviceProvider, "Content");
 
             timeRemaining = TimeSpan.FromMinutes(10.0);
+
+            levelIndex = level;
 
             LoadTiles(path);
 
@@ -254,22 +259,21 @@ namespace LearningXNA
         {
             switch (tileType)
             {
+                // EQUALS FOR EVERY LEVEL
                 // Blank space
                 case '.':
                     return new Tile(null, TileCollision.Passable);
-
                 // Exit
                 case 'X':
                     return LoadExitTile(x, y);
-
                 // Cookie
                 case '°':
                     return LoadCookieTile(x, y);
 
+                // SPECIAL TILES
                 // Falling object
                 case 'f':
                     return LoadFallingObjectTile(x, y);
-
                 // Floating platform
                 case '-':
                     return LoadTile("Platform", TileCollision.Platform);
@@ -373,10 +377,12 @@ namespace LearningXNA
                 case '▓':
                     return LoadDestroyableTile("Tile0", 3, x, y);
 
-
-
                 case '*':
                     return LoadTile("drawerClosed", TileCollision.Disappearing);
+
+
+                case '„':
+                    return LoadVarietyTile("grass", 3, TileCollision.Impassable);
 
 
                 case 'ü':
