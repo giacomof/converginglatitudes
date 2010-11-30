@@ -682,7 +682,7 @@ namespace LearningXNA
                 return TileCollision.LevelFrame;
             // Allow jumping past the level top and falling through the bottom.
             if (y < 0 || y >= Height)
-                return TileCollision.LevelFrame;
+                return TileCollision.YAxisLevelFrame;
 
             return tiles[x, y].Collision;
         }

@@ -849,7 +849,8 @@ namespace LearningXNA
                         collision != TileCollision.SwitchWall3 &&
                         collision != TileCollision.DestroyableWall1 &&
                         collision != TileCollision.DestroyableWall2 &&
-                        collision != TileCollision.DestroyableWall3)
+                        collision != TileCollision.DestroyableWall3 &&
+                        collision != TileCollision.YAxisLevelFrame)
                     {
                         // Determine collision depth (with direction) and magnitude.
                         Rectangle tileBounds = Level.GetBounds(x, y);
