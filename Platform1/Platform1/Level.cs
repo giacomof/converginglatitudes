@@ -296,7 +296,7 @@ namespace LearningXNA
                 case 'Ǒ':
                     return LoadCircleFlyingEnemyTile(x, y, "Helicopter");
                 case 'ß':
-                    return LoadFlyingEnemyTile(x, y, "Bumblebee");
+                    return LoadCircleFlyingEnemyTile(x, y, "Bumblebee");
 
                 case 'W':
                     return LoadEnemyOnCeilingTile(x, y, "EnemyOnCeiling");
