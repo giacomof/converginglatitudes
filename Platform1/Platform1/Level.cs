@@ -334,6 +334,9 @@ namespace LearningXNA
                 // Bouncing Object
                 case '§':
                     return LoadTile("Trampolin", TileCollision.Bouncy);
+
+                case '≈':
+                    return LoadVarietyTile("cloud", 3, TileCollision.Bouncy);
                 // Spikes
                 case '╩':
                     return LoadVarietyTile("Cactus", 2, TileCollision.KillerTile);
