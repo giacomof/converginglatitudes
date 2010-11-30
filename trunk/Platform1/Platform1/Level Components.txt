@@ -88,3 +88,4 @@ New stuff for level 2
 - Bouncy ( mushroom )							'Ω'
 - Bouncy ( flower )								'♣'
 - Impassable ( rock )							'∏'
+- Killing ( spikes )							'Ѱ'
