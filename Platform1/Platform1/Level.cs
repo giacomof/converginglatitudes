@@ -53,7 +53,7 @@ namespace LearningXNA
         public double elapsedTime = 0;
         public bool changeCollider = false;
 
-        int levelIndex;
+        public int levelIndex;
 
         // Physical structure of the level.
         public Tile[,] tiles;
