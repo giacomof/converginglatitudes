@@ -56,38 +56,22 @@ Player dependent tiles
 
 
 
-
-
-- Tutorial overlay 0							'ü'
-- Tutorial overlay 1							'é'
-- Tutorial overlay 2							'ä'
-- Tutorial overlay 3							'ů'
-- Tutorial overlay 4							'ç'
-- Tutorial overlay 5							'ł'
-- Tutorial overlay 6							'ë'
-- Tutorial overlay 7							'Ő'
-- Tutorial overlay 8							'Ź'
-
-
-
-- Impassable ( random grass)					'„'
-- Bouncy ( random cloud )						'≈'
-
-- Platform ( left big branch )					'À'
-- Platform ( left medium branch )				'Á'
-- Platform ( left small branch )				'Â'
-
-- Platform ( right big branch )					'Ã'
-- Platform ( right medium branch )				'Ä'
-- Platform ( right small branch )				'Å'
-
-
 New stuff for level 2
-- Impassable ( grass )							'„'
-- Bouncy ( random cloud )						'≈'
-- Bouncy ( mushroom )							'Ω'
-- Bouncy ( flower )								'♣'
-- Impassable ( rock )							'∏'
-- Killing ( spikes )							'Ѱ'
-- Impassable ( stone )							'H'
-- Platform ( treetrunk )						'Ǝ'
+- Impassable (grass)										'„'
+- Bouncy ( random cloud )									'≈'
+- Bouncy ( mushroom )										'Ω'
+- Bouncy ( flower )											'♣'
+- Impassable ( rock )										'∏'
+- Killing ( spikes )										'Ѱ'
+- Impassable ( stone )										'H'
+- Platform ( treetrunk )									'Ǝ'
+
+- Platform ( left big branch )								'À'
+- Platform ( left medium branch )							'Á'
+- Platform ( left small branch )							'Â'
+
+- Platform ( right big branch )								'Ã'
+- Platform ( right medium branch )							'Ä'
+- Platform ( right small branch )							'Å'
+
+
