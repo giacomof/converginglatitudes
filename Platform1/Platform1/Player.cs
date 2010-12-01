@@ -67,6 +67,7 @@ namespace LearningXNA
         private Animation monsterDuckIdleAnimation;
         private Animation monsterDuckRunAnimation;
         private Animation monsterDuckJumpAnimation;
+        private Animation monsterDuckFlyAnimation;
 
 
         private Animation transformationAnimation;
@@ -154,7 +155,7 @@ namespace LearningXNA
 
 
         // Constants for controlling vertical movement
-        private const float monsterDuckMaxJumpTime = 0.35f;
+        private const float monsterDuckMaxJumpTime = 0.25f;
         public const float monsterDuckJumpLaunchVelocity = -4000.0f;
         private const float monsterDuckGravityAcceleration = 3500.0f;
         private const float monsterDuckMaxFallSpeed = 600.0f;
@@ -315,6 +316,7 @@ namespace LearningXNA
             monsterDuckIdleAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/duckIdle"), 0.1f, true);
             monsterDuckRunAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/duckRun"), 0.1f, true);
             monsterDuckJumpAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/duckJump"), 0.1f, false);
+            monsterDuckFlyAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/duckFly"), 0.03f, true);
 
 
             transformationAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/transformation"), 0.1f, false);
@@ -744,10 +746,11 @@ namespace LearningXNA
 
                     case MONSTER_DUCK:
                         if (!isOnGround)
-                            sprite.PlayAnimation(monsterDuckJumpAnimation);
+                            sprite.PlayAnimation(monsterDuckFlyAnimation);
                         // Begin or continue a jump
                         if (isFlappingWings && !wasFlappingWings)
                         {
+                            sprite.PlayAnimation(monsterDuckFlyAnimation);
                             jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
                             isJumping = true;
                         }
