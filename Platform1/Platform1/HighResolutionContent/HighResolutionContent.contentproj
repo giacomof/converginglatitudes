@@ -706,13 +706,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tiles\Switch.png">
-      <Name>Switch</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Overlays\you_died.png">
       <Name>you_died</Name>
       <Importer>TextureImporter</Importer>
@@ -952,6 +945,20 @@
     </Compile>
     <Compile Include="Sprites\Piranha\Piranha2.png">
       <Name>Piranha2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Tiles\switchOff.png">
+      <Name>switchOff</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Tiles\switchOn.png">
+      <Name>switchOn</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
