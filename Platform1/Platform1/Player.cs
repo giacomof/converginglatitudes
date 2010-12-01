@@ -57,6 +57,7 @@ namespace LearningXNA
 
         private Animation monsterDuckIdleAnimation;
         private Animation monsterDuckRunAnimation;
+        private Animation monsterDuckJumpAnimation;
 
 
         private Animation transformationAnimation;
@@ -296,6 +297,7 @@ namespace LearningXNA
 
             monsterDuckIdleAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/duckIdle"), 0.1f, true);
             monsterDuckRunAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/duckRun"), 0.1f, true);
+            monsterDuckJumpAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/duckJump"), 0.1f, false);
 
 
             transformationAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/transformation"), 0.1f, false);
@@ -722,7 +724,7 @@ namespace LearningXNA
 
                     case MONSTER_DUCK:
                         if (!isOnGround)
-                            sprite.PlayAnimation(monsterCatJumpAnimation);
+                            sprite.PlayAnimation(monsterDuckJumpAnimation);
                         if ((!wasJumping && IsOnGround) || isBouncing || jumpTime > 0.0f)
                         {
                             if (jumpTime == 0.0f)
