@@ -174,10 +174,11 @@ namespace LearningXNA
             // Load background layer textures. For now, all levels must
             // use the same backgrounds and only use the left-most part of them.
             layers = new Layer[4];
-            layers[0] = new Layer(Content, "Backgrounds/Layer0", 0.1f);
-            layers[1] = new Layer(Content, "Backgrounds/Layer1", 0.5f);
-            layers[2] = new Layer(Content, "Backgrounds/Layer2", 0.8f);
-            layers[3] = new Layer(Content, "Backgrounds/Layer3", 1.0f);
+            string layerPath = "Backgrounds/level" + levelIndex+1;
+            layers[0] = new Layer(Content, layerPath + "/Layer0", 0.1f);
+            layers[1] = new Layer(Content, layerPath + "/Layer1", 0.5f);
+            layers[2] = new Layer(Content, layerPath + "/Layer2", 0.8f);
+            layers[3] = new Layer(Content, layerPath + "/Layer3", 1.0f);
 
             hudFont = Content.Load<SpriteFont>("Fonts/Hud");
 
