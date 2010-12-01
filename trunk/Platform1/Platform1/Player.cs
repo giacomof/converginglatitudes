@@ -733,10 +733,14 @@ namespace LearningXNA
 
                             jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
                         }
+                        if (jumpTime == 0 && isDoingSpecialAction)
+                        {
+                            jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        }
                         break;
                 }
 
-                            
+                System.Console.WriteLine(jumpTime);   
 
                 // If we are in the ascent of the jump
                 if (0.0f < jumpTime && jumpTime <= MaxJumpTime)
