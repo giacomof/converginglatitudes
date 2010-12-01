@@ -72,7 +72,7 @@ namespace LearningXNA
 
         // Used to store tha ability to change animal between levels
         public bool canBeCat = true; //DEBUG REASON
-        public bool canBeDuck = false;
+        public bool canBeDuck = true;
 
         //DEBUG INTERFACE CHANGE
         public bool changeInterface;

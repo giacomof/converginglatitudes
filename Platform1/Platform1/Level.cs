@@ -376,6 +376,7 @@ namespace LearningXNA
                     return LoadVarietyTile("Cactus", 2, TileCollision.KillerTile);
                 case 'Ѱ':
                     return LoadVarietyTile("spikes", 2, TileCollision.KillerTile);
+
                 case 'Ж':
                     return LoadVarietyTile("pendingSpikes", 2, TileCollision.KillerTile);
                 // Invisible killing tile
