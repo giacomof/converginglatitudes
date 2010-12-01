@@ -232,6 +232,7 @@ namespace LearningXNA
             get { return isFlappingWings; }
         }
         private bool isFlappingWings;
+        private bool wasFlappingWings;
 
 
         public bool isScared;
@@ -450,6 +451,7 @@ namespace LearningXNA
 
             wasClimbing = isClimbing;
             wasClimbingOnCeiling = isClimbingOnCeiling;
+            wasFlappingWings = isFlappingWings;
 
             if(!isDoingSpecialAction)
             {
@@ -480,6 +482,7 @@ namespace LearningXNA
             isClimbingOnCeiling = false;
             isCallingAnimal = false;
             isDoingSpecialAction = false;
+            isFlappingWings = false;
 
 
             // Key press used for debug reasons
@@ -743,7 +746,11 @@ namespace LearningXNA
                         if (!isOnGround)
                             sprite.PlayAnimation(monsterDuckJumpAnimation);
                         // Begin or continue a jump
-                        if ((!wasJumping && IsOnGround) || isBouncing || jumpTime > 0.0f)
+                        if (isFlappingWings && !wasFlappingWings)
+
+                            jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                        else if ((!wasJumping && IsOnGround) || isBouncing || jumpTime > 0.0f)
                         {
                             if (jumpTime == 0.0f)
                                 jumpSound.Play();
