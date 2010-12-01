@@ -431,6 +431,9 @@ namespace LearningXNA
                 case '„':
                     return LoadVarietyTile("grass", 3, TileCollision.Impassable);
 
+                case 'Æ':
+                    return LoadTile("switchOff", TileCollision.Destroyable);
+
 
                 case 'ü':
                     return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 0);

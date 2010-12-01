@@ -58,7 +58,9 @@ namespace LearningXNA
         private Texture2D tutorialOverlay8;
 
         // Meta-level game state.
+
         private int levelIndex = -0;
+
         private Level level;
         private bool wasContinuePressed;
 
@@ -73,6 +75,7 @@ namespace LearningXNA
         // Used to store tha ability to change animal between levels
         public bool canBeCat = true; //DEBUG REASON
         public bool canBeDuck = true;
+        public bool canBeMole = true;
 
         //DEBUG INTERFACE CHANGE
         public bool changeInterface;
@@ -82,6 +85,7 @@ namespace LearningXNA
         const short MONSTER = 0;
         const short MONSTER_CAT = 1;
         const short MONSTER_DUCK = 2;
+        const short MONSTER_MOLE = 3;
 
         public int totalScore = 0;
 
@@ -203,6 +207,7 @@ namespace LearningXNA
                         ReloadCurrentLevel();
                         level.Player.CanBeCat = canBeCat;
                         level.Player.CanBeDuck = canBeDuck;
+                        level.Player.CanBeMole = canBeMole;
                     }
                 }
             }
@@ -240,6 +245,7 @@ namespace LearningXNA
                     // Save the change shape abilities before disposing the actual level
                     canBeCat = level.Player.CanBeCat;
                     canBeDuck = level.Player.CanBeDuck;
+                    canBeMole = level.Player.CanBeMole;
                 }
                 level.Dispose();
             }
@@ -250,6 +256,7 @@ namespace LearningXNA
             // Apply the old change shape abilities after loading the new level
             level.Player.CanBeCat = canBeCat;
             level.Player.CanBeDuck = canBeDuck;
+            level.Player.CanBeMole = canBeMole;
         }
 
         private void ReloadCurrentLevel()

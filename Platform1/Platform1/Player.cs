@@ -15,6 +15,7 @@ namespace LearningXNA
         const short MONSTER             = 0;
         const short MONSTER_CAT         = 1;
         const short MONSTER_DUCK        = 2;
+        const short MONSTER_MOLE        = 3;
         public short animalShape = MONSTER;
 
         // Tutorial variables
@@ -35,6 +36,14 @@ namespace LearningXNA
             set { canBeDuck = value; }
         }
         private bool canBeDuck;
+
+        // Define if the player can shape change to monster Mole
+        public bool CanBeMole
+        {
+            get { return canBeMole; }
+            set { canBeMole = value; }
+        }
+        private bool canBeMole;
        
 
 
@@ -264,6 +273,7 @@ namespace LearningXNA
             // Reset the shape changing abilities
             CanBeCat = false;
             CanBeDuck = false;
+            CanBeMole = true;
 
             isIdle = true;
             hasReachedExit = false;
@@ -901,7 +911,7 @@ namespace LearningXNA
                             if (previousBottom <= tileBounds.Top)
                                 isOnGround = true;
                             // Ignore platforms, unless we are on the ground.
-                            if ((collision == TileCollision.Impassable || collision == TileCollision.LevelFrame || collision == TileCollision.Bouncy) || IsOnGround)
+                            if ((collision == TileCollision.Impassable || collision == TileCollision.LevelFrame || collision == TileCollision.Bouncy || collision == TileCollision.Destroyable) || IsOnGround)
                             {
                                 // Resolve the collision along the Y axis.
                                 Position = new Vector2(Position.X, Position.Y + depth.Y);
@@ -937,35 +947,68 @@ namespace LearningXNA
                             float absDepthX = Math.Abs(depth.X);
                             float absDepthY = Math.Abs(depth.Y);
 
-                           // //start destroy tile
-                           // // RIGHT
-                           // float previousLeft = bounds.Left;
-                           // float previousRight = bounds.Right;
-                           // KeyboardState keyboardState = Keyboard.GetState();
-                           // if (collision == TileCollision.Impassable &&
-                           //     keyboardState.IsKeyDown(Keys.Z) &&
-                           //     keyboardState.IsKeyDown(Keys.Right) &&
-                           //         previousRight >= tileBounds.Right)
-                           // {
-                           //     x++;
-                           //     y--;
-                           //     Level.tiles[x, y].Texture = null;
-                           //     Level.tiles[x, y].Collision = TileCollision.Passable;
-                           // }
-                           // // LEFT
-                           // if (collision == TileCollision.Impassable &&
-                           // keyboardState.IsKeyDown(Keys.Z) &&
-                           // keyboardState.IsKeyDown(Keys.Left) &&
-                           //     previousLeft <= tileBounds.Left)
-                           // {
+                            //start destroy tile
+                            // RIGHT
 
-                           //     x--;
-                           //     y--;
-                           //     Level.tiles[x--, y--].Texture = null;
-                           //     Level.tiles[x--, y--].Collision = TileCollision.Passable;
-                           // }
+                            TileCollision monsterLeftTopCollision = level.GetCollision(leftTile, topTile);
+                            TileCollision monsterLeftBottomCollision = level.GetCollision(leftTile, topTile+1);
+                            TileCollision monsterRightTopCollision = level.GetCollision(rightTile, topTile);
+                            TileCollision monsterRightBottomCollision = level.GetCollision(rightTile, topTile+1);
+                            float previousLeft = bounds.Left;
+                            float previousRight = bounds.Right;
+                            KeyboardState keyboardState = Keyboard.GetState();
+                            if (monsterRightTopCollision == TileCollision.Destroyable &&
+                                keyboardState.IsKeyDown(Keys.Z) &&
+                                keyboardState.IsKeyDown(Keys.Right) &&
+                                isJumping != true &&
+                                
+                               // animalShape == MONSTER_MOLE && 
+                                previousRight >= tileBounds.Right )
+                            {
+                               // x++;
+                                //y--;
+                                
+                                Level.tiles[rightTile, topTile].Texture = null;
+                                Level.tiles[rightTile, topTile].Collision = TileCollision.Passable;
+                            }
+                            if (monsterRightBottomCollision == TileCollision.Destroyable &&
+                               keyboardState.IsKeyDown(Keys.Z) &&
+                               keyboardState.IsKeyDown(Keys.Right) &&
+                               isJumping != true &&
 
-                           ////end destroy tile 
+                              // animalShape == MONSTER_MOLE && 
+                               previousRight >= tileBounds.Right)
+                            {
+                                Level.tiles[rightTile, topTile+1].Texture = null;
+                                Level.tiles[rightTile, topTile+1].Collision = TileCollision.Passable;
+                            }
+                            // LEFT
+                            if (monsterLeftTopCollision == TileCollision.Destroyable &&
+                            keyboardState.IsKeyDown(Keys.Z) &&
+                            keyboardState.IsKeyDown(Keys.Left) &&
+                            //animalShape == MONSTER_MOLE &&
+                            isJumping != true &&
+                                previousLeft <= tileBounds.Left)
+                            {
+
+                               // x--;
+                                //y--;
+                                Level.tiles[leftTile, topTile].Texture = null;
+                                Level.tiles[leftTile, topTile].Collision = TileCollision.Passable;
+
+                            }
+                            if (monsterLeftBottomCollision == TileCollision.Destroyable &&
+                            keyboardState.IsKeyDown(Keys.Z) &&
+                            keyboardState.IsKeyDown(Keys.Left) &&
+                                //animalShape == MONSTER_MOLE &&
+                            isJumping != true &&
+                                previousLeft <= tileBounds.Left)
+                            {
+                                Level.tiles[leftTile, topTile+1].Texture = null;
+                                Level.tiles[leftTile, topTile+1].Collision = TileCollision.Passable;
+                            }
+
+                            //end destroy tile 
 
                            
 
@@ -977,7 +1020,7 @@ namespace LearningXNA
                                     isOnGround = true;
 
                                 // Ignore platforms, unless we are on the ground.
-                                if ((collision == TileCollision.Impassable || collision == TileCollision.LevelFrame || collision == TileCollision.Bouncy) || IsOnGround)
+                                if ((collision == TileCollision.Impassable || collision == TileCollision.LevelFrame || collision == TileCollision.Bouncy) || IsOnGround || collision == TileCollision.Destroyable)
                                 {
                                     // Resolve the collision along the Y axis.
                                     Position = new Vector2(Position.X, Position.Y + depth.Y);
@@ -986,7 +1029,7 @@ namespace LearningXNA
                                     bounds = BoundingRectangle;
                                 }
                             }
-                            else if (collision == TileCollision.Impassable || collision == TileCollision.LevelFrame || collision == TileCollision.Bouncy) // Ignore platforms.
+                            else if (collision == TileCollision.Impassable || collision == TileCollision.LevelFrame || collision == TileCollision.Bouncy || collision == TileCollision.Destroyable) // Ignore platforms.
                             {
                                 
                                 // Resolve the collision along the X axis.
@@ -1021,7 +1064,7 @@ namespace LearningXNA
                         isOnGround = true;
 
                     // Ignore platforms, unless we are on the ground.  
-                    if (collision == TileCollision.Impassable || IsOnGround)
+                    if (collision == TileCollision.Impassable || IsOnGround || collision == TileCollision.Destroyable)
                     {
                         // Resolve the collision along the Y axis.  
                         Position = new Vector2(Position.X, Position.Y + depth.Y);
@@ -1030,7 +1073,7 @@ namespace LearningXNA
                         bounds = BoundingRectangle;
                     }
                 }
-                else if (collision == TileCollision.Impassable) // Ignore platforms.  
+                else if (collision == TileCollision.Impassable || collision == TileCollision.Destroyable) // Ignore platforms.  
                 {
                     // Resolve the collision along the X axis.  
                     Position = new Vector2(Position.X + depth.X, Position.Y);
@@ -1073,7 +1116,7 @@ namespace LearningXNA
             for (int y = topTile+1; y <= bottomTile; y++)
             {
                 TileCollision collision = Level.GetCollision(side, y);
-                if (collision != TileCollision.Impassable || distance > 0)
+                if ((collision != TileCollision.Impassable && collision!= TileCollision.Destroyable)|| distance > 0 )
                 {
                     return false;
                 }
@@ -1096,7 +1139,7 @@ namespace LearningXNA
             distance = Math.Abs(bounds.Top - (topTile+1)*Tile.Height);
 
             TileCollision collision = Level.GetCollision(centralTile, topTile);
-            if (collision == TileCollision.Impassable && distance == 0)
+            if ((collision == TileCollision.Impassable && distance == 0) || (collision == TileCollision.Destroyable && distance == 0))
             {
                 return true;
             }

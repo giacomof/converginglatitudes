@@ -106,7 +106,11 @@ namespace LearningXNA
         /// <summary>
         /// Y axxis level frame
         /// </summary>
-        YAxisLevelFrame = 18
+        YAxisLevelFrame = 18,
+        /// <summary>
+        /// Destroyable tile for the hamster
+        /// </summary>
+        Destroyable = 19
     }
 
     /// <summary>
