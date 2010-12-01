@@ -55,6 +55,9 @@ namespace LearningXNA
         private Animation monsterCatClimbOnCeilingAnimation;
         private Animation monsterCatClimbOnCeilingIdleAnimation;
 
+        private Animation monsterDuckIdleAnimation;
+        private Animation monsterDuckRunAnimation;
+
 
         private Animation transformationAnimation;
         private int transformationTimerMilliseconds = 100;
@@ -129,6 +132,23 @@ namespace LearningXNA
         private const float monsterCatGravityAcceleration = 3500.0f;
         private const float monsterCatMaxFallSpeed = 600.0f;
         private const float monsterCatJumpControlPower = 0.14f;
+        //*******************************************************
+
+        //***********MONSTER-DUCK SHAPE MOVEMENTS*****************
+        // Constants for controling horizontal movement
+        private const float monsterDuckMoveAcceleration = 14000.0f;
+        private const float monsterDuckMaxMoveSpeed = 14000.0f;
+        private const float monsterDuckGroundDragFactor = 0.58f;
+        private const float monsterDuckAirDragFactor = 0.65f;
+        private const float monsterDuckWallDragFactor = 0.45f;
+
+
+        // Constants for controlling vertical movement
+        private const float monsterDuckMaxJumpTime = 0.35f;
+        public const float monsterDuckJumpLaunchVelocity = -4000.0f;
+        private const float monsterDuckGravityAcceleration = 3500.0f;
+        private const float monsterDuckMaxFallSpeed = 600.0f;
+        private const float monsterDuckJumpControlPower = 0.14f;
         //*******************************************************
 
         // Constants for controling horizontal movement
@@ -274,6 +294,10 @@ namespace LearningXNA
             monsterCatClimbOnCeilingAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/catClimbOnCeiling"), 0.1f, true);
             monsterCatClimbOnCeilingIdleAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/catClimbOnCeilingIdle"), 0.1f, false);
 
+            monsterDuckIdleAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/duckIdle"), 0.1f, true);
+            monsterDuckRunAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/duckRun"), 0.1f, true);
+
+
             transformationAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/transformation"), 0.1f, false);
 
             // Load sounds.            
@@ -351,6 +375,10 @@ namespace LearningXNA
                                 case MONSTER_CAT:
                                     sprite.PlayAnimation(monsterCatRunAnimation);
                                     break;
+
+                                case MONSTER_DUCK:
+                                    sprite.PlayAnimation(monsterDuckRunAnimation);
+                                    break;
                             }
 
                         }
@@ -365,6 +393,10 @@ namespace LearningXNA
 
                                 case MONSTER_CAT:
                                     sprite.PlayAnimation(monsterCatIdleAnimation);
+                                    break;
+
+                                case MONSTER_DUCK:
+                                    sprite.PlayAnimation(monsterDuckIdleAnimation);
                                     break;
                             }
                         }
@@ -505,7 +537,7 @@ namespace LearningXNA
                 isJumping = false;
             }
 
-            if( keyboardState.IsKeyDown(Keys.D1))
+            if (keyboardState.IsKeyDown(Keys.D1))
             {
                 changeShape(MONSTER);
             }
@@ -513,8 +545,10 @@ namespace LearningXNA
             {
                 changeShape(MONSTER_CAT);
             }
-
-            
+            else if (keyboardState.IsKeyDown(Keys.D3) && canBeDuck)
+            {
+                changeShape(MONSTER_DUCK);
+            }  
         }
 
         /// <summary>
@@ -599,6 +633,30 @@ namespace LearningXNA
                         Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
                     }
                     break;
+
+                case MONSTER_DUCK:
+
+                    // Base velocity is a combination of horizontal movement control and
+                    // acceleration downward due to gravity.
+                    velocity.X += movementX * MoveAcceleration * elapsed;
+                    velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
+
+                    velocity.Y = DoJump(velocity.Y, gameTime);
+
+                    // Apply pseudo-drag horizontally.
+                    if (IsOnGround)
+                        velocity.X *= GroundDragFactor;
+                    else
+                        velocity.X *= AirDragFactor;
+
+                    // Prevent the player from running faster than his top speed.            
+                    velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
+
+                    // Apply velocity.
+                    Position += velocity * elapsed;
+                    Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
+
+                    break;
             }
 
             // If the player is now colliding with the level, separate them.
@@ -654,6 +712,18 @@ namespace LearningXNA
                         if (!isOnGround)
                             sprite.PlayAnimation(monsterCatJumpAnimation);
                         if ((!wasJumping && IsOnGround ) || isBouncing || jumpTime > 0.0f)
+                        {
+                            if (jumpTime == 0.0f)
+                                jumpSound.Play();
+
+                            jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        }
+                        break;
+
+                    case MONSTER_DUCK:
+                        if (!isOnGround)
+                            sprite.PlayAnimation(monsterCatJumpAnimation);
+                        if ((!wasJumping && IsOnGround) || isBouncing || jumpTime > 0.0f)
                         {
                             if (jumpTime == 0.0f)
                                 jumpSound.Play();
@@ -1058,6 +1128,9 @@ namespace LearningXNA
                 case MONSTER_CAT:
                     sprite.PlayAnimation(monsterCatDieAnimation);
                     break;
+                case MONSTER_DUCK:
+                    sprite.PlayAnimation(monsterCatDieAnimation);
+                    break;
             }
         }
 
@@ -1086,15 +1159,7 @@ namespace LearningXNA
         public void OnReachedExit()
         {
             hasReachedExit = true;
-            switch (animalShape)
-            {
-                case MONSTER:
-                    sprite.PlayAnimation(monsterCelebrateAnimation);
-                    break;
-                case MONSTER_CAT:
-                    sprite.PlayAnimation(monsterCatCelebrateAnimation);
-                    break;
-            }
+            sprite.PlayAnimation(monsterCelebrateAnimation);
         }
 
         /// <summary>
@@ -1158,7 +1223,30 @@ namespace LearningXNA
                         top = monsterCatIdleAnimation.FrameHeight - height;
 
                         break;
+
+                    case MONSTER_DUCK:
+                        // Constants for controling horizontal movement
+                        MoveAcceleration = monsterDuckMoveAcceleration;
+                        MaxMoveSpeed = monsterDuckMaxMoveSpeed;
+                        GroundDragFactor = monsterDuckGroundDragFactor;
+                        AirDragFactor = monsterDuckAirDragFactor;
+
+                        // Constants for controlling vertical movement
+                        MaxJumpTime = monsterDuckMaxJumpTime;
+                        JumpLaunchVelocity = monsterDuckJumpLaunchVelocity;
+                        GravityAcceleration = monsterDuckGravityAcceleration;
+                        MaxFallSpeed = monsterDuckMaxFallSpeed;
+                        JumpControlPower = monsterDuckJumpControlPower;
+
+                        // Calculate bounding box dimension
+                        width = (int)(monsterDuckIdleAnimation.FrameWidth * 0.4);
+                        left = (monsterDuckIdleAnimation.FrameWidth - width) / 2;
+                        height = (int)(monsterDuckIdleAnimation.FrameWidth * 0.8);
+                        top = monsterDuckIdleAnimation.FrameHeight - height;
+
+                        break;
                 }
+
             }
             // Change bounding box dimension        
             localBounds = new Rectangle(left, top, width, height);
