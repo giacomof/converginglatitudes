@@ -177,7 +177,12 @@ namespace LearningXNA
             string layerPath = "Backgrounds/level" + (levelIndex+1);
             layers[0] = new Layer(Content, layerPath + "/Layer0", 0.1f);
             layers[1] = new Layer(Content, layerPath + "/Layer1", 0.5f);
-            layers[2] = new Layer(Content, layerPath + "/Layer2", 1.0f);
+
+            if (level+1 == 1)
+                layers[2] = new Layer(Content, layerPath + "/Layer2", 0.8f);
+            else
+                layers[2] = new Layer(Content, layerPath + "/Layer2", 1.0f);
+
             layers[3] = new Layer(Content, layerPath + "/Layer3", 1.0f);
 
             hudFont = Content.Load<SpriteFont>("Fonts/Hud");
