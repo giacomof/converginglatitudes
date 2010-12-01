@@ -58,7 +58,7 @@ namespace LearningXNA
         private Texture2D tutorialOverlay8;
 
         // Meta-level game state.
-        private int levelIndex = -0;
+        private int levelIndex = -1;
         private Level level;
         private bool wasContinuePressed;
 
