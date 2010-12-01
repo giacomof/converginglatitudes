@@ -174,7 +174,7 @@ namespace LearningXNA
             // Load background layer textures. For now, all levels must
             // use the same backgrounds and only use the left-most part of them.
             layers = new Layer[4];
-            string layerPath = "Backgrounds/level" + levelIndex+1;
+            string layerPath = "Backgrounds/level" + (levelIndex+1);
             layers[0] = new Layer(Content, layerPath + "/Layer0", 0.1f);
             layers[1] = new Layer(Content, layerPath + "/Layer1", 0.5f);
             layers[2] = new Layer(Content, layerPath + "/Layer2", 0.8f);
@@ -376,6 +376,8 @@ namespace LearningXNA
                     return LoadVarietyTile("Cactus", 2, TileCollision.KillerTile);
                 case 'Ѱ':
                     return LoadVarietyTile("spikes", 2, TileCollision.KillerTile);
+                case 'Ж':
+                    return LoadVarietyTile("pendingSpikes", 2, TileCollision.KillerTile);
                 // Invisible killing tile
                 case '⌂':
                     return LoadInvisibleTile(TileCollision.KillerTile);
@@ -1325,13 +1327,13 @@ namespace LearningXNA
                                     spriteBatch.Draw(switchTileOn, position, Color.White);
                                 break;
                             case TileCollision.SwitchWall2:
-                                if (destroyableWall1Active)
+                                if (destroyableWall2Active)
                                     spriteBatch.Draw(texture, position, Color.White);
                                 else
                                     spriteBatch.Draw(switchTileOn, position, Color.White);
                                 break;
                             case TileCollision.SwitchWall3:
-                                if (destroyableWall1Active)
+                                if (destroyableWall3Active)
                                     spriteBatch.Draw(texture, position, Color.White);
                                 else
                                     spriteBatch.Draw(switchTileOn, position, Color.White);
