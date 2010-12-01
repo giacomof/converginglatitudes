@@ -725,6 +725,7 @@ namespace LearningXNA
                     case MONSTER_DUCK:
                         if (!isOnGround)
                             sprite.PlayAnimation(monsterDuckJumpAnimation);
+                        // Begin or continue a jump
                         if ((!wasJumping && IsOnGround) || isBouncing || jumpTime > 0.0f)
                         {
                             if (jumpTime == 0.0f)
