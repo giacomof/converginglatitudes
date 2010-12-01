@@ -747,8 +747,10 @@ namespace LearningXNA
                             sprite.PlayAnimation(monsterDuckJumpAnimation);
                         // Begin or continue a jump
                         if (isFlappingWings && !wasFlappingWings)
-
+                        {
                             jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                            isJumping = true;
+                        }
 
                         else if ((!wasJumping && IsOnGround) || isBouncing || jumpTime > 0.0f)
                         {
@@ -766,7 +768,7 @@ namespace LearningXNA
                 if (0.0f < jumpTime && jumpTime <= MaxJumpTime)
                 {
                     // Fully override the vertical velocity with a power curve that gives players more control over the top of the jump
-                   if (isJumping && !isBouncing)
+                   if ((isJumping && !isBouncing) || isFlappingWings)
                         velocityY = JumpLaunchVelocity * (1.0f - (float)Math.Pow(jumpTime / MaxJumpTime, JumpControlPower));
                     else if (isBouncing)
                     {
