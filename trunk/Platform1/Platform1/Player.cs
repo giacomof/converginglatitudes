@@ -227,6 +227,12 @@ namespace LearningXNA
         }
         private bool isCallingAnimal;
 
+        public bool IsFlappingWings
+        {
+            get { return isFlappingWings; }
+        }
+        private bool isFlappingWings;
+
 
         public bool isScared;
         public int scaredDirection;
@@ -402,11 +408,9 @@ namespace LearningXNA
                                 case MONSTER:
                                     sprite.PlayAnimation(monsterIdleAnimation);
                                     break;
-
                                 case MONSTER_CAT:
                                     sprite.PlayAnimation(monsterCatIdleAnimation);
                                     break;
-
                                 case MONSTER_DUCK:
                                     sprite.PlayAnimation(monsterDuckIdleAnimation);
                                     break;
@@ -451,6 +455,7 @@ namespace LearningXNA
             {
                 isClimbing = false;
                 isClimbingOnCeiling = false;
+                isFlappingWings = false;
                 switch (animalShape)
                 {
                     case MONSTER:
@@ -487,35 +492,38 @@ namespace LearningXNA
             {
                 isDoingSpecialAction = true;
 
-                if (animalShape == MONSTER)
+                switch (animalShape)
                 {
-                    isCallingAnimal = true;
+                    case MONSTER:
+                        isCallingAnimal = true;
+                        break;
+                    case MONSTER_CAT:
+                        if (canClimb())
+                        {
+                            isClimbing = true;
+                            isJumping = false;
+                            isOnGround = false;
+                        }
+                        else if (canClimbOnCeiling())
+                        {
+                            isClimbing = true;
+                            isClimbingOnCeiling = true;
+                            isJumping = false;
+                            isOnGround = false;
+                        }
+                        break;
+                    case MONSTER_DUCK:
+                        isFlappingWings = true;
+                        break;
+                    default:
+                        break;
                 }
-
-                else if (animalShape == MONSTER_CAT)
-                {
-                    if ( canClimb())
-                    {
-                        isClimbing = true;
-                        isJumping = false;
-                        isOnGround = false;
-                    }
-                    else if (canClimbOnCeiling())
-                    {
-                        isClimbing = true;
-                        isClimbingOnCeiling = true;
-                        isJumping = false;
-                        isOnGround = false;
-                    }
-                }
-
             }
 
             if (keyboardState.IsKeyDown(Keys.Left))
             {
                 movementX = -1.0f;
                 lastMovementX = -1.0f;
-
             }
             else if (keyboardState.IsKeyDown(Keys.Right))
             {
@@ -526,7 +534,6 @@ namespace LearningXNA
             if (keyboardState.IsKeyDown(Keys.Up))
             {
                 movementY = -1.0f;
-
             }
             else if (keyboardState.IsKeyDown(Keys.Down))
             {
@@ -741,10 +748,6 @@ namespace LearningXNA
                             if (jumpTime == 0.0f)
                                 jumpSound.Play();
 
-                            jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                        }
-                        if (jumpTime == 0 && isDoingSpecialAction)
-                        {
                             jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
                         }
                         break;
