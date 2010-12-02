@@ -39,6 +39,9 @@ namespace LearningXNA
         private Texture2D monsterCatAvailable;
         private Texture2D monsterCatActive;
         private Texture2D monsterDuckNotAvailable;
+        private Texture2D monsterDuckAvailable;
+        private Texture2D monsterDuckActive;
+
         private Texture2D monsterSomethingNotAvailable;
 
         
@@ -74,7 +77,7 @@ namespace LearningXNA
 
         // Used to store tha ability to change animal between levels
         public bool canBeCat = true; //DEBUG REASON
-        public bool canBeDuck = false;
+        public bool canBeDuck = true;
         public bool canBeMole = true;
 
         //DEBUG INTERFACE CHANGE
@@ -124,8 +127,10 @@ namespace LearningXNA
             monsterCatNotAvailable = Content.Load<Texture2D>("Overlays/hud/monstercat-notavailable");
             monsterCatAvailable = Content.Load<Texture2D>("Overlays/hud/monstercat-available");
             monsterCatActive = Content.Load<Texture2D>("Overlays/hud/monstercat-active");
-
             monsterDuckNotAvailable = Content.Load<Texture2D>("Overlays/hud/monsterduck-notavailable");
+            monsterDuckAvailable = Content.Load<Texture2D>("Overlays/hud/monsterduck-available");
+            monsterDuckActive = Content.Load<Texture2D>("Overlays/hud/monsterduck-active");
+
             monsterSomethingNotAvailable = Content.Load<Texture2D>("Overlays/hud/monstersomething-notavailable");
 
 
@@ -344,8 +349,13 @@ namespace LearningXNA
             else
                 catIcon = monsterCatNotAvailable;
 
+            if (level.Player.animalShape == MONSTER_DUCK)
+                duckIcon = monsterDuckActive;
+            else if (level.Player.CanBeDuck)
+                duckIcon = monsterDuckAvailable;
+            else
+                duckIcon = monsterDuckNotAvailable;
 
-            duckIcon = monsterDuckNotAvailable;
             somethingIcon = monsterSomethingNotAvailable; 
             
 
