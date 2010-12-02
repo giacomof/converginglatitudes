@@ -1228,6 +1228,11 @@ namespace LearningXNA
                     changeShape(MONSTER_CAT);
                     eatCatSound.Play();
                     break;
+                case MONSTER_DUCK:
+                    canBeDuck = true;
+                    changeShape(MONSTER_DUCK);
+                    eatCatSound.Play();
+                    break;
             }
             
         }

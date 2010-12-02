@@ -98,8 +98,11 @@ namespace LearningXNA
             if (spriteSet == "Cat")
             {
                 animalShape = MONSTER_CAT;
+            } 
+            else if (spriteSet == "Duck")
+            {
+                animalShape = MONSTER_DUCK;
             }
-
             LoadContent(spriteSet);
         }
 

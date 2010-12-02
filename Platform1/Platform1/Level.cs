@@ -290,9 +290,6 @@ namespace LearningXNA
                 // Various enemies
                 case 'A':
                     return LoadEnemyTile(x, y, "RCCarEnemy");
-                case 'D':
-                    return LoadEnemyTile(x, y, "MonsterD");
-
                 case 'F':
                     return LoadFlyingEnemyTile(x, y, "Helicopter");
                 case 'B':
@@ -313,6 +310,8 @@ namespace LearningXNA
                 // Load cat
                 case 'C':
                     return LoadAnimalTile(x, y, "Cat");
+                case 'D':
+                    return LoadAnimalTile(x, y, "Duck");
 
                 // Various enemy animals
                 // Load dog
