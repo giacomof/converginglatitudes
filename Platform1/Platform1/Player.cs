@@ -18,6 +18,12 @@ namespace LearningXNA
         const short MONSTER_MOLE        = 3;
         public short animalShape = MONSTER;
 
+
+        // Sound Categories
+        const short DIE                 = 0;
+
+        static Random random = new Random();
+
         // Tutorial variables
         static public int needTutorial;
 
@@ -79,6 +85,11 @@ namespace LearningXNA
         private AnimationPlayer sprite;
 
         // Sounds
+        private SoundEffect die0;
+        private SoundEffect die1;
+        private SoundEffect die2;
+        private SoundEffect die3;
+
         private SoundEffect killedSound;
         private SoundEffect jumpSound;
         private SoundEffect fallSound;
@@ -326,7 +337,13 @@ namespace LearningXNA
 
             transformationAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/transformation"), 0.1f, false);
 
-            // Load sounds.            
+            // Load sounds.           
+            die0 = Level.Content.Load<SoundEffect>("Sounds/die/die0");
+            die1 = Level.Content.Load<SoundEffect>("Sounds/die/die1");
+            die2 = Level.Content.Load<SoundEffect>("Sounds/die/die2");
+            die3 = Level.Content.Load<SoundEffect>("Sounds/die/die3");
+
+
             killedSound = Level.Content.Load<SoundEffect>("Sounds/PlayerKilled");
             jumpSound = Level.Content.Load<SoundEffect>("Sounds/PlayerJump");
             fallSound = Level.Content.Load<SoundEffect>("Sounds/PlayerFall");
@@ -1193,10 +1210,7 @@ namespace LearningXNA
             if (!isDead)
             {
                 isDead = true;
-                if (something)
-                    killedSound.Play();
-                else
-                    fallSound.Play();
+                playRandomSound(DIE);
             }
 
             switch (animalShape)
@@ -1334,6 +1348,33 @@ namespace LearningXNA
             }
             // Change bounding box dimension        
             localBounds = new Rectangle(left, top, width, height);
+        }
+
+        public void playRandomSound(short category)
+        {
+            int index;
+            switch (category)
+            {
+                case DIE:
+                    index = random.Next(4);
+                    switch (index)
+                    {
+                        case 0:
+                            die0.Play();
+                            break;
+                        case 1:
+                            die1.Play();
+                            break;
+                        case 2:
+                            die2.Play();
+                            break;
+                        case 3:
+                            die3.Play();
+                            break;
+                    }
+                    break;
+            }
+
         }
 
 
