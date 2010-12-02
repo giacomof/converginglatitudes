@@ -31,9 +31,11 @@ namespace LearningXNA
         }
 
         // Shape state of the character; starting from 0 as a monster
-        const short MONSTER = 0;
-        const short MONSTER_CAT = 1;
-        const short MONSTER_DUCK = 2;
+        const short MONSTER         = 0;
+        const short MONSTER_CAT     = 1;
+        const short MONSTER_DUCK    = 2;
+
+        const short WIN             = 0;
 
         int scaredDistance = 250;
 
@@ -107,7 +109,7 @@ namespace LearningXNA
         private static readonly Point InvalidPosition = new Point(-1, -1);
 
         // Level game state.
-        private Random random = new Random(790786); // Arbitrary, but constant seed
+        private Random random = new Random();
         private float cameraPosition;
 
 
@@ -147,7 +149,10 @@ namespace LearningXNA
         }
         ContentManager content;
 
-        private SoundEffect exitReachedSound;
+        private SoundEffect win0;
+        private SoundEffect win1;
+        private SoundEffect win2;
+        private SoundEffect win3;
 
         #region Loading
 
@@ -199,7 +204,10 @@ namespace LearningXNA
             checkpoint = Vector2.Zero;
 
             // Load sounds.
-            exitReachedSound = Content.Load<SoundEffect>("Sounds/ExitReached");
+            win0 = Content.Load<SoundEffect>("Sounds/win/win0");
+            win1 = Content.Load<SoundEffect>("Sounds/win/win1");
+            win2 = Content.Load<SoundEffect>("Sounds/win/win2");
+            win3 = Content.Load<SoundEffect>("Sounds/win/win3");
         }
 
         /// <summary>
@@ -1076,7 +1084,7 @@ namespace LearningXNA
         private void OnExitReached()
         {
             Player.OnReachedExit();
-            exitReachedSound.Play();
+            playRandomSound(WIN);
             reachedExit = true;
         }
 
@@ -1180,6 +1188,35 @@ namespace LearningXNA
             }
         }
         //end checkpoint
+
+
+        public void playRandomSound(short category)
+        {
+            int index;
+            switch (category)
+            {
+                case WIN:
+                    index = random.Next(4);
+                    switch (index)
+                    {
+                        case 0:
+                            win0.Play();
+                            break;
+                        case 1:
+                            win1.Play();
+                            break;
+                        case 2:
+                            win2.Play();
+                            break;
+                        case 3:
+                            win3.Play();
+                            break;
+                    }
+                    break;
+
+            }
+
+        }
 
 
         #endregion
