@@ -21,6 +21,7 @@ namespace LearningXNA
 
         // Sound Categories
         const short DIE                 = 0;
+        
 
         static Random random = new Random();
 
@@ -90,9 +91,7 @@ namespace LearningXNA
         private SoundEffect die2;
         private SoundEffect die3;
 
-        private SoundEffect killedSound;
         private SoundEffect jumpSound;
-        private SoundEffect fallSound;
         private SoundEffect eatCatSound;
         private SoundEffect eatDuckSound;
 
@@ -343,10 +342,7 @@ namespace LearningXNA
             die2 = Level.Content.Load<SoundEffect>("Sounds/die/die2");
             die3 = Level.Content.Load<SoundEffect>("Sounds/die/die3");
 
-
-            killedSound = Level.Content.Load<SoundEffect>("Sounds/PlayerKilled");
             jumpSound = Level.Content.Load<SoundEffect>("Sounds/PlayerJump");
-            fallSound = Level.Content.Load<SoundEffect>("Sounds/PlayerFall");
             eatCatSound = Level.Content.Load<SoundEffect>("Sounds/EatCat");
         }
 
@@ -795,8 +791,6 @@ namespace LearningXNA
                         }
                         break;
                 }
-
-                System.Console.WriteLine(jumpTime);   
 
                 // If we are in the ascent of the jump
                 if (0.0f < jumpTime && jumpTime <= MaxJumpTime)
@@ -1373,6 +1367,7 @@ namespace LearningXNA
                             break;
                     }
                     break;
+
             }
 
         }
