@@ -251,6 +251,9 @@ namespace LearningXNA
         private bool wasJumping;
         private float jumpTime;
 
+        private int flyAnimationTimerMilliseconds = 500;
+        private float flyAnimationTimer = 0;
+
         private Rectangle localBounds;
         /// <summary>
         /// Gets a rectangle which bounds this player in world space.
@@ -713,6 +716,9 @@ namespace LearningXNA
         /// </returns>
         private float DoJump(float velocityY, GameTime gameTime)
         {
+            if (flyAnimationTimer > 0)
+                flyAnimationTimer -= gameTime.ElapsedGameTime.Milliseconds;
+
             // If the player wants to jump
             if ((isJumping || isBouncing || !isOnGround))
             {
@@ -746,13 +752,19 @@ namespace LearningXNA
 
                     case MONSTER_DUCK:
                         if (!isOnGround)
-                            sprite.PlayAnimation(monsterDuckFlyAnimation);
+                        {
+                            if (flyAnimationTimer > 0)
+                                sprite.PlayAnimation(monsterDuckFlyAnimation);
+                            else
+                                sprite.PlayAnimation(monsterDuckJumpAnimation);
+                        }
                         // Begin or continue a jump
                         if (isFlappingWings && !wasFlappingWings)
                         {
                             sprite.PlayAnimation(monsterDuckFlyAnimation);
                             jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
                             isJumping = true;
+                            flyAnimationTimer = flyAnimationTimerMilliseconds;
                         }
 
                         else if ((!wasJumping && IsOnGround) || isBouncing || jumpTime > 0.0f)
