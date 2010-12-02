@@ -23,6 +23,7 @@ namespace LearningXNA
         const short DIE                 = 0;
         const short JUMP                = 1;
         const short EATCAT              = 2;
+        const short EATDUCK             = 3;
         
 
         static Random random = new Random();
@@ -103,8 +104,8 @@ namespace LearningXNA
         private SoundEffect eatcat1;
         private SoundEffect eatcat2;
 
-
-        private SoundEffect eatDuckSound;
+        private SoundEffect eatduck0;
+        private SoundEffect eatduck1;
 
         public Level Level
         {
@@ -363,6 +364,8 @@ namespace LearningXNA
             eatcat1 = Level.Content.Load<SoundEffect>("Sounds/eatcat/eatcat1");
             eatcat2 = Level.Content.Load<SoundEffect>("Sounds/eatcat/eatcat2");
 
+            eatduck0 = Level.Content.Load<SoundEffect>("Sounds/eatduck/eatduck0");
+            eatduck1 = Level.Content.Load<SoundEffect>("Sounds/eatduck/eatduck1");
         }
 
         /// <summary>
@@ -1258,7 +1261,7 @@ namespace LearningXNA
                 case MONSTER_DUCK:
                     canBeDuck = true;
                     changeShape(MONSTER_DUCK);
-                    //playRandomSound(EATDUCK);
+                    playRandomSound(EATDUCK);
                     break;
             }
             
@@ -1421,6 +1424,19 @@ namespace LearningXNA
                             break;
                         case 2:
                             eatcat2.Play();
+                            break;
+                    }
+                    break;
+
+                case EATDUCK:
+                    index = random.Next(2);
+                    switch (index)
+                    {
+                        case 0:
+                            eatduck0.Play();
+                            break;
+                        case 1:
+                            eatduck1.Play();
                             break;
                     }
                     break;
