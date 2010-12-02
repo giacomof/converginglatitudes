@@ -21,6 +21,7 @@ namespace LearningXNA
 
         // Sound Categories
         const short DIE                 = 0;
+        const short JUMP                = 1;
         
 
         static Random random = new Random();
@@ -91,7 +92,13 @@ namespace LearningXNA
         private SoundEffect die2;
         private SoundEffect die3;
 
-        private SoundEffect jumpSound;
+        private SoundEffect jump0;
+        private SoundEffect jump1;
+        private SoundEffect jump2;
+        private SoundEffect jump3;
+        private SoundEffect jump4;
+
+
         private SoundEffect eatCatSound;
         private SoundEffect eatDuckSound;
 
@@ -342,7 +349,12 @@ namespace LearningXNA
             die2 = Level.Content.Load<SoundEffect>("Sounds/die/die2");
             die3 = Level.Content.Load<SoundEffect>("Sounds/die/die3");
 
-            jumpSound = Level.Content.Load<SoundEffect>("Sounds/PlayerJump");
+            jump0 = Level.Content.Load<SoundEffect>("Sounds/jump/jump0");
+            jump1 = Level.Content.Load<SoundEffect>("Sounds/jump/jump1");
+            jump2 = Level.Content.Load<SoundEffect>("Sounds/jump/jump2");
+            jump3 = Level.Content.Load<SoundEffect>("Sounds/jump/jump3");
+            jump4 = Level.Content.Load<SoundEffect>("Sounds/jump/jump4");
+
             eatCatSound = Level.Content.Load<SoundEffect>("Sounds/EatCat");
         }
 
@@ -747,7 +759,7 @@ namespace LearningXNA
                         if ((!wasJumping && IsOnGround) || isBouncing || jumpTime > 0.0f)
                         {
                             if (jumpTime == 0.0f)
-                                jumpSound.Play();
+                                playRandomSound(JUMP);
 
                             jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
                         }
@@ -759,7 +771,7 @@ namespace LearningXNA
                         if ((!wasJumping && IsOnGround ) || isBouncing || jumpTime > 0.0f)
                         {
                             if (jumpTime == 0.0f)
-                                jumpSound.Play();
+                                playRandomSound(JUMP);
 
                             jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
                         }
@@ -785,7 +797,7 @@ namespace LearningXNA
                         else if ((!wasJumping && IsOnGround) || isBouncing || jumpTime > 0.0f)
                         {
                             if (jumpTime == 0.0f)
-                                jumpSound.Play();
+                                playRandomSound(JUMP);
 
                             jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
                         }
@@ -1364,6 +1376,28 @@ namespace LearningXNA
                             break;
                         case 3:
                             die3.Play();
+                            break;
+                    }
+                    break;
+
+                case JUMP:
+                    index = random.Next(5);
+                    switch (index)
+                    {
+                        case 0:
+                            jump0.Play();
+                            break;
+                        case 1:
+                            jump1.Play();
+                            break;
+                        case 2:
+                            jump2.Play();
+                            break;
+                        case 3:
+                            jump3.Play();
+                            break;
+                        case 4:
+                            jump4.Play();
                             break;
                     }
                     break;
