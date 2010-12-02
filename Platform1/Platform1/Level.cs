@@ -1025,7 +1025,7 @@ namespace LearningXNA
             {
                 dogPosition = dog.getPosition();
                 distance = Vector2.Distance(dogPosition, playerPosition);
-                if (distance < scaredDistance && !player.isScared && player.animalShape == MONSTER_CAT)
+                if (distance < scaredDistance && !player.isScared && player.animalShape != MONSTER)
                 {
                     player.isScared = true;
                     if (dogPosition.X - playerPosition.X < 0)
