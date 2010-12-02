@@ -68,6 +68,7 @@ namespace LearningXNA
         private Animation monsterDuckRunAnimation;
         private Animation monsterDuckJumpAnimation;
         private Animation monsterDuckFlyAnimation;
+        private Animation monsterDuckDieAnimation;
 
 
         private Animation transformationAnimation;
@@ -320,6 +321,7 @@ namespace LearningXNA
             monsterDuckRunAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/duckRun"), 0.1f, true);
             monsterDuckJumpAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/duckJump"), 0.1f, false);
             monsterDuckFlyAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/duckFly"), 0.03f, true);
+            monsterDuckDieAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/duckDie"), 0.1f, false);
 
 
             transformationAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/transformation"), 0.1f, false);
@@ -1206,7 +1208,7 @@ namespace LearningXNA
                     sprite.PlayAnimation(monsterCatDieAnimation);
                     break;
                 case MONSTER_DUCK:
-                    sprite.PlayAnimation(monsterCatDieAnimation);
+                    sprite.PlayAnimation(monsterDuckDieAnimation);
                     break;
             }
         }
