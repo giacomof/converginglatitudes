@@ -119,6 +119,8 @@ namespace LearningXNA
         private SoundEffect transformation1;
         private SoundEffect transformation2;
 
+        private SoundEffect checkpoint;
+
         public Level Level
         {
             get { return level; }
@@ -388,6 +390,8 @@ namespace LearningXNA
             transformation0 = Level.Content.Load<SoundEffect>("Sounds/transformation/transformation0");
             transformation1 = Level.Content.Load<SoundEffect>("Sounds/transformation/transformation1");
             transformation2 = Level.Content.Load<SoundEffect>("Sounds/transformation/transformation2");
+
+            checkpoint = Level.Content.Load<SoundEffect>("Sounds/checkpoint");
         }
 
         /// <summary>
@@ -966,6 +970,7 @@ namespace LearningXNA
                             level.actualLives = level.maxLives;
                             level.checkpoint = new Vector2(x, y) * Tile.Size;
                             level.checkpoint.X += Tile.Width / 2;
+                            checkpoint.Play();
                         }
                     }
                     //end Checkpoint
