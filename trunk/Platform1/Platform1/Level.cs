@@ -1213,9 +1213,7 @@ namespace LearningXNA
                             break;
                     }
                     break;
-
             }
-
         }
 
 

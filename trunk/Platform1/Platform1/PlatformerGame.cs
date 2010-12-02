@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 
 
 namespace LearningXNA
@@ -43,8 +44,7 @@ namespace LearningXNA
         private Texture2D monsterDuckActive;
 
         private Texture2D monsterSomethingNotAvailable;
-
-        
+               
 
         private Texture2D winOverlay;
         private Texture2D loseOverlay;
@@ -59,6 +59,19 @@ namespace LearningXNA
         private Texture2D tutorialOverlay6;
         private Texture2D tutorialOverlay7;
         private Texture2D tutorialOverlay8;
+
+
+        private Random random = new Random();
+        private bool alreadyLost = false;
+
+        const short YOULOSE = 0;
+
+        private SoundEffect youlose0;
+        private SoundEffect youlose1;
+        private SoundEffect youlose2;
+        private SoundEffect youlose3;
+        private SoundEffect youlose4;
+
 
         // Meta-level game state.
 
@@ -148,6 +161,12 @@ namespace LearningXNA
             tutorialOverlay6 = Content.Load<Texture2D>("Overlays/tutorial6");
             tutorialOverlay7 = Content.Load<Texture2D>("Overlays/tutorial7");
             tutorialOverlay8 = Content.Load<Texture2D>("Overlays/tutorial8");
+
+            youlose0 = Content.Load<SoundEffect>("Sounds/youlose/youlose0");
+            youlose1 = Content.Load<SoundEffect>("Sounds/youlose/youlose1");
+            youlose2 = Content.Load<SoundEffect>("Sounds/youlose/youlose2");
+            youlose3 = Content.Load<SoundEffect>("Sounds/youlose/youlose3");
+            youlose4 = Content.Load<SoundEffect>("Sounds/youlose/youlose4");
 
 
            MediaPlayer.IsRepeating = true;
@@ -398,12 +417,18 @@ namespace LearningXNA
                 }
                 else
                 {
+                    if (!alreadyLost)
+                    {
+                        playRandomSound(YOULOSE);
+                        alreadyLost = true;
+                    }
                     status = loseOverlay;
                 }
             }
             else if (!level.Player.IsAlive)
             {
                 status = diedOverlay;
+                alreadyLost = false;
             }
 
             if (Player.needTutorial != -1)
@@ -454,6 +479,37 @@ namespace LearningXNA
         {
             spriteBatch.DrawString(font, value, position + new Vector2(1.0f, 1.0f), Color.Black);
             spriteBatch.DrawString(font, value, position, color);
+        }
+
+        public void playRandomSound(short category)
+        {
+            int index;
+            switch (category)
+            {
+                case YOULOSE:
+                    index = random.Next(5);
+                    switch (index)
+                    {
+                        case 0:
+                            youlose0.Play();
+                            break;
+                        case 1:
+                            youlose1.Play();
+                            break;
+                        case 2:
+                            youlose2.Play();
+                            break;
+                        case 3:
+                            youlose3.Play();
+                            break;
+                        case 4:
+                            youlose4.Play();
+                            break;
+                    }
+                    break;
+
+            }
+
         }
     }
 }
