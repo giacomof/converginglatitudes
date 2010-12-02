@@ -24,6 +24,7 @@ namespace LearningXNA
         const short JUMP                = 1;
         const short EATCAT              = 2;
         const short EATDUCK             = 3;
+        const short FLAP                = 4;
         
 
         static Random random = new Random();
@@ -106,6 +107,12 @@ namespace LearningXNA
 
         private SoundEffect eatduck0;
         private SoundEffect eatduck1;
+
+        private SoundEffect flap0;
+        private SoundEffect flap1;
+        private SoundEffect flap2;
+        private SoundEffect flap3;
+        private SoundEffect flap4;
 
         public Level Level
         {
@@ -366,6 +373,12 @@ namespace LearningXNA
 
             eatduck0 = Level.Content.Load<SoundEffect>("Sounds/eatduck/eatduck0");
             eatduck1 = Level.Content.Load<SoundEffect>("Sounds/eatduck/eatduck1");
+
+            flap0 = Level.Content.Load<SoundEffect>("Sounds/flap/flap0");
+            flap1 = Level.Content.Load<SoundEffect>("Sounds/flap/flap1");
+            flap2 = Level.Content.Load<SoundEffect>("Sounds/flap/flap2");
+            flap3 = Level.Content.Load<SoundEffect>("Sounds/flap/flap3");
+            flap4 = Level.Content.Load<SoundEffect>("Sounds/flap/flap4");
         }
 
         /// <summary>
@@ -802,6 +815,7 @@ namespace LearningXNA
                             jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
                             isJumping = true;
                             flyAnimationTimer = flyAnimationTimerMilliseconds;
+                            playRandomSound(FLAP);
                         }
 
                         else if ((!wasJumping && IsOnGround) || isBouncing || jumpTime > 0.0f)
@@ -1437,6 +1451,28 @@ namespace LearningXNA
                             break;
                         case 1:
                             eatduck1.Play();
+                            break;
+                    }
+                    break;
+
+                case FLAP:
+                    index = random.Next(5);
+                    switch (index)
+                    {
+                        case 0:
+                            flap0.Play();
+                            break;
+                        case 1:
+                            flap1.Play();
+                            break;
+                        case 2:
+                            flap2.Play();
+                            break;
+                        case 3:
+                            flap3.Play();
+                            break;
+                        case 4:
+                            flap4.Play();
                             break;
                     }
                     break;
