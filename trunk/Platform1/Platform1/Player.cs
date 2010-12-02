@@ -25,6 +25,7 @@ namespace LearningXNA
         const short EATCAT              = 2;
         const short EATDUCK             = 3;
         const short FLAP                = 4;
+        const short TRANSFORMATION      = 5;
         
 
         static Random random = new Random();
@@ -113,6 +114,10 @@ namespace LearningXNA
         private SoundEffect flap2;
         private SoundEffect flap3;
         private SoundEffect flap4;
+
+        private SoundEffect transformation0;
+        private SoundEffect transformation1;
+        private SoundEffect transformation2;
 
         public Level Level
         {
@@ -379,6 +384,10 @@ namespace LearningXNA
             flap2 = Level.Content.Load<SoundEffect>("Sounds/flap/flap2");
             flap3 = Level.Content.Load<SoundEffect>("Sounds/flap/flap3");
             flap4 = Level.Content.Load<SoundEffect>("Sounds/flap/flap4");
+
+            transformation0 = Level.Content.Load<SoundEffect>("Sounds/transformation/transformation0");
+            transformation1 = Level.Content.Load<SoundEffect>("Sounds/transformation/transformation1");
+            transformation2 = Level.Content.Load<SoundEffect>("Sounds/transformation/transformation2");
         }
 
         /// <summary>
@@ -1303,6 +1312,8 @@ namespace LearningXNA
 
             if (animalShape != shapeFlag)
             {
+                playRandomSound(TRANSFORMATION);
+
                 transformationTimerClock = transformationTimerMilliseconds;
 
                 animalShape = shapeFlag;
@@ -1473,6 +1484,22 @@ namespace LearningXNA
                             break;
                         case 4:
                             flap4.Play();
+                            break;
+                    }
+                    break;
+
+                case TRANSFORMATION:
+                    index = random.Next(3);
+                    switch (index)
+                    {
+                        case 0:
+                            transformation0.Play();
+                            break;
+                        case 1:
+                            transformation1.Play();
+                            break;
+                        case 2:
+                            transformation2.Play();
                             break;
                     }
                     break;
