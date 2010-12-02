@@ -22,6 +22,7 @@ namespace LearningXNA
         // Sound Categories
         const short DIE                 = 0;
         const short JUMP                = 1;
+        const short EATCAT              = 2;
         
 
         static Random random = new Random();
@@ -98,8 +99,11 @@ namespace LearningXNA
         private SoundEffect jump3;
         private SoundEffect jump4;
 
+        private SoundEffect eatcat0;
+        private SoundEffect eatcat1;
+        private SoundEffect eatcat2;
 
-        private SoundEffect eatCatSound;
+
         private SoundEffect eatDuckSound;
 
         public Level Level
@@ -355,7 +359,10 @@ namespace LearningXNA
             jump3 = Level.Content.Load<SoundEffect>("Sounds/jump/jump3");
             jump4 = Level.Content.Load<SoundEffect>("Sounds/jump/jump4");
 
-            eatCatSound = Level.Content.Load<SoundEffect>("Sounds/EatCat");
+            eatcat0 = Level.Content.Load<SoundEffect>("Sounds/eatcat/eatcat0");
+            eatcat1 = Level.Content.Load<SoundEffect>("Sounds/eatcat/eatcat1");
+            eatcat2 = Level.Content.Load<SoundEffect>("Sounds/eatcat/eatcat2");
+
         }
 
         /// <summary>
@@ -1246,12 +1253,12 @@ namespace LearningXNA
                 case MONSTER_CAT:
                     canBeCat = true;
                     changeShape(MONSTER_CAT);
-                    eatCatSound.Play();
+                    playRandomSound(EATCAT);
                     break;
                 case MONSTER_DUCK:
                     canBeDuck = true;
                     changeShape(MONSTER_DUCK);
-                    eatCatSound.Play();
+                    //playRandomSound(EATDUCK);
                     break;
             }
             
@@ -1402,6 +1409,21 @@ namespace LearningXNA
                     }
                     break;
 
+                case EATCAT:
+                    index = random.Next(3);
+                    switch (index)
+                    {
+                        case 0:
+                            eatcat0.Play();
+                            break;
+                        case 1:
+                            eatcat1.Play();
+                            break;
+                        case 2:
+                            eatcat2.Play();
+                            break;
+                    }
+                    break;
             }
 
         }
