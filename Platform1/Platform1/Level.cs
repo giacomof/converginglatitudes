@@ -93,6 +93,7 @@ namespace LearningXNA
         private List<JumpingEnemy> jumpingenemies = new List<JumpingEnemy>();
         private List<FlyingEnemy> flyingenemies = new List<FlyingEnemy>();
         private List<CircleFlyingEnemy> circleFlyingenemies = new List<CircleFlyingEnemy>();
+        private List<HorizontalFlyingEnemy> horizontalFlyingenemies = new List<HorizontalFlyingEnemy>();
         private List<Animal> animals = new List<Animal>();
         private List<DogEnemy> dogEnemies = new List<DogEnemy>();
         private List<FallingObject> fallingObjects = new List<FallingObject>();
@@ -318,6 +319,9 @@ namespace LearningXNA
                     return LoadCircleFlyingEnemyTile(x, y, "Helicopter");
                 case 'ß':
                     return LoadCircleFlyingEnemyTile(x, y, "Bumblebee");
+
+                case 'Ƚ':
+                    return LoadHorizontalFlyingEnemyTile(x, y, "Bumblebee");
 
                 case 'W':
                     return LoadEnemyOnCeilingTile(x, y, "Spider");
@@ -677,6 +681,15 @@ namespace LearningXNA
             return new Tile(null, TileCollision.Passable);
         }
 
+        private Tile LoadHorizontalFlyingEnemyTile(int x, int y, string spriteSet)
+        {
+            Vector2 position = RectangleExtensions.GetBottomCenter(GetBounds(x, y));
+            horizontalFlyingenemies.Add(new HorizontalFlyingEnemy(this, position, spriteSet));
+
+            return new Tile(null, TileCollision.Passable);
+        }
+
+
         /// <summary>
         /// Instantiates a Cookie and puts it in the level.
         /// </summary>
@@ -811,6 +824,7 @@ namespace LearningXNA
                 UpdateEnemiesOnCeiling(gameTime);
                 UpdateFlyingEnemies(gameTime);
                 UpdateCircleFlyingenemies(gameTime);
+                UpdateHorizontalFlyingenemies(gameTime);
                 UpdateAnimals(gameTime);
                 UpdateDogEnemy(gameTime);
 
@@ -992,6 +1006,23 @@ namespace LearningXNA
 
                 // Touching an enemy instantly kills the player
                 if (circleFlyingenemy.BoundingRectangle.Intersects(Player.BoundingRectangle))
+                {
+                    OnPlayerKilled(true);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Animates each enemy and allow them to kill the player.
+        /// </summary>
+        private void UpdateHorizontalFlyingenemies(GameTime gameTime)
+        {
+            foreach (HorizontalFlyingEnemy horizontalFlyingenemy in horizontalFlyingenemies)
+            {
+                horizontalFlyingenemy.Update(gameTime);
+
+                // Touching an enemy instantly kills the player
+                if (horizontalFlyingenemy.BoundingRectangle.Intersects(Player.BoundingRectangle))
                 {
                     OnPlayerKilled(true);
                 }
@@ -1305,6 +1336,9 @@ namespace LearningXNA
 
             foreach (CircleFlyingEnemy circleFlyingEnemy in circleFlyingenemies)
                 circleFlyingEnemy.Draw(gameTime, spriteBatch);
+
+            foreach (HorizontalFlyingEnemy horizontalFlyingEnemy in horizontalFlyingenemies)
+                horizontalFlyingEnemy.Draw(gameTime, spriteBatch);
 
             foreach (Animal animal in animals)
                 animal.Draw(gameTime, spriteBatch);

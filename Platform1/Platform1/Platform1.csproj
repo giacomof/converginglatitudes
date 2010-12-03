@@ -94,6 +94,7 @@
     <Compile Include="AnimationPlayer.cs" />
     <Compile Include="Circle.cs" />
     <Compile Include="CircleFlyingEnemy.cs" />
+    <Compile Include="HorizontalFlyingEnemy.cs" />
     <Compile Include="EnemyOnCeiling.cs" />
     <Compile Include="FlyingEnemy.cs" />
     <Compile Include="DogEnemy.cs" />

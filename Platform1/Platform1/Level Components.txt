@@ -25,6 +25,7 @@ Enemies
 - Circle Flying Enemy (Helicopter)							'Ǒ'								
 - Enemy (Radio controlled car)								'A'
 - Jumping Enemy	(piranhas)									'J'
+- Horizontal Flying Enemy (bumblebee)						'Ƚ'
 
 Player independent tiles
 - Blank space 												'.'
