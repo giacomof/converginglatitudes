@@ -192,11 +192,11 @@ namespace LearningXNA
 
 
         // Constants for controlling vertical movement
-        private const float monsterDuckMaxJumpTime = 0.25f;
+        private const float monsterDuckMaxJumpTime = 0.15f;
         public const float monsterDuckJumpLaunchVelocity = -4000.0f;
         private const float monsterDuckGravityAcceleration = 3500.0f;
-        private const float monsterDuckMaxFallSpeed = 600.0f;
-        private const float monsterDuckJumpControlPower = 0.14f;
+        private const float monsterDuckMaxFallSpeed = 250.0f;
+        private const float monsterDuckJumpControlPower = 0.10f;
         //*******************************************************
 
         // Constants for controling horizontal movement
@@ -320,7 +320,7 @@ namespace LearningXNA
 
             // Reset the shape changing abilities
             CanBeCat = false;
-            CanBeDuck = false;
+            CanBeDuck = true;
             CanBeMole = true;
 
             isIdle = true;
