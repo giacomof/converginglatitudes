@@ -50,11 +50,15 @@ Player dependent tiles
 - Switch destroy wall 1 (switch)							'˥'
 - Switch destroy wall 2	(switch)							'˦'
 - Switch destroy wall 3	(switch)							'˧'
+- Switch destroy wall 4	(switch)							'†'
+- Switch destroy wall 5	(switch)							'‡'
 - Destroyable wall 1 (rock wall)							'░'
 - Destroyable wall 2 (rock wall)							'▒'
 - Destroyable wall 3 (rock wall)							'▓'
+- Destroyable wall 4 (rock wall)							'█'
+- Destroyable wall 5 (rock wall)							'▐'
 
-
+†
 
 
 New stuff for level 2
