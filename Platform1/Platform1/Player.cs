@@ -449,8 +449,6 @@ namespace LearningXNA
                 if (isScared)
                 {
                     scaredTimerClock += gameTime.ElapsedGameTime.Milliseconds;
-                    if (!wasScared)
-                        playRandomSound(EXCLAMATION);
                     if (scaredTimerClock >= scaredTimerMilliseconds)
                     {
                         isScared = false;
@@ -628,6 +626,8 @@ namespace LearningXNA
             {
                 movementX = scaredDirection;
                 lastMovementX = scaredDirection;
+                if (!wasScared)
+                    playRandomSound(EXCLAMATION);
             }
 
             // Check if the player wants to jump.
