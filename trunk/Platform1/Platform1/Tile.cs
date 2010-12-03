@@ -110,7 +110,27 @@ namespace LearningXNA
         /// <summary>
         /// Destroyable tile for the hamster
         /// </summary>
-        Destroyable = 19
+        Destroyable = 19,
+
+        /// <summary>
+        /// Switch for deactivating walls number 4
+        /// </summary>
+        SwitchWall4 = 20,
+
+        /// <summary>
+        /// Switch for deactivating walls number 5
+        /// </summary>
+        SwitchWall5 = 21,
+
+        /// <summary>
+        /// Destroyable wall number 4
+        /// </summary>
+        DestroyableWall4 = 22,
+
+        /// <summary>
+        /// Destroyable wall number 5
+        /// </summary>
+        DestroyableWall5 = 23,
     }
 
     /// <summary>

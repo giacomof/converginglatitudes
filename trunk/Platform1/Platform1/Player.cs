@@ -973,6 +973,10 @@ namespace LearningXNA
                         level.activateWall2Switch();
                     if (animalShape == MONSTER && collision == TileCollision.SwitchWall3 && isDoingSpecialAction)
                         level.activateWall3Switch();
+                    if (animalShape == MONSTER && collision == TileCollision.SwitchWall4 && isDoingSpecialAction)
+                         level.activateWall4Switch();
+                    if (animalShape == MONSTER && collision == TileCollision.SwitchWall5 && isDoingSpecialAction)
+                        level.activateWall5Switch();
 
 
                     //start Checkpoint
@@ -1037,9 +1041,13 @@ namespace LearningXNA
                         collision != TileCollision.SwitchWall1 &&
                         collision != TileCollision.SwitchWall2 &&
                         collision != TileCollision.SwitchWall3 &&
+                        collision != TileCollision.SwitchWall4 &&
+                        collision != TileCollision.SwitchWall5 &&
                         collision != TileCollision.DestroyableWall1 &&
                         collision != TileCollision.DestroyableWall2 &&
                         collision != TileCollision.DestroyableWall3 &&
+                        collision != TileCollision.DestroyableWall4 &&
+                        collision != TileCollision.DestroyableWall5 &&
                         collision != TileCollision.YAxisLevelFrame)
                     {
                         // Determine collision depth (with direction) and magnitude.

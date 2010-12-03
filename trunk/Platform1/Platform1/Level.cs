@@ -52,6 +52,10 @@ namespace LearningXNA
         private float destroyableWall2SwitchTimerClock = 0;
         private bool destroyableWall3Active = true;
         private float destroyableWall3SwitchTimerClock = 0;
+        private bool destroyableWall4Active = true;
+        private float destroyableWall4SwitchTimerClock = 0;
+        private bool destroyableWall5Active = true;
+        private float destroyableWall5SwitchTimerClock = 0;
 
         public double elapsedTime = 0;
         public bool changeCollider = false;
@@ -100,6 +104,8 @@ namespace LearningXNA
         public List<Coordinates> destroyableWalls1 = new List<Coordinates>();
         public List<Coordinates> destroyableWalls2 = new List<Coordinates>();
         public List<Coordinates> destroyableWalls3 = new List<Coordinates>();
+        public List<Coordinates> destroyableWalls4 = new List<Coordinates>();
+        public List<Coordinates> destroyableWalls5 = new List<Coordinates>();
 
         // Key locations in the level.        
         private Vector2 start;
@@ -436,12 +442,20 @@ namespace LearningXNA
                     return LoadTile("switchOff", TileCollision.SwitchWall2);
                 case '˧':
                     return LoadTile("switchOff", TileCollision.SwitchWall3);
+                case '†':
+                    return LoadTile("switchOff", TileCollision.SwitchWall4);
+                case '‡':
+                    return LoadTile("switchOff", TileCollision.SwitchWall5);
                 case '░':
                     return LoadDestroyableTile("Tile0", 1, x, y);
                 case '▒':
                     return LoadDestroyableTile("Tile0", 2, x, y);
                 case '▓':
                     return LoadDestroyableTile("Tile0", 3, x, y);
+                case '█':
+                    return LoadDestroyableTile("Tile0", 4, x, y);
+                case '▐':
+                    return LoadDestroyableTile("Tile0", 5, x, y);
 
                 case '*':
                     return LoadTile("drawerOpen", TileCollision.Disappearing);
@@ -538,6 +552,12 @@ namespace LearningXNA
                     return new Tile(Content.Load<Texture2D>("Tiles/" + name), TileCollision.Impassable);
                 case 3:
                     destroyableWalls3.Add(new Coordinates(x, y));
+                    return new Tile(Content.Load<Texture2D>("Tiles/" + name), TileCollision.Impassable);
+                case 4:
+                    destroyableWalls4.Add(new Coordinates(x, y));
+                    return new Tile(Content.Load<Texture2D>("Tiles/" + name), TileCollision.Impassable);
+                case 5:
+                    destroyableWalls5.Add(new Coordinates(x, y));
                     return new Tile(Content.Load<Texture2D>("Tiles/" + name), TileCollision.Impassable);
                 default:
                     return new Tile();
@@ -777,6 +797,10 @@ namespace LearningXNA
                 destroyableWall2SwitchTimerClock -= gameTime.ElapsedGameTime.Milliseconds;
             if (destroyableWall3SwitchTimerClock >= 0)
                 destroyableWall3SwitchTimerClock -= gameTime.ElapsedGameTime.Milliseconds;
+            if (destroyableWall4SwitchTimerClock >= 0)
+                destroyableWall4SwitchTimerClock -= gameTime.ElapsedGameTime.Milliseconds;
+            if (destroyableWall5SwitchTimerClock >= 0)
+                destroyableWall5SwitchTimerClock -= gameTime.ElapsedGameTime.Milliseconds;
 
 
             // Pause while the player is dead or time is expired.
@@ -1203,6 +1227,38 @@ namespace LearningXNA
             }
         }
 
+        public void activateWall4Switch()
+        {
+            if (destroyableWall4SwitchTimerClock <= 0)
+            {
+                destroyableWall4SwitchTimerClock = SwitchTimerMilliseconds;
+                if (destroyableWall4Active)
+                    foreach (Coordinates coordinate in destroyableWalls4)
+                        tiles[coordinate.x, coordinate.y].Collision = TileCollision.DestroyableWall4;
+                else
+                    foreach (Coordinates coordinate in destroyableWalls4)
+                        tiles[coordinate.x, coordinate.y].Collision = TileCollision.Impassable;
+
+                destroyableWall4Active = !destroyableWall4Active;
+            }
+        }
+
+        public void activateWall5Switch()
+        {
+            if (destroyableWall5SwitchTimerClock <= 0)
+            {
+                destroyableWall5SwitchTimerClock = SwitchTimerMilliseconds;
+                if (destroyableWall5Active)
+                    foreach (Coordinates coordinate in destroyableWalls5)
+                        tiles[coordinate.x, coordinate.y].Collision = TileCollision.DestroyableWall5;
+                else
+                    foreach (Coordinates coordinate in destroyableWalls5)
+                        tiles[coordinate.x, coordinate.y].Collision = TileCollision.Impassable;
+
+                destroyableWall5Active = !destroyableWall5Active;
+            }
+        }
+
         /// <summary>
         /// Restores the player to the starting point to try the level again.
         /// </summary>
@@ -1401,7 +1457,9 @@ namespace LearningXNA
                     if (texture != null && collision != TileCollision.PlatformCollider &&
                         collision != TileCollision.DestroyableWall1 &&
                         collision != TileCollision.DestroyableWall2 &&
-                        collision != TileCollision.DestroyableWall3) 
+                        collision != TileCollision.DestroyableWall3 &&
+                        collision != TileCollision.DestroyableWall4 &&
+                        collision != TileCollision.DestroyableWall5) 
                         
                     {
                         Vector2 position = new Vector2(x, y) * Tile.Size;
@@ -1440,6 +1498,18 @@ namespace LearningXNA
                                 break;
                             case TileCollision.SwitchWall3:
                                 if (destroyableWall3Active)
+                                    spriteBatch.Draw(texture, position, Color.White);
+                                else
+                                    spriteBatch.Draw(switchTileOn, position, Color.White);
+                                break;
+                            case TileCollision.SwitchWall4:
+                                if (destroyableWall4Active)
+                                    spriteBatch.Draw(texture, position, Color.White);
+                                else
+                                    spriteBatch.Draw(switchTileOn, position, Color.White);
+                                break;
+                            case TileCollision.SwitchWall5:
+                                if (destroyableWall5Active)
                                     spriteBatch.Draw(texture, position, Color.White);
                                 else
                                     spriteBatch.Draw(switchTileOn, position, Color.White);
