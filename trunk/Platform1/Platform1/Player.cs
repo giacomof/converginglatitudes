@@ -520,7 +520,7 @@ namespace LearningXNA
                     }
                 }
             }
-
+            
             // Clear input.
             movementX = 0.0f;
             movementY = 0.0f;
@@ -1068,6 +1068,7 @@ namespace LearningXNA
                             float previousLeft = bounds.Left;
                             float previousRight = bounds.Right;
                             KeyboardState keyboardState = Keyboard.GetState();
+                            
                             if (monsterRightTopCollision == TileCollision.Destroyable &&
                                 keyboardState.IsKeyDown(Keys.Z) &&
                                 keyboardState.IsKeyDown(Keys.Right) &&
