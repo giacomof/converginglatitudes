@@ -461,6 +461,8 @@ namespace LearningXNA
 
                 case '*':
                     return LoadTile("drawerOpen", TileCollision.Disappearing);
+                case '+':
+                    return LoadVarietyTile("rock", 3, TileCollision.Disappearing);
 
 
                 case '„':
