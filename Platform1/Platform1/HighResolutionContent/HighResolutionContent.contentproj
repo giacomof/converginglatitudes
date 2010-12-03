@@ -1823,12 +1823,12 @@
       <Name>3</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Levels\4.txt">
-      <Name>4</Name>
+    <None Include="Levels\8.txt">
+      <Name>8</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Levels\5.txt">
-      <Name>5</Name>
+    <None Include="Levels\4.txt">
+      <Name>4</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -26,7 +26,8 @@ Enemies
 - Enemy (Radio controlled car)								'A'
 - Jumping Enemy	(piranhas)									'J'
 - Horizontal Flying Enemy (bumblebee)						'Ƚ'
-- Normal enemy (Spider)										'S'
+- Normal enemy (Spider)
+- upside down enemy (spider)							'W'										'S'
 
 Player independent tiles
 - Blank space 												'.'
