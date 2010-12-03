@@ -26,6 +26,7 @@ namespace LearningXNA
         const short EATDUCK             = 3;
         const short FLAP                = 4;
         const short TRANSFORMATION      = 5;
+        const short EXCLAMATION         = 6;
         
 
         static Random random = new Random();
@@ -118,6 +119,10 @@ namespace LearningXNA
         private SoundEffect transformation0;
         private SoundEffect transformation1;
         private SoundEffect transformation2;
+
+        private SoundEffect exclamation0;
+        private SoundEffect exclamation1;
+        private SoundEffect exclamation2;
 
         private SoundEffect checkpoint;
 
@@ -274,6 +279,7 @@ namespace LearningXNA
 
 
         public bool isScared;
+        public bool wasScared;
         public int scaredDirection;
         private int scaredTimerMilliseconds = 2000;
         private float scaredTimerClock;
@@ -391,6 +397,10 @@ namespace LearningXNA
             transformation1 = Level.Content.Load<SoundEffect>("Sounds/transformation/transformation1");
             transformation2 = Level.Content.Load<SoundEffect>("Sounds/transformation/transformation2");
 
+            exclamation0 = Level.Content.Load<SoundEffect>("Sounds/exclamation/exclamation0");
+            exclamation1 = Level.Content.Load<SoundEffect>("Sounds/exclamation/exclamation1");
+            exclamation2 = Level.Content.Load<SoundEffect>("Sounds/exclamation/exclamation2");
+
             checkpoint = Level.Content.Load<SoundEffect>("Sounds/checkpoint");
         }
 
@@ -439,6 +449,8 @@ namespace LearningXNA
                 if (isScared)
                 {
                     scaredTimerClock += gameTime.ElapsedGameTime.Milliseconds;
+                    if (!wasScared)
+                        playRandomSound(EXCLAMATION);
                     if (scaredTimerClock >= scaredTimerMilliseconds)
                     {
                         isScared = false;
@@ -520,6 +532,7 @@ namespace LearningXNA
             wasClimbing = isClimbing;
             wasClimbingOnCeiling = isClimbingOnCeiling;
             wasFlappingWings = isFlappingWings;
+            wasScared = isScared;
 
             if(!isDoingSpecialAction)
             {
@@ -1505,6 +1518,22 @@ namespace LearningXNA
                             break;
                         case 2:
                             transformation2.Play();
+                            break;
+                    }
+                    break;
+
+                case EXCLAMATION:
+                    index = random.Next(3);
+                    switch (index)
+                    {
+                        case 0:
+                            exclamation0.Play();
+                            break;
+                        case 1:
+                            exclamation1.Play();
+                            break;
+                        case 2:
+                            exclamation2.Play();
                             break;
                     }
                     break;
