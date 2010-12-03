@@ -36,6 +36,7 @@ namespace LearningXNA
         const short MONSTER_DUCK    = 2;
 
         const short WIN             = 0;
+        const short LIGHTBULB       = 1;
 
         int scaredDistance = 250;
 
@@ -68,6 +69,7 @@ namespace LearningXNA
         private Vector2 numberPos;
 
         private bool rightCallingDistance;
+        private bool alreadyRightCallingDistance;
 
         private Texture2D disappearingTileOpen;
         private Texture2D switchTileOn;
@@ -154,6 +156,9 @@ namespace LearningXNA
         private SoundEffect win2;
         private SoundEffect win3;
 
+        private SoundEffect lightbulb0;
+        private SoundEffect lightbulb1;
+
         #region Loading
 
         /// <summary>
@@ -208,6 +213,9 @@ namespace LearningXNA
             win1 = Content.Load<SoundEffect>("Sounds/win/win1");
             win2 = Content.Load<SoundEffect>("Sounds/win/win2");
             win3 = Content.Load<SoundEffect>("Sounds/win/win3");
+
+            lightbulb0 = Content.Load<SoundEffect>("Sounds/lightbulb/lightbulb0"); ;
+            lightbulb1 = Content.Load<SoundEffect>("Sounds/lightbulb/lightbulb1"); ;
         }
 
         /// <summary>
@@ -1190,6 +1198,8 @@ namespace LearningXNA
         //end checkpoint
 
 
+        
+
         public void playRandomSound(short category)
         {
             int index;
@@ -1210,6 +1220,19 @@ namespace LearningXNA
                             break;
                         case 3:
                             win3.Play();
+                            break;
+                    }
+                    break;
+
+                case LIGHTBULB:
+                    index = random.Next(2);
+                    switch (index)
+                    {
+                        case 0:
+                            lightbulb0.Play();
+                            break;
+                        case 1:
+                            lightbulb1.Play();
                             break;
                     }
                     break;
@@ -1250,9 +1273,15 @@ namespace LearningXNA
             {
                 spriteBatch.Draw(exclamationMark, eventIconPosition, Color.White);
             }
-            if(rightCallingDistance)
+            if (rightCallingDistance)
+            {
+                if (!alreadyRightCallingDistance)
+                    playRandomSound(LIGHTBULB);
+
                 spriteBatch.Draw(lightBulb, eventIconPosition, Color.White);
-            
+                
+            }
+            alreadyRightCallingDistance = rightCallingDistance;
 
             ////MOVING PLATFORM STUFF
             foreach (MovableTile tile in movableTiles)
