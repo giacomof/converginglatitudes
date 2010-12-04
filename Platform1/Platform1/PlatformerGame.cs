@@ -30,6 +30,10 @@ namespace LearningXNA
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
+        Video myVideoFile;
+        VideoPlayer videoPlayer;
+
+
         // Global content.
         private SpriteFont hudFont;
         private Texture2D hud;
@@ -76,7 +80,7 @@ namespace LearningXNA
         // Meta-level game state.
 
 
-        private int levelIndex = 3;
+        private int levelIndex = -1;
         private Level level;
         private bool wasContinuePressed;
 
@@ -113,6 +117,8 @@ namespace LearningXNA
 
             Content.RootDirectory = "Content";
 
+            videoPlayer = new VideoPlayer();
+
             // Framerate differs between platforms.
             TargetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / TargetFrameRate);
 
@@ -128,6 +134,8 @@ namespace LearningXNA
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            myVideoFile = Content.Load<Video>("Video/Story");
 
             // Load fonts
             hudFont = Content.Load<SpriteFont>("Fonts/Hud");
@@ -187,6 +195,9 @@ namespace LearningXNA
             level.Update(gameTime);
 
             base.Update(gameTime);
+
+            // Video Stuff
+            //videoPlayer.Play(myVideoFile);
         }
 
         private void HandleInput()
@@ -295,15 +306,11 @@ namespace LearningXNA
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            
+            graphics.GraphicsDevice.Clear(Color.Black);
 
             level.Draw(gameTime, spriteBatch);
 
             DrawHud();
-
-            
 
             base.Draw(gameTime);
         }
@@ -311,6 +318,12 @@ namespace LearningXNA
         private void DrawHud()
         {
             spriteBatch.Begin();
+
+            if (videoPlayer.State == MediaState.Playing)
+            {
+                spriteBatch.Draw(videoPlayer.GetTexture(), new Rectangle(0, 0, myVideoFile.Width, myVideoFile.Height), Color.White);
+            }
+
 
             Rectangle titleSafeArea = GraphicsDevice.Viewport.TitleSafeArea;
             Vector2 hudLocation = new Vector2(titleSafeArea.X, titleSafeArea.Y);
