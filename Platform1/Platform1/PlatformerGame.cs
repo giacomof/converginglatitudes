@@ -30,8 +30,9 @@ namespace LearningXNA
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
-        Video myVideoFile;
+        Video initialVideo;
         VideoPlayer videoPlayer;
+        private float initialVideoClock = 39000;
 
 
         // Global content.
@@ -135,7 +136,7 @@ namespace LearningXNA
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            myVideoFile = Content.Load<Video>("Video/Story");
+            initialVideo = Content.Load<Video>("Video/Story");
 
             // Load fonts
             hudFont = Content.Load<SpriteFont>("Fonts/Hud");
@@ -178,9 +179,11 @@ namespace LearningXNA
 
 
            MediaPlayer.IsRepeating = true;
-           MediaPlayer.Play(Content.Load<Song>("Sounds/human_beat"));
+           
 
-            LoadNextLevel();
+           videoPlayer.Play(initialVideo);
+
+           LoadNextLevel();
         }
 
         /// <summary>
@@ -192,12 +195,24 @@ namespace LearningXNA
         {
             HandleInput();
 
-            level.Update(gameTime);
+            if (initialVideoClock > 0)
+            {
+                initialVideoClock -= gameTime.ElapsedGameTime.Milliseconds;
+            }
+            else
+            {
+                if(!videoPlayer.IsDisposed)
+                {
+                    videoPlayer.Stop();
+                    videoPlayer.Dispose();
+                    MediaPlayer.Play(Content.Load<Song>("Sounds/human_beat"));
+                }
 
-            base.Update(gameTime);
+                level.Update(gameTime);
 
-            // Video Stuff
-            //videoPlayer.Play(myVideoFile);
+                base.Update(gameTime);
+            }
+            
         }
 
         private void HandleInput()
@@ -225,6 +240,9 @@ namespace LearningXNA
             // to get the player back to playing.
             if (!wasContinuePressed && continuePressed)
             {
+                if (initialVideoClock > 0)
+                    initialVideoClock = 0;
+
                 if (!level.Player.IsAlive)
                 {
                     level.StartNewLife();
@@ -308,21 +326,26 @@ namespace LearningXNA
         {
             graphics.GraphicsDevice.Clear(Color.Black);
 
-            level.Draw(gameTime, spriteBatch);
+            if (!videoPlayer.IsDisposed)
+            {
+                spriteBatch.Begin();
+                spriteBatch.Draw(videoPlayer.GetTexture(), new Rectangle(0, 0, initialVideo.Width, initialVideo.Height), Color.White);
+                spriteBatch.End();
+            }
+            else
+            {
 
-            DrawHud();
+                level.Draw(gameTime, spriteBatch);
 
-            base.Draw(gameTime);
+                DrawHud();
+
+                base.Draw(gameTime);
+            }
         }
 
         private void DrawHud()
         {
             spriteBatch.Begin();
-
-            if (videoPlayer.State == MediaState.Playing)
-            {
-                spriteBatch.Draw(videoPlayer.GetTexture(), new Rectangle(0, 0, myVideoFile.Width, myVideoFile.Height), Color.White);
-            }
 
 
             Rectangle titleSafeArea = GraphicsDevice.Viewport.TitleSafeArea;
