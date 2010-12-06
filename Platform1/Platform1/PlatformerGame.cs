@@ -64,6 +64,7 @@ namespace LearningXNA
         private Texture2D tutorialOverlay6;
         private Texture2D tutorialOverlay7;
         private Texture2D tutorialOverlay8;
+        private Texture2D tutorialOverlay9;
 
 
         private Random random = new Random();
@@ -82,7 +83,7 @@ namespace LearningXNA
 
 
 
-        private int levelIndex = 3;
+        private int levelIndex = -1;
 
         private Level level;
         private bool wasContinuePressed;
@@ -96,9 +97,9 @@ namespace LearningXNA
         private const int BackBufferHeight = 720;
 
         // Used to store tha ability to change animal between levels
-        public bool canBeCat = true; //DEBUG REASON
-        public bool canBeDuck = true;
-        public bool canBeMole = true;
+        public bool canBeCat = false; //DEBUG REASON
+        public bool canBeDuck = false;
+        public bool canBeMole = false;
 
         //DEBUG INTERFACE CHANGE
         public bool changeInterface;
@@ -172,6 +173,7 @@ namespace LearningXNA
             tutorialOverlay6 = Content.Load<Texture2D>("Overlays/tutorial6");
             tutorialOverlay7 = Content.Load<Texture2D>("Overlays/tutorial7");
             tutorialOverlay8 = Content.Load<Texture2D>("Overlays/tutorial8");
+            tutorialOverlay9 = Content.Load<Texture2D>("Overlays/tutorial9");
 
             youlose0 = Content.Load<SoundEffect>("Sounds/youlose/youlose0");
             youlose1 = Content.Load<SoundEffect>("Sounds/youlose/youlose1");
@@ -180,12 +182,11 @@ namespace LearningXNA
             youlose4 = Content.Load<SoundEffect>("Sounds/youlose/youlose4");
 
 
-           MediaPlayer.IsRepeating = true;
-           
+            MediaPlayer.IsRepeating = true;
 
-           videoPlayer.Play(initialVideo);
+            videoPlayer.Play(initialVideo);
 
-           LoadNextLevel();
+            LoadNextLevel();
         }
 
         /// <summary>
@@ -203,7 +204,8 @@ namespace LearningXNA
             }
             else
             {
-                if(!videoPlayer.IsDisposed)
+                if(!videoPlayer.IsDisposed
+                    )
                 {
                     videoPlayer.Stop();
                     videoPlayer.Dispose();
@@ -499,6 +501,9 @@ namespace LearningXNA
                         break;
                     case 8:
                         status = tutorialOverlay8;
+                        break;
+                    case 9:
+                        status = tutorialOverlay9;
                         break;
                 }
             }
