@@ -81,7 +81,9 @@ namespace LearningXNA
         // Meta-level game state.
 
 
-        private int levelIndex = -1;
+
+        private int levelIndex = 1;
+
         private Level level;
         private bool wasContinuePressed;
 
