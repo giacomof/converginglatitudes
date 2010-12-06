@@ -82,7 +82,7 @@ namespace LearningXNA
 
 
 
-        private int levelIndex = 1;
+        private int levelIndex = 3;
 
         private Level level;
         private bool wasContinuePressed;
