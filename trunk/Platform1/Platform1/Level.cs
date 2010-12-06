@@ -490,6 +490,8 @@ namespace LearningXNA
                     return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 7);
                 case 'Ź':
                     return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 8);
+                case 'ÿ':
+                    return LoadTutorialTile("Tutorial", TileCollision.TutorialTile, 9);
 
 
                 // Unknown tile type character
