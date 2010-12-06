@@ -1056,73 +1056,7 @@ namespace LearningXNA
                         if (depth != Vector2.Zero)
                         {
                             float absDepthX = Math.Abs(depth.X);
-                            float absDepthY = Math.Abs(depth.Y);
-
-                            //start destroy tile
-                            // RIGHT
-
-                            TileCollision monsterLeftTopCollision = level.GetCollision(leftTile, topTile);
-                            TileCollision monsterLeftBottomCollision = level.GetCollision(leftTile, topTile+1);
-                            TileCollision monsterRightTopCollision = level.GetCollision(rightTile, topTile);
-                            TileCollision monsterRightBottomCollision = level.GetCollision(rightTile, topTile+1);
-                            float previousLeft = bounds.Left;
-                            float previousRight = bounds.Right;
-                            KeyboardState keyboardState = Keyboard.GetState();
-                            
-                            if (monsterRightTopCollision == TileCollision.Destroyable &&
-                                keyboardState.IsKeyDown(Keys.Z) &&
-                                keyboardState.IsKeyDown(Keys.Right) &&
-                                isJumping != true &&
-                                
-                               // animalShape == MONSTER_MOLE && 
-                                previousRight >= tileBounds.Right )
-                            {
-                               // x++;
-                                //y--;
-                                
-                                Level.tiles[rightTile, topTile].Texture = null;
-                                Level.tiles[rightTile, topTile].Collision = TileCollision.Passable;
-                            }
-                            if (monsterRightBottomCollision == TileCollision.Destroyable &&
-                               keyboardState.IsKeyDown(Keys.Z) &&
-                               keyboardState.IsKeyDown(Keys.Right) &&
-                               isJumping != true &&
-
-                              // animalShape == MONSTER_MOLE && 
-                               previousRight >= tileBounds.Right)
-                            {
-                                Level.tiles[rightTile, topTile+1].Texture = null;
-                                Level.tiles[rightTile, topTile+1].Collision = TileCollision.Passable;
-                            }
-                            // LEFT
-                            if (monsterLeftTopCollision == TileCollision.Destroyable &&
-                            keyboardState.IsKeyDown(Keys.Z) &&
-                            keyboardState.IsKeyDown(Keys.Left) &&
-                            //animalShape == MONSTER_MOLE &&
-                            isJumping != true &&
-                                previousLeft <= tileBounds.Left)
-                            {
-
-                               // x--;
-                                //y--;
-                                Level.tiles[leftTile, topTile].Texture = null;
-                                Level.tiles[leftTile, topTile].Collision = TileCollision.Passable;
-
-                            }
-                            if (monsterLeftBottomCollision == TileCollision.Destroyable &&
-                            keyboardState.IsKeyDown(Keys.Z) &&
-                            keyboardState.IsKeyDown(Keys.Left) &&
-                                //animalShape == MONSTER_MOLE &&
-                            isJumping != true &&
-                                previousLeft <= tileBounds.Left)
-                            {
-                                Level.tiles[leftTile, topTile+1].Texture = null;
-                                Level.tiles[leftTile, topTile+1].Collision = TileCollision.Passable;
-                            }
-
-                            //end destroy tile 
-
-                           
+                            float absDepthY = Math.Abs(depth.Y);                       
 
                             // Resolve the collision along the shallow axis.
                             if (absDepthY < absDepthX || collision == TileCollision.Platform)
@@ -1150,6 +1084,74 @@ namespace LearningXNA
                                 // Perform further collisions with the new bounds.
                                 bounds = BoundingRectangle;
                             }
+
+                                     //start destroy tile
+                            // RIGHT
+
+                            TileCollision monsterLeftTopCollision = level.GetCollision(leftTile, topTile);
+                            TileCollision monsterLeftBottomCollision = level.GetCollision(leftTile, topTile+1);
+                            TileCollision monsterRightTopCollision = level.GetCollision(rightTile, topTile);
+                            TileCollision monsterRightBottomCollision = level.GetCollision(rightTile, topTile+1);
+                            float previousLeft = bounds.Left;
+                            float previousRight = bounds.Right;
+                            KeyboardState keyboardState = Keyboard.GetState();
+                            
+                            if (monsterRightTopCollision == TileCollision.Destroyable &&
+                                keyboardState.IsKeyDown(Keys.Z) &&
+                                keyboardState.IsKeyDown(Keys.Right) &&
+                                isOnGround == true //&&
+                                
+                               // animalShape == MONSTER_MOLE && 
+                               // previousRight >= tileBounds.Right
+                                )
+                            {
+                               // x++;
+                                //y--;
+                                
+                                Level.tiles[rightTile, topTile].Texture = null;
+                                Level.tiles[rightTile, topTile].Collision = TileCollision.Passable;
+                            }
+                            if (monsterRightBottomCollision == TileCollision.Destroyable &&
+                               keyboardState.IsKeyDown(Keys.Z) &&
+                               keyboardState.IsKeyDown(Keys.Right) &&
+                               isOnGround == true //&&
+
+                              // animalShape == MONSTER_MOLE && 
+                               //previousRight >= tileBounds.Right
+                                )
+                            {
+                                Level.tiles[rightTile, topTile+1].Texture = null;
+                                Level.tiles[rightTile, topTile+1].Collision = TileCollision.Passable;
+                            }
+                            // LEFT
+                            if (monsterLeftTopCollision == TileCollision.Destroyable &&
+                            keyboardState.IsKeyDown(Keys.Z) &&
+                            keyboardState.IsKeyDown(Keys.Left) &&
+                            //animalShape == MONSTER_MOLE &&
+                            isOnGround == true //&&
+                                //previousLeft <= tileBounds.Left
+                                )
+                            {
+
+                               // x--;
+                                //y--;
+                                Level.tiles[leftTile, topTile].Texture = null;
+                                Level.tiles[leftTile, topTile].Collision = TileCollision.Passable;
+
+                            }
+                            if (monsterLeftBottomCollision == TileCollision.Destroyable &&
+                            keyboardState.IsKeyDown(Keys.Z) &&
+                            keyboardState.IsKeyDown(Keys.Left) &&
+                                //animalShape == MONSTER_MOLE &&
+                            isOnGround == true //&&
+                               // previousLeft <= tileBounds.Left
+                                )
+                            {
+                                Level.tiles[leftTile, topTile+1].Texture = null;
+                                Level.tiles[leftTile, topTile+1].Collision = TileCollision.Passable;
+                            }
+
+                            //end destroy tile 
                         }
                     }
                 }
