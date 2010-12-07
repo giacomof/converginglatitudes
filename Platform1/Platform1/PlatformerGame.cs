@@ -32,7 +32,7 @@ namespace LearningXNA
 
         Video initialVideo;
         VideoPlayer videoPlayer;
-        private float initialVideoClock = 39000;
+        private bool checkVideo = true;
 
 
         // Global content.
@@ -80,9 +80,6 @@ namespace LearningXNA
 
 
         // Meta-level game state.
-
-
-
         private int levelIndex = -1;
 
         private Level level;
@@ -198,19 +195,17 @@ namespace LearningXNA
         {
             HandleInput();
 
-            if (initialVideoClock > 0)
+            if (checkVideo)
             {
-                initialVideoClock -= gameTime.ElapsedGameTime.Milliseconds;
+                if (videoPlayer.State == MediaState.Stopped)
+                {
+                    videoPlayer.Dispose();
+                    MediaPlayer.Play(Content.Load<Song>("Sounds/human_beat"));
+                    checkVideo = false;
+                }
             }
             else
             {
-                if(!videoPlayer.IsDisposed
-                    )
-                {
-                    videoPlayer.Stop();
-                    videoPlayer.Dispose();
-                    MediaPlayer.Play(Content.Load<Song>("Sounds/human_beat"));
-                }
 
                 level.Update(gameTime);
 
@@ -244,8 +239,8 @@ namespace LearningXNA
             // to get the player back to playing.
             if (!wasContinuePressed && continuePressed)
             {
-                if (initialVideoClock > 0)
-                    initialVideoClock = 0;
+                if(!videoPlayer.IsDisposed)
+                    videoPlayer.Stop();
 
                 if (!level.Player.IsAlive)
                 {
