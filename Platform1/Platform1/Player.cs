@@ -866,7 +866,7 @@ namespace LearningXNA
                 flyAnimationTimer -= gameTime.ElapsedGameTime.Milliseconds;
 
             // If the player wants to jump
-            if (isJumping || isBouncing || !isOnGround || isFlappingWings)
+            if ((isJumping || isBouncing || !isOnGround || isFlappingWings) && isAlive)
             {
                 switch (animalShape)
                 {
