@@ -83,6 +83,12 @@ namespace LearningXNA
         private Animation monsterDuckFlyAnimation;
         private Animation monsterDuckDieAnimation;
 
+        private Animation monsterMoleIdleAnimation;
+        private Animation monsterMoleRunAnimation;
+        private Animation monsterMoleJumpAnimation;
+        private Animation monsterMoleShovelAnimation;
+        private Animation monsterMoleDieAnimation;
+
 
         private Animation transformationAnimation;
         private int transformationTimerMilliseconds = 100;
@@ -203,6 +209,24 @@ namespace LearningXNA
         private const float monsterDuckMaxFallSpeed = 250.0f;
         private const float monsterDuckJumpControlPower = 0.10f;
         //*******************************************************
+
+        //***********MONSTER-MOLE SHAPE MOVEMENTS*****************
+        // Constants for controling horizontal movement
+        private const float monsterMoleMoveAcceleration = 14000.0f;
+        private const float monsterMoleMaxMoveSpeed = 14000.0f;
+        private const float monsterMoleGroundDragFactor = 0.58f;
+        private const float monsterMoleAirDragFactor = 0.65f;
+        private const float monsterMoleWallDragFactor = 0.45f;
+
+
+        // Constants for controlling vertical movement
+        private const float monsterMoleMaxJumpTime = 0.35f;
+        public const float monsterMoleJumpLaunchVelocity = -4000.0f;
+        private const float monsterMoleGravityAcceleration = 3500.0f;
+        private const float monsterMoleMaxFallSpeed = 600.0f;
+        private const float monsterMoleJumpControlPower = 0.14f;
+        //*******************************************************
+
 
         // Constants for controling horizontal movement
         private float MoveAcceleration = 14000.0f;
@@ -326,8 +350,8 @@ namespace LearningXNA
 
             // Reset the shape changing abilities
             CanBeCat = false;
-            CanBeDuck = true;
-            CanBeMole = true;
+            CanBeDuck = false;
+            CanBeMole = false;
 
             isIdle = true;
             hasReachedExit = false;
@@ -364,6 +388,12 @@ namespace LearningXNA
             monsterDuckJumpAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/duckJump"), 0.1f, false);
             monsterDuckFlyAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/duckFly"), 0.03f, true);
             monsterDuckDieAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/duckDie"), 0.1f, false);
+
+            monsterMoleIdleAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/moleIdle"), 0.1f, true);
+            monsterMoleRunAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/moleRun"), 0.1f, true);
+            monsterMoleJumpAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/moleJump"), 0.1f, false);
+            monsterMoleShovelAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/moleShovel"), 0.1f, true);
+            monsterMoleDieAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/moleDie"), 0.1f, false);
 
 
             transformationAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/transformation"), 0.1f, false);
@@ -476,6 +506,9 @@ namespace LearningXNA
                                 case MONSTER_DUCK:
                                     sprite.PlayAnimation(monsterDuckRunAnimation);
                                     break;
+                                case MONSTER_MOLE:
+                                    sprite.PlayAnimation(monsterMoleRunAnimation);
+                                    break;
                             }
 
                         }
@@ -492,6 +525,9 @@ namespace LearningXNA
                                     break;
                                 case MONSTER_DUCK:
                                     sprite.PlayAnimation(monsterDuckIdleAnimation);
+                                    break;
+                                case MONSTER_MOLE:
+                                    sprite.PlayAnimation(monsterMoleIdleAnimation);
                                     break;
                             }
                         }
@@ -651,7 +687,11 @@ namespace LearningXNA
             else if (keyboardState.IsKeyDown(Keys.D3) && canBeDuck)
             {
                 changeShape(MONSTER_DUCK);
-            }  
+            }
+            else if (keyboardState.IsKeyDown(Keys.D4) && canBeMole)
+            {
+                changeShape(MONSTER_MOLE);
+            }
         }
 
         /// <summary>
@@ -760,6 +800,30 @@ namespace LearningXNA
                     Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
 
                     break;
+
+                case MONSTER_MOLE:
+
+                    // Base velocity is a combination of horizontal movement control and
+                    // acceleration downward due to gravity.
+                    velocity.X += movementX * MoveAcceleration * elapsed;
+                    velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
+
+                    velocity.Y = DoJump(velocity.Y, gameTime);
+
+                    // Apply pseudo-drag horizontally.
+                    if (IsOnGround)
+                        velocity.X *= GroundDragFactor;
+                    else
+                        velocity.X *= AirDragFactor;
+
+                    // Prevent the player from running faster than his top speed.            
+                    velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
+
+                    // Apply velocity.
+                    Position += velocity * elapsed;
+                    Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
+
+                    break;
             }
 
             // If the player is now colliding with the level, separate them.
@@ -845,6 +909,18 @@ namespace LearningXNA
                         }
 
                         else if ((!wasJumping && IsOnGround) || isBouncing || jumpTime > 0.0f)
+                        {
+                            if (jumpTime == 0.0f)
+                                playRandomSound(JUMP);
+
+                            jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        }
+                        break;
+
+                    case MONSTER_MOLE:
+                        if (!isOnGround)
+                            sprite.PlayAnimation(monsterMoleJumpAnimation);
+                        if ((!wasJumping && IsOnGround) || isBouncing || jumpTime > 0.0f)
                         {
                             if (jumpTime == 0.0f)
                                 playRandomSound(JUMP);
@@ -1292,6 +1368,9 @@ namespace LearningXNA
                 case MONSTER_DUCK:
                     sprite.PlayAnimation(monsterDuckDieAnimation);
                     break;
+                case MONSTER_MOLE:
+                    sprite.PlayAnimation(monsterMoleDieAnimation);
+                    break;
             }
         }
 
@@ -1313,6 +1392,11 @@ namespace LearningXNA
                 case MONSTER_DUCK:
                     canBeDuck = true;
                     changeShape(MONSTER_DUCK);
+                    playRandomSound(EATDUCK);
+                    break;
+                case MONSTER_MOLE:
+                    canBeMole = true;
+                    changeShape(MONSTER_MOLE);
                     playRandomSound(EATDUCK);
                     break;
             }
@@ -1411,6 +1495,28 @@ namespace LearningXNA
                         left = (monsterDuckIdleAnimation.FrameWidth - width) / 2;
                         height = (int)(monsterDuckIdleAnimation.FrameWidth * 0.8);
                         top = monsterDuckIdleAnimation.FrameHeight - height;
+
+                        break;
+
+                    case MONSTER_MOLE:
+                        // Constants for controling horizontal movement
+                        MoveAcceleration = monsterMoleMoveAcceleration;
+                        MaxMoveSpeed = monsterMoleMaxMoveSpeed;
+                        GroundDragFactor = monsterMoleGroundDragFactor;
+                        AirDragFactor = monsterMoleAirDragFactor;
+
+                        // Constants for controlling vertical movement
+                        MaxJumpTime = monsterMoleMaxJumpTime;
+                        JumpLaunchVelocity = monsterMoleJumpLaunchVelocity;
+                        GravityAcceleration = monsterMoleGravityAcceleration;
+                        MaxFallSpeed = monsterMoleMaxFallSpeed;
+                        JumpControlPower = monsterMoleJumpControlPower;
+
+                        // Calculate bounding box dimension
+                        width = (int)(monsterMoleIdleAnimation.FrameWidth * 0.4);
+                        left = (monsterMoleIdleAnimation.FrameWidth - width) / 2;
+                        height = (int)(monsterMoleIdleAnimation.FrameWidth * 0.8);
+                        top = monsterMoleIdleAnimation.FrameHeight - height;
 
                         break;
                 }
