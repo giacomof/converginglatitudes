@@ -64,7 +64,7 @@ namespace LearningXNA
         public bool isControllable;
         public bool isActive;
 
-        public MovableTile(Level level, Vector2 position, TileCollision collision, bool controllable)
+        public MovableTile(Level level, Vector2 position, TileCollision collision, bool controllable, int receivedFlag)
         {
             this.level = level;
             this.position = position;
@@ -72,12 +72,20 @@ namespace LearningXNA
             isControllable = controllable;
             isActive = false;
 
-            LoadContent();
+            LoadContent(receivedFlag);
         }
 
-        public void LoadContent()
+        public void LoadContent(int flag)
         {
-            texture = Level.Content.Load<Texture2D>("Tiles/movingPlatform");
+            switch (flag)
+            {
+                case 0:
+                    texture = Level.Content.Load<Texture2D>("Tiles/movingPlatform");
+                    break;
+                case 1:
+                    texture = Level.Content.Load<Texture2D>("Tiles/floatingTrunk");
+                    break;
+            }
             origin = new Vector2(texture.Width / 2.0f, texture.Height / 2.0f);
             // Calculate bounds within texture size.  
             localBounds = new Rectangle(0, 0, texture.Width, texture.Height);
