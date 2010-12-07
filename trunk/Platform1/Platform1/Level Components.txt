@@ -25,7 +25,9 @@ Tutorial
 
 Enemies
 - Falling Object (lego tiles)								'f'
-- Falling Object ( rocks )									'ƭ'
+- Falling Object slow ( rocks )								'ƭ'
+- Falling Object fast ( rocks )								'ƒ'
+
 - Flying Enemy (Helicopter)									'F'	
 - Circle Flying Enemy (Helicopter)							'Ǒ'
 - Circle Flying Enemy (Bumblebee)							'ß'								
