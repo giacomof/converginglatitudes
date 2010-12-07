@@ -7,6 +7,7 @@ General stuff
 - Cookie													'°'
 - Cat 														'C'
 - Dog														'd'
+- Checkpoint												'¤'
 
 Tutorial
 - Tutorial overlay 0										'ü'
