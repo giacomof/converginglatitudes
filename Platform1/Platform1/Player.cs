@@ -131,6 +131,10 @@ namespace LearningXNA
 
         private SoundEffect checkpoint;
 
+        private SoundEffect moleDestroyWall;
+
+        private SoundEffect eatMole;
+
         public Level Level
         {
             get { return level; }
@@ -431,6 +435,10 @@ namespace LearningXNA
             exclamation2 = Level.Content.Load<SoundEffect>("Sounds/exclamation/exclamation2");
 
             checkpoint = Level.Content.Load<SoundEffect>("Sounds/checkpoint");
+
+            moleDestroyWall = Level.Content.Load<SoundEffect>("Sounds/moleDestroyWall"); ;
+
+            eatMole = Level.Content.Load<SoundEffect>("Sounds/eatMole");
         }
 
         /// <summary>
@@ -1192,6 +1200,7 @@ namespace LearningXNA
                                 
                                 Level.tiles[rightTile, topTile].Texture = null;
                                 Level.tiles[rightTile, topTile].Collision = TileCollision.Passable;
+                                moleDestroyWall.Play();
                             }
                             if (monsterRightBottomCollision == TileCollision.Destroyable &&
                                isDoingSpecialAction &&
@@ -1201,6 +1210,7 @@ namespace LearningXNA
                             {
                                 Level.tiles[rightTile, topTile+1].Texture = null;
                                 Level.tiles[rightTile, topTile+1].Collision = TileCollision.Passable;
+                                moleDestroyWall.Play();
                             }
                             // LEFT
                             if (monsterLeftTopCollision == TileCollision.Destroyable &&
@@ -1212,6 +1222,7 @@ namespace LearningXNA
 
                                 Level.tiles[leftTile, topTile].Texture = null;
                                 Level.tiles[leftTile, topTile].Collision = TileCollision.Passable;
+                                moleDestroyWall.Play();
                             }
                             if (monsterLeftBottomCollision == TileCollision.Destroyable &&
                                 isDoingSpecialAction &&
@@ -1221,6 +1232,7 @@ namespace LearningXNA
                             {
                                 Level.tiles[leftTile, topTile+1].Texture = null;
                                 Level.tiles[leftTile, topTile+1].Collision = TileCollision.Passable;
+                                moleDestroyWall.Play();
                             }
 
                             //end destroy tile 
@@ -1393,7 +1405,7 @@ namespace LearningXNA
                 case MONSTER_MOLE:
                     canBeMole = true;
                     changeShape(MONSTER_MOLE);
-                    playRandomSound(EATDUCK);
+                    eatMole.Play();
                     break;
             }
             
