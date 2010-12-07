@@ -310,6 +310,8 @@ namespace LearningXNA
                     return LoadFallingObjectTile(x, y, 0);
                 case 'ƭ':
                     return LoadFallingObjectTile(x, y, 1);
+                case 'ƒ':
+                    return LoadFallingObjectTile(x, y, 2);
                 // Floating platform
                 case '-':
                     return LoadTile("Platform", TileCollision.Platform);

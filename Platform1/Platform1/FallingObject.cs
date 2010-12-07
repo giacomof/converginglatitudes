@@ -74,7 +74,7 @@ namespace LearningXNA
             this.originalPosition = position;
             flag = receivedFlag;
 
-            if (flag == 1)
+            if (flag == 2)
                 MaxFallSpeed = 500.0f;
 
 
@@ -94,6 +94,10 @@ namespace LearningXNA
                     texture = Level.Content.Load<Texture2D>("Sprites/FallingObject/lego" + index);
                     break;
                 case 1:
+                    index = random.Next(3);
+                    texture = Level.Content.Load<Texture2D>("Tiles/rock" + index);
+                    break;
+                case 2:
                     index = random.Next(3);
                     texture = Level.Content.Load<Texture2D>("Tiles/rock" + index);
                     break;
