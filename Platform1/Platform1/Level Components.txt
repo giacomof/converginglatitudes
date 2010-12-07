@@ -28,6 +28,7 @@ Enemies
 - Enemy (Radio controlled car)								'A'
 - Jumping Enemy	(piranhas)									'J'
 - Horizontal Flying Enemy (bumblebee)						'Ƚ'
+- Fast Horizontal Flying Enemy (bumblebee)					'ᶅ'
 - Normal enemy (Spider)										'S'
 - upside down enemy (spider)								'W'										
 

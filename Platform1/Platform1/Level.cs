@@ -329,7 +329,9 @@ namespace LearningXNA
                     return LoadCircleFlyingEnemyTile(x, y, "Bumblebee");
 
                 case 'Ƚ':
-                    return LoadHorizontalFlyingEnemyTile(x, y, "Bumblebee");
+                    return LoadHorizontalFlyingEnemyTile(x, y, false, "Bumblebee");
+                case 'ᶅ':
+                    return LoadHorizontalFlyingEnemyTile(x, y, true, "Bumblebee");
 
                 case 'W':
                     return LoadEnemyOnCeilingTile(x, y, "CeilingSpider");
@@ -707,10 +709,10 @@ namespace LearningXNA
             return new Tile(null, TileCollision.Passable);
         }
 
-        private Tile LoadHorizontalFlyingEnemyTile(int x, int y, string spriteSet)
+        private Tile LoadHorizontalFlyingEnemyTile(int x, int y, bool fast, string spriteSet)
         {
             Vector2 position = RectangleExtensions.GetBottomCenter(GetBounds(x, y));
-            horizontalFlyingenemies.Add(new HorizontalFlyingEnemy(this, position, spriteSet));
+            horizontalFlyingenemies.Add(new HorizontalFlyingEnemy(this, position, fast, spriteSet));
 
             return new Tile(null, TileCollision.Passable);
         }
