@@ -63,15 +63,18 @@ namespace LearningXNA
         /// The speed at which this enemy moves along the X axis.
         /// </summary>
 
-        private const float MoveSpeed = 128.0f;
+        private float MoveSpeed = 128.0f;
 
         /// <summary>
         /// Constructs a new Enemy.
         /// </summary>
-        public HorizontalFlyingEnemy(Level level, Vector2 position, string spriteSet)
+        public HorizontalFlyingEnemy(Level level, Vector2 position, bool fast, string spriteSet)
         {
             this.level = level;
             this.position = position;
+
+            if (fast)
+                MoveSpeed = 256.0f;
 
             LoadContent(spriteSet);
         }
