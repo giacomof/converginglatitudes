@@ -47,8 +47,9 @@ namespace LearningXNA
         private Texture2D monsterDuckNotAvailable;
         private Texture2D monsterDuckAvailable;
         private Texture2D monsterDuckActive;
-
-        private Texture2D monsterSomethingNotAvailable;
+        private Texture2D monsterMoleNotAvailable;
+        private Texture2D monsterMoleAvailable;
+        private Texture2D monsterMoleActive;
                
 
         private Texture2D winOverlay;
@@ -105,10 +106,10 @@ namespace LearningXNA
         public bool wasChangedInterface;
 
         // Shape state of the character; starting from 0 as a monster
-        const short MONSTER = 0;
-        const short MONSTER_CAT = 1;
-        const short MONSTER_DUCK = 2;
-        const short MONSTER_MOLE = 3;
+        const short MONSTER             = 0;
+        const short MONSTER_CAT         = 1;
+        const short MONSTER_DUCK        = 2;
+        const short MONSTER_MOLE        = 3;
 
         public int totalScore = 0;
 
@@ -154,8 +155,9 @@ namespace LearningXNA
             monsterDuckNotAvailable = Content.Load<Texture2D>("Overlays/hud/monsterduck-notavailable");
             monsterDuckAvailable = Content.Load<Texture2D>("Overlays/hud/monsterduck-available");
             monsterDuckActive = Content.Load<Texture2D>("Overlays/hud/monsterduck-active");
-
-            monsterSomethingNotAvailable = Content.Load<Texture2D>("Overlays/hud/monstersomething-notavailable");
+            monsterMoleNotAvailable = Content.Load<Texture2D>("Overlays/hud/monstermole-notavailable");
+            monsterMoleAvailable = Content.Load<Texture2D>("Overlays/hud/monstermole-available");
+            monsterMoleActive = Content.Load<Texture2D>("Overlays/hud/monstermole-active");
 
 
             // Load overlay textures
@@ -391,7 +393,7 @@ namespace LearningXNA
             Texture2D monsterIcon = null;
             Texture2D catIcon = null;
             Texture2D duckIcon = null;
-            Texture2D somethingIcon = null;
+            Texture2D moleIcon = null;
 
             if (level.Player.animalShape == MONSTER)
                 monsterIcon = monsterActive;
@@ -412,13 +414,18 @@ namespace LearningXNA
             else
                 duckIcon = monsterDuckNotAvailable;
 
-            somethingIcon = monsterSomethingNotAvailable; 
+            if (level.Player.animalShape == MONSTER_MOLE)
+                moleIcon = monsterMoleActive;
+            else if (level.Player.CanBeMole)
+                moleIcon = monsterMoleAvailable;
+            else
+                moleIcon = monsterMoleNotAvailable;
             
 
             spriteBatch.Draw(monsterIcon, hudLocation + monsterIconPos, Color.White);
             spriteBatch.Draw(catIcon, hudLocation + catIconPos, Color.White);
             spriteBatch.Draw(duckIcon, hudLocation + duckIconPos, Color.White);
-            spriteBatch.Draw(somethingIcon, hudLocation + somethingIconPos, Color.White);
+            spriteBatch.Draw(moleIcon, hudLocation + somethingIconPos, Color.White);
 
 
             // Draw time remaining. Uses modulo division to cause blinking when the
