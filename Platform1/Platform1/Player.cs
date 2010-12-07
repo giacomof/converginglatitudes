@@ -89,7 +89,6 @@ namespace LearningXNA
         private Animation monsterMoleShovelAnimation;
         private Animation monsterMoleDieAnimation;
 
-
         private Animation transformationAnimation;
         private int transformationTimerMilliseconds = 100;
         private float transformationTimerClock;
@@ -467,15 +466,15 @@ namespace LearningXNA
             GetInput();
             ApplyPhysics(gameTime);
 
-
             if (transformationTimerClock > 0)
             {
                 transformationTimerClock -= gameTime.ElapsedGameTime.Milliseconds;
                 sprite.PlayAnimation(transformationAnimation);
             }
+            else if (animalShape == MONSTER_MOLE && isDoingSpecialAction && isOnGround)
+                sprite.PlayAnimation(monsterMoleShovelAnimation);
             else
             {
-
                 if (isScared)
                 {
                     scaredTimerClock += gameTime.ElapsedGameTime.Milliseconds;
@@ -1662,7 +1661,7 @@ namespace LearningXNA
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             // Flip the sprite to face the way we are moving.
-            if (isIdle || hasReachedExit || transformationTimerClock > 0)
+            if ((isIdle || hasReachedExit || transformationTimerClock > 0) && !(animalShape == MONSTER_MOLE && isDoingSpecialAction))
                 flip = SpriteEffects.None;
             else if (lastMovementX > 0)
                 flip = SpriteEffects.FlipHorizontally;
