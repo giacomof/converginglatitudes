@@ -1094,7 +1094,11 @@ namespace LearningXNA
                             if (previousBottom <= tileBounds.Top)
                                 isOnGround = true;
                             // Ignore platforms, unless we are on the ground.
-                            if ((collision == TileCollision.Impassable || collision == TileCollision.LevelFrame || collision == TileCollision.Bouncy || collision == TileCollision.Destroyable) || IsOnGround)
+                            if ((collision == TileCollision.Impassable || 
+                                collision == TileCollision.LevelFrame || 
+                                collision == TileCollision.Bouncy || 
+                                collision == TileCollision.Destroyable) || 
+                                IsOnGround)
                             {
                                 // Resolve the collision along the Y axis.
                                 Position = new Vector2(Position.X, Position.Y + depth.Y);
@@ -1142,7 +1146,11 @@ namespace LearningXNA
                                     isOnGround = true;
 
                                 // Ignore platforms, unless we are on the ground.
-                                if ((collision == TileCollision.Impassable || collision == TileCollision.LevelFrame || collision == TileCollision.Bouncy) || IsOnGround || collision == TileCollision.Destroyable)
+                                if ((collision == TileCollision.Impassable || 
+                                    collision == TileCollision.LevelFrame || 
+                                    collision == TileCollision.Bouncy) || 
+                                    IsOnGround || 
+                                    collision == TileCollision.Destroyable)
                                 {
                                     // Resolve the collision along the Y axis.
                                     Position = new Vector2(Position.X, Position.Y + depth.Y);
@@ -1151,7 +1159,10 @@ namespace LearningXNA
                                     bounds = BoundingRectangle;
                                 }
                             }
-                            else if (collision == TileCollision.Impassable || collision == TileCollision.LevelFrame || collision == TileCollision.Bouncy || collision == TileCollision.Destroyable) // Ignore platforms.
+                            else if (collision == TileCollision.Impassable || 
+                                    collision == TileCollision.LevelFrame || 
+                                    collision == TileCollision.Bouncy || 
+                                    collision == TileCollision.Destroyable) // Ignore platforms.
                             {
                                 
                                 // Resolve the collision along the X axis.
@@ -1173,55 +1184,41 @@ namespace LearningXNA
                             KeyboardState keyboardState = Keyboard.GetState();
                             
                             if (monsterRightTopCollision == TileCollision.Destroyable &&
-                                keyboardState.IsKeyDown(Keys.Z) &&
+                                isDoingSpecialAction &&
                                 keyboardState.IsKeyDown(Keys.Right) &&
-                                isOnGround == true //&&
-                                
-                               // animalShape == MONSTER_MOLE && 
-                               // previousRight >= tileBounds.Right
+                                isOnGround == true &&
+                                animalShape == MONSTER_MOLE
                                 )
                             {
-                               // x++;
-                                //y--;
                                 
                                 Level.tiles[rightTile, topTile].Texture = null;
                                 Level.tiles[rightTile, topTile].Collision = TileCollision.Passable;
                             }
                             if (monsterRightBottomCollision == TileCollision.Destroyable &&
-                               keyboardState.IsKeyDown(Keys.Z) &&
+                               isDoingSpecialAction &&
                                keyboardState.IsKeyDown(Keys.Right) &&
-                               isOnGround == true //&&
-
-                              // animalShape == MONSTER_MOLE && 
-                               //previousRight >= tileBounds.Right
-                                )
+                               isOnGround == true &&
+                               animalShape == MONSTER_MOLE)
                             {
                                 Level.tiles[rightTile, topTile+1].Texture = null;
                                 Level.tiles[rightTile, topTile+1].Collision = TileCollision.Passable;
                             }
                             // LEFT
                             if (monsterLeftTopCollision == TileCollision.Destroyable &&
-                            keyboardState.IsKeyDown(Keys.Z) &&
-                            keyboardState.IsKeyDown(Keys.Left) &&
-                            //animalShape == MONSTER_MOLE &&
-                            isOnGround == true //&&
-                                //previousLeft <= tileBounds.Left
-                                )
+                                isDoingSpecialAction &&
+                                keyboardState.IsKeyDown(Keys.Left) &&
+                                animalShape == MONSTER_MOLE &&
+                                isOnGround == true)
                             {
 
-                               // x--;
-                                //y--;
                                 Level.tiles[leftTile, topTile].Texture = null;
                                 Level.tiles[leftTile, topTile].Collision = TileCollision.Passable;
-
                             }
                             if (monsterLeftBottomCollision == TileCollision.Destroyable &&
-                            keyboardState.IsKeyDown(Keys.Z) &&
-                            keyboardState.IsKeyDown(Keys.Left) &&
-                                //animalShape == MONSTER_MOLE &&
-                            isOnGround == true //&&
-                               // previousLeft <= tileBounds.Left
-                                )
+                                isDoingSpecialAction &&
+                                keyboardState.IsKeyDown(Keys.Left) &&
+                                animalShape == MONSTER_MOLE &&
+                                isOnGround == true)
                             {
                                 Level.tiles[leftTile, topTile+1].Texture = null;
                                 Level.tiles[leftTile, topTile+1].Collision = TileCollision.Passable;
