@@ -6,6 +6,8 @@ General stuff
 - Exit														'X'
 - Cookie													'°'
 - Cat 														'C'
+- Duck														'D'
+- Mole														'M'
 - Dog														'd'
 - Checkpoint												'¤'
 
@@ -65,7 +67,6 @@ Player dependent tiles
 - Destroyable wall 4 (rock wall)							'█'
 - Destroyable wall 5 (rock wall)							'▐'
 
-†
 
 
 New stuff for level 2
