@@ -79,6 +79,8 @@ New stuff for level 2
 - Impassable ( rock )										'∏'
 - Killing ( spikes )										'Ѱ'
 - Killing ( pending spikes )								'Ж'
+- Killing ( right spikes )									'┘'
+- Killing ( left spikes )									'└'
 - Impassable ( stone )										'H'
 - Platform ( treetrunk )									'Ǝ'
 - Killing ( water )											'∂'
