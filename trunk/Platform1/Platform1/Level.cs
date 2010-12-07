@@ -168,6 +168,8 @@ namespace LearningXNA
         private SoundEffect lightbulb0;
         private SoundEffect lightbulb1;
 
+        private SoundEffect leverSound;
+
         #region Loading
 
         /// <summary>
@@ -223,8 +225,10 @@ namespace LearningXNA
             win2 = Content.Load<SoundEffect>("Sounds/win/win2");
             win3 = Content.Load<SoundEffect>("Sounds/win/win3");
 
-            lightbulb0 = Content.Load<SoundEffect>("Sounds/lightbulb/lightbulb0"); ;
-            lightbulb1 = Content.Load<SoundEffect>("Sounds/lightbulb/lightbulb1"); ;
+            lightbulb0 = Content.Load<SoundEffect>("Sounds/lightbulb/lightbulb0");
+            lightbulb1 = Content.Load<SoundEffect>("Sounds/lightbulb/lightbulb1");
+
+            leverSound = Content.Load<SoundEffect>("Sounds/leverSound");
         }
 
         /// <summary>
@@ -1229,6 +1233,7 @@ namespace LearningXNA
         {
             if (horizontalSwitchTimerClock <= 0)
             {
+                leverSound.Play();
                 horizontalSwitchTimerClock = SwitchTimerMilliseconds;
                 horizontalMovingPlatformsActive = !horizontalMovingPlatformsActive;
             }
@@ -1241,6 +1246,7 @@ namespace LearningXNA
         {
             if (verticalSwitchTimerClock <= 0)
             {
+                leverSound.Play();
                 verticalSwitchTimerClock = SwitchTimerMilliseconds;
                 verticalMovingPlatformsActive = !verticalMovingPlatformsActive;
             }
@@ -1253,6 +1259,7 @@ namespace LearningXNA
         {
             if (destroyableWall1SwitchTimerClock <= 0)
             {
+                leverSound.Play();
                 destroyableWall1SwitchTimerClock = SwitchTimerMilliseconds;
                 if(destroyableWall1Active)
                     foreach (Coordinates coordinate in destroyableWalls1)
@@ -1269,6 +1276,7 @@ namespace LearningXNA
         {
             if (destroyableWall2SwitchTimerClock <= 0)
             {
+                leverSound.Play();
                 destroyableWall2SwitchTimerClock = SwitchTimerMilliseconds;
                 if (destroyableWall2Active)
                     foreach (Coordinates coordinate in destroyableWalls2)
@@ -1285,6 +1293,7 @@ namespace LearningXNA
         {
             if (destroyableWall3SwitchTimerClock <= 0)
             {
+                leverSound.Play();
                 destroyableWall3SwitchTimerClock = SwitchTimerMilliseconds;
                 if (destroyableWall3Active)
                     foreach (Coordinates coordinate in destroyableWalls3)
@@ -1301,6 +1310,7 @@ namespace LearningXNA
         {
             if (destroyableWall4SwitchTimerClock <= 0)
             {
+                leverSound.Play();
                 destroyableWall4SwitchTimerClock = SwitchTimerMilliseconds;
                 if (destroyableWall4Active)
                     foreach (Coordinates coordinate in destroyableWalls4)
@@ -1317,6 +1327,7 @@ namespace LearningXNA
         {
             if (destroyableWall5SwitchTimerClock <= 0)
             {
+                leverSound.Play();
                 destroyableWall5SwitchTimerClock = SwitchTimerMilliseconds;
                 if (destroyableWall5Active)
                     foreach (Coordinates coordinate in destroyableWalls5)
