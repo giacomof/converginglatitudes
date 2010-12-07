@@ -342,6 +342,8 @@ namespace LearningXNA
                     return LoadAnimalTile(x, y, "Cat");
                 case 'D':
                     return LoadAnimalTile(x, y, "Duck");
+                case 'M':
+                    return LoadAnimalTile(x, y, "Mole");
 
                 // Various enemy animals
                 // Load dog
