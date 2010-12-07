@@ -859,7 +859,7 @@ namespace LearningXNA
                 flyAnimationTimer -= gameTime.ElapsedGameTime.Milliseconds;
 
             // If the player wants to jump
-            if ((isJumping || isBouncing || !isOnGround))
+            if (isJumping || isBouncing || !isOnGround || isFlappingWings)
             {
                 switch (animalShape)
                 {
@@ -898,7 +898,7 @@ namespace LearningXNA
                                 sprite.PlayAnimation(monsterDuckJumpAnimation);
                         }
                         // Begin or continue a jump
-                        if (isFlappingWings && !wasFlappingWings)
+                        if ((isFlappingWings && !wasFlappingWings))
                         {
                             sprite.PlayAnimation(monsterDuckFlyAnimation);
                             jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
