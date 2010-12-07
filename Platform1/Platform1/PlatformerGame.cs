@@ -66,6 +66,8 @@ namespace LearningXNA
         private Texture2D tutorialOverlay7;
         private Texture2D tutorialOverlay8;
         private Texture2D tutorialOverlay9;
+        private Texture2D tutorialOverlay10;
+        private Texture2D tutorialOverlay11;
 
 
         private Random random = new Random();
@@ -175,6 +177,8 @@ namespace LearningXNA
             tutorialOverlay7 = Content.Load<Texture2D>("Overlays/tutorial7");
             tutorialOverlay8 = Content.Load<Texture2D>("Overlays/tutorial8");
             tutorialOverlay9 = Content.Load<Texture2D>("Overlays/tutorial9");
+            tutorialOverlay10 = Content.Load<Texture2D>("Overlays/tutorial10");
+            tutorialOverlay11 = Content.Load<Texture2D>("Overlays/tutorial11");
 
             youlose0 = Content.Load<SoundEffect>("Sounds/youlose/youlose0");
             youlose1 = Content.Load<SoundEffect>("Sounds/youlose/youlose1");
@@ -508,6 +512,12 @@ namespace LearningXNA
                         break;
                     case 9:
                         status = tutorialOverlay9;
+                        break;
+                    case 10:
+                        status = tutorialOverlay10;
+                        break;
+                    case 11:
+                        status = tutorialOverlay11;
                         break;
                 }
             }
