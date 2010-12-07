@@ -12,6 +12,7 @@ namespace LearningXNA
         // Animal Flags
         const short MONSTER_CAT = 1;
         const short MONSTER_DUCK = 2;
+        const short MONSTER_MOLE = 3;
 
         /// <summary>
         /// Shape flag of the animal.
@@ -102,6 +103,10 @@ namespace LearningXNA
             else if (spriteSet == "Duck")
             {
                 animalShape = MONSTER_DUCK;
+            }
+            else if (spriteSet == "Mole")
+            {
+                animalShape = MONSTER_MOLE;
             }
             LoadContent(spriteSet);
         }
