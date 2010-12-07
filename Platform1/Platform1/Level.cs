@@ -870,6 +870,7 @@ namespace LearningXNA
                 {
                     secondsCounter -= 15;
                     score += PointsPer15Seconds;
+                    leverSound.Play();
                 }
                 timeRemaining -= TimeSpan.FromSeconds(seconds);
             }
