@@ -307,7 +307,9 @@ namespace LearningXNA
                 // SPECIAL TILES
                 // Falling object
                 case 'f':
-                    return LoadFallingObjectTile(x, y);
+                    return LoadFallingObjectTile(x, y, 0);
+                case 'ƭ':
+                    return LoadFallingObjectTile(x, y, 1);
                 // Floating platform
                 case '-':
                     return LoadTile("Platform", TileCollision.Platform);
@@ -537,10 +539,10 @@ namespace LearningXNA
         /// <summary>
         /// Loads a falling object.
         /// </summary>
-        private Tile LoadFallingObjectTile(int x, int y)
+        private Tile LoadFallingObjectTile(int x, int y, int flag)
         {
             Point position = GetBounds(x, y).Center;
-            fallingObjects.Add(new FallingObject(this, new Vector2(position.X, position.Y)));
+            fallingObjects.Add(new FallingObject(this, new Vector2(position.X, position.Y), flag));
             return new Tile(null, TileCollision.Passable);
         }
 

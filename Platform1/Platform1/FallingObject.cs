@@ -21,8 +21,8 @@ namespace LearningXNA
         private Vector2 basePosition;
         private float bounce;
 
-        private const float GravityAcceleration = 1000.0f;
-        private const float MaxFallSpeed = 200.0f;
+        private const float GravityAcceleration = 2000.0f;
+        private float MaxFallSpeed = 200.0f;
 
         public Vector2 Velocity
         {
@@ -50,6 +50,8 @@ namespace LearningXNA
 
         public Vector2 originalPosition;
 
+        private int flag;
+
 
         /// <summary>
         /// Gets a circle which bounds this FallingObject in world space.
@@ -65,22 +67,37 @@ namespace LearningXNA
         /// <summary>
         /// Constructs a new FallingObject.
         /// </summary>
-        public FallingObject(Level level, Vector2 position)
+        public FallingObject(Level level, Vector2 position, int receivedFlag)
         {
             this.level = level;
             this.basePosition = position;
             this.originalPosition = position;
+            flag = receivedFlag;
 
-            LoadContent();
+            if (flag == 1)
+                MaxFallSpeed = 500.0f;
+
+
+            LoadContent(flag);
         }
 
         /// <summary>
         /// Loads the FallingObject texture and collected sound.
         /// </summary>
-        public void LoadContent()
+        public void LoadContent(int flag)
         {
-            int index = random.Next(4);
-            texture = Level.Content.Load<Texture2D>("Sprites/FallingObject/lego"+index);
+            int index;
+            switch (flag)
+            {
+                case 0:
+                    index = random.Next(4);
+                    texture = Level.Content.Load<Texture2D>("Sprites/FallingObject/lego" + index);
+                    break;
+                case 1:
+                    index = random.Next(3);
+                    texture = Level.Content.Load<Texture2D>("Tiles/rock" + index);
+                    break;
+            }
             origin = new Vector2(texture.Width / 2.0f, texture.Height / 2.0f);
         }
 
@@ -101,7 +118,7 @@ namespace LearningXNA
             ApplyPhysics(gameTime);
             if (basePosition.Y > 15 * Tile.Height)
             {
-                LoadContent();
+                LoadContent(flag);
                 basePosition = originalPosition;
             }
 
