@@ -79,6 +79,7 @@ New stuff for level 2
 - Platform ( treetrunk )									'Ǝ'
 - Killing ( water )											'∂'
 - Disappearing block (stone)								'+'
+- Mole Destroyable tile										'Æ'
 
 - Platform ( left big branch )								'À'
 - Platform ( left medium branch )							'Á'
