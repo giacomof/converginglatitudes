@@ -2016,12 +2016,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Levels\4.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Name>4</Name>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Backgrounds\level6\Layer0_0.png">
       <Name>Layer0_0</Name>
       <Importer>TextureImporter</Importer>
@@ -2662,6 +2656,11 @@
       <Name>moleShovel</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Levels\4.txt">
+      <Name>4</Name>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
