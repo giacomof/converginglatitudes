@@ -478,8 +478,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Overlays\hud\monstersomething-notavailable.png">
-      <Name>monstersomething-notavailable</Name>
+    <Compile Include="Overlays\hud\monstermole-notavailable.png">
+      <Name>monstermole-notavailable</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -2720,6 +2720,18 @@
   <ItemGroup>
     <Compile Include="Tiles\floatingTrunk.png">
       <Name>floatingTrunk</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Overlays\hud\monstermole-active.png">
+      <Name>monstermole-active</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Overlays\hud\monstermole-available.png">
+      <Name>monstermole-available</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
