@@ -16,7 +16,7 @@ namespace LearningXNA
         const short MONSTER_CAT         = 1;
         const short MONSTER_DUCK        = 2;
         const short MONSTER_MOLE        = 3;
-        public short animalShape = MONSTER;
+        public short animalShape        = MONSTER;
 
 
         // Sound Categories
@@ -28,7 +28,6 @@ namespace LearningXNA
         const short TRANSFORMATION      = 5;
         const short EXCLAMATION         = 6;
         
-
         static Random random = new Random();
 
         // Tutorial variables
