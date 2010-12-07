@@ -442,9 +442,13 @@ namespace LearningXNA
                 case '∆':
                     return LoadVerticalMovableTile(x, y, TileCollision.Platform, true);
                 case '<':
-                    return LoadMovableTile(x, y, TileCollision.Platform, false);
+                    return LoadMovableTile(x, y, TileCollision.Platform, false, 0);
+                case 'Ƨ':
+                    return LoadMovableTile(x, y, TileCollision.Platform, false, 1);
                 case '≤':
-                    return LoadMovableTile(x, y, TileCollision.Platform, true);
+                    return LoadMovableTile(x, y, TileCollision.Platform, true, 0);
+                case 'Ƶ':
+                    return LoadMovableTile(x, y, TileCollision.Platform, true, 1);
 
                 case '┤':
                     return LoadTile("switchOff", TileCollision.HorizontalSwitch);
@@ -528,10 +532,10 @@ namespace LearningXNA
         /// <summary>
         /// Loads a moving tile.
         /// </summary>
-        private Tile LoadMovableTile(int x, int y, TileCollision collision, bool controllable)
+        private Tile LoadMovableTile(int x, int y, TileCollision collision, bool controllable, int flag)
         {
             Point position = GetBounds(x, y).Center;
-            movableTiles.Add(new MovableTile(this, new Vector2(position.X, position.Y), collision, controllable));
+            movableTiles.Add(new MovableTile(this, new Vector2(position.X, position.Y), collision, controllable, flag));
 
             return new Tile(null, TileCollision.Passable);
         }
