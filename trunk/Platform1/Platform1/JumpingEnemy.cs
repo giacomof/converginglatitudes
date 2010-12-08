@@ -101,14 +101,12 @@ namespace LearningXNA
 
        public void Update(GameTime gameTime)
         {
-            //Console.WriteLine(jumpTime + " " + isJumping);
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
             int seconds = gameTime.TotalRealTime.Seconds;
             if ((seconds / 3) % 2 == 0 && isJumping == false)
             {
                 isJumping = true;
             }
-           //elapsedTotal+= elapsed;
             
             //jump
            
@@ -129,7 +127,6 @@ namespace LearningXNA
                 }
                 else
                 {
-                    //Console.WriteLine("hej");
                     // Reached the apex of the jump
                     velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
                     
@@ -143,7 +140,6 @@ namespace LearningXNA
             // Apply velocity.
             position += velocity * elapsed;
             position = new Vector2(Position.X, (float)Math.Round(Position.Y));
-            //Console.WriteLine(position.Y + " " + isJumping + " " + initialPosition);
             if (position.Y >= initialPosition.Y)
             {
                 jumpTime = 0.0f;

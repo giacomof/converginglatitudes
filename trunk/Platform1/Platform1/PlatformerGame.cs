@@ -39,6 +39,7 @@ namespace LearningXNA
         private SpriteFont hudFont;
         private Texture2D hud;
         private Texture2D hud2;
+        private Texture2D hud3;
         private Texture2D monsterAvailable;
         private Texture2D monsterActive;
         private Texture2D monsterCatNotAvailable;
@@ -106,6 +107,7 @@ namespace LearningXNA
         public bool canBeMole = true;
 
         //DEBUG INTERFACE CHANGE
+        public int actualHud = 2;
         public bool changeInterface;
         public bool wasChangedInterface;
 
@@ -151,6 +153,7 @@ namespace LearningXNA
             // Load HUD stuff
             hud = Content.Load<Texture2D>("Overlays/hud/interface");
             hud2 = Content.Load<Texture2D>("Overlays/hud/interface2");
+            hud3 = Content.Load<Texture2D>("Overlays/hud/interface3");
             monsterAvailable = Content.Load<Texture2D>("Overlays/hud/monster-available");
             monsterActive = Content.Load<Texture2D>("Overlays/hud/monster-active");
             monsterCatNotAvailable = Content.Load<Texture2D>("Overlays/hud/monstercat-notavailable");
@@ -234,8 +237,14 @@ namespace LearningXNA
 
             if (keyboardState.IsKeyDown(Keys.I))
             {
-                if(!wasChangedInterface)
+                if (!wasChangedInterface)
+                {
                     changeInterface = !changeInterface;
+                    actualHud++;
+                    if (actualHud > 2)
+                        actualHud = 0;
+                }
+
                 wasChangedInterface = true;
             }
             else
@@ -363,37 +372,51 @@ namespace LearningXNA
                                          titleSafeArea.Y + titleSafeArea.Height / 2.0f);
             
             // Positions for timer and cookie counter
-            Vector2 timerPos;
-            Vector2 cookiePos;
-            Vector2 livesPos;
-            Vector2 monsterIconPos;
-            Vector2 catIconPos;
-            Vector2 duckIconPos;
-            Vector2 somethingIconPos;
+            Vector2 timerPos = Vector2.Zero;
+            Vector2 cookiePos = Vector2.Zero;
+            Vector2 livesPos = Vector2.Zero;
+            Vector2 monsterIconPos = Vector2.Zero;
+            Vector2 catIconPos = Vector2.Zero;
+            Vector2 duckIconPos = Vector2.Zero;
+            Vector2 moleIconPos = Vector2.Zero;
 
-            if (changeInterface)
+            switch (actualHud)
             {
-                timerPos = new Vector2(53, 12);
-                cookiePos = new Vector2(290, 12);
-                livesPos = new Vector2(178, 12);
-                monsterIconPos = new Vector2(1016, 0);
-                catIconPos = new Vector2(1080, 0);
-                duckIconPos = new Vector2(1144, 0);
-                somethingIconPos = new Vector2(1210, 0);
+                case 0:
+                    timerPos = new Vector2(53, 12);
+                    cookiePos = new Vector2(290, 12);
+                    livesPos = new Vector2(178, 12);
+                    monsterIconPos = new Vector2(1016, 0);
+                    catIconPos = new Vector2(1080, 0);
+                    duckIconPos = new Vector2(1144, 0);
+                    moleIconPos = new Vector2(1210, 0);
 
-                spriteBatch.Draw(hud, hudLocation, Color.White);
-            }
-            else
-            {
-                timerPos = new Vector2(53, 12);
-                cookiePos = new Vector2(290, 12);
-                livesPos = new Vector2(178, 12);
-                monsterIconPos = new Vector2(0, 58);
-                catIconPos = new Vector2(0, 121);
-                duckIconPos = new Vector2(0, 185);
-                somethingIconPos = new Vector2(0, 244);
+                    spriteBatch.Draw(hud, hudLocation, Color.White);
+                    break;
 
-                spriteBatch.Draw(hud2, hudLocation, Color.White);
+                case 1:
+                    timerPos = new Vector2(53, 12);
+                    cookiePos = new Vector2(290, 12);
+                    livesPos = new Vector2(178, 12);
+                    monsterIconPos = new Vector2(0, 58);
+                    catIconPos = new Vector2(0, 121);
+                    duckIconPos = new Vector2(0, 185);
+                    moleIconPos = new Vector2(0, 244);
+
+                    spriteBatch.Draw(hud2, hudLocation, Color.White);
+                    break;
+
+                case 2:
+                    timerPos = new Vector2(1209, 12);
+                    cookiePos = new Vector2(1095, 12);
+                    livesPos = new Vector2(984, 12);
+                    monsterIconPos = new Vector2(5, 0);
+                    catIconPos = new Vector2(73, 0);
+                    duckIconPos = new Vector2(137, 0);
+                    moleIconPos = new Vector2(200, 0);
+
+                    spriteBatch.Draw(hud3, hudLocation, Color.White);
+                    break;
             }
 
             Texture2D monsterIcon = null;
@@ -431,7 +454,7 @@ namespace LearningXNA
             spriteBatch.Draw(monsterIcon, hudLocation + monsterIconPos, Color.White);
             spriteBatch.Draw(catIcon, hudLocation + catIconPos, Color.White);
             spriteBatch.Draw(duckIcon, hudLocation + duckIconPos, Color.White);
-            spriteBatch.Draw(moleIcon, hudLocation + somethingIconPos, Color.White);
+            spriteBatch.Draw(moleIcon, hudLocation + moleIconPos, Color.White);
 
 
             // Draw time remaining. Uses modulo division to cause blinking when the

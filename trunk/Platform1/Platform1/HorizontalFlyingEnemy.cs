@@ -134,7 +134,6 @@ namespace LearningXNA
             }
             else
             {
-                System.Console.WriteLine(tileX + " " + tileY);
                 // If we are about to run into a wall or off a cliff, start waiting.
                 if (Level.GetCollision(tileX + (int)direction, tileY) == TileCollision.Impassable ||
                     Level.GetCollision(tileX + (int)direction, tileY) == TileCollision.LevelFrame ||
