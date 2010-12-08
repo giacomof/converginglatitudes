@@ -85,7 +85,7 @@ namespace LearningXNA
         // Meta-level game state.
 
 
-        private int levelIndex = 5;
+        private int levelIndex = 2;
 
 
 
