@@ -24,18 +24,13 @@ namespace LearningXNA
     [Serializable]
     public struct HighScoreData
     {
-        public string[] PlayerName;
         public int[] Score;
-        public int[] Level;
 
         public int Count;
 
         public HighScoreData(int count)
         {
-            PlayerName = new string[count];
             Score = new int[count];
-            Level = new int[count];
-
             Count = count;
         }
     }
@@ -55,10 +50,9 @@ namespace LearningXNA
 
         public readonly string HighScoresFilename = "highscores.lst";
 
-
-
         // Global content.
         private SpriteFont hudFont;
+        private SpriteFont highScoreFont;
         private Texture2D hud;
         private Texture2D hud2;
         private Texture2D hud3;
@@ -108,7 +102,7 @@ namespace LearningXNA
         private SoundEffect youlose3;
         private SoundEffect youlose4;
 
-        private int levelIndex = 5;
+        private int levelIndex = -1;
 
         private Level level;
         private bool wasContinuePressed;
@@ -122,9 +116,9 @@ namespace LearningXNA
         private const int BackBufferHeight = 720;
 
         // Used to store tha ability to change animal between levels
-        public bool canBeCat = false; //DEBUG REASON
-        public bool canBeDuck = false;
-        public bool canBeMole = false;
+        public bool canBeCat = true; //DEBUG REASON
+        public bool canBeDuck = true;
+        public bool canBeMole = true;
 
         //DEBUG INTERFACE CHANGE
         public int actualHud = 2;
@@ -177,6 +171,7 @@ namespace LearningXNA
 
             // Load fonts
             hudFont = Content.Load<SpriteFont>("Fonts/Hud");
+            highScoreFont = Content.Load<SpriteFont>("Fonts/HighScore");
 
             // Load HUD stuff
             hud = Content.Load<Texture2D>("Overlays/hud/interface");
@@ -364,6 +359,7 @@ namespace LearningXNA
                 if (levelIndex == 7)
                 {
                     gameState = HIGH_SCORE;
+                    SaveHighScore(totalScore);
                     break;
                 }
                 if (File.Exists(levelPath))
@@ -439,6 +435,7 @@ namespace LearningXNA
                 case HIGH_SCORE:
                     spriteBatch.Begin();
                     spriteBatch.Draw(highScore, new Rectangle(0, 0, 1280, 720), Color.White);
+                    printHighScore();
                     spriteBatch.End();
                     break;
 
@@ -739,26 +736,16 @@ namespace LearningXNA
             {
                 //If the file doesn't exist, make a fake one...
                 // Create the data to save
-                HighScoreData data = new HighScoreData(5);
-                data.PlayerName[0] = "Neil";
-                data.Level[0] = 10;
-                data.Score[0] = 200500;
+                HighScoreData data = new HighScoreData(10);
+                data.Score[0] = 500;
 
-                data.PlayerName[1] = "Shawn";
-                data.Level[1] = 10;
-                data.Score[1] = 187000;
+                data.Score[1] = 400;
 
-                data.PlayerName[2] = "Mark";
-                data.Level[2] = 9;
-                data.Score[2] = 113300;
+                data.Score[2] = 300;
 
-                data.PlayerName[3] = "Cindy";
-                data.Level[3] = 7;
-                data.Score[3] = 95100;
+                data.Score[3] = 200;
 
-                data.PlayerName[4] = "Sam";
-                data.Level[4] = 1;
-                data.Score[4] = 1000;
+                data.Score[4] = 100;
 
                 SaveHighScores(data, HighScoresFilename);
             }
@@ -766,37 +753,70 @@ namespace LearningXNA
             base.Initialize();
         }
 
-        //private void SaveHighScore()
-        //{
-        //    // Create the data to save
-        //    HighScoreData data = LoadHighScores(HighScoresFilename);
+        private void SaveHighScore(int score)
+        {
+            // Create the data to save
+            HighScoreData data = LoadHighScores(HighScoresFilename);
 
-        //    int scoreIndex = -1;
-        //    for (int i = 0; i < data.Count; i++)
-        //    {
-        //        if (score > data.Score[i])
-        //        {
-        //            scoreIndex = i;
-        //            break;
-        //        }
-        //    }
+            int scoreIndex = -1;
+            for (int i = 0; i < data.Count; i++)
+            {
+                if (score > data.Score[i])
+                {
+                    scoreIndex = i;
+                    break;
+                }
+            }
 
-        //    if (scoreIndex > -1)
-        //    {
-        //        //New high score found ... do swaps
-        //        for (int i = data.Count - 1; i > scoreIndex; i--)
-        //        {
-        //            data.PlayerName[i] = data.PlayerName[i - 1];
-        //            data.Score[i] = data.Score[i - 1];
-        //            data.Level[i] = data.Level[i - 1];
-        //        }
+            if (scoreIndex > -1)
+            {
+                //New high score found ... do swaps
+                for (int i = data.Count - 1; i > scoreIndex; i--)
+                {
+                    data.Score[i] = data.Score[i - 1];
+                }
 
-        //        data.PlayerName[scoreIndex] = "Player1"; //Retrieve User Name Here
-        //        data.Score[scoreIndex] = score;
-        //        data.Level[scoreIndex] = currentLevel + 1;
+                data.Score[scoreIndex] = score;
 
-        //        SaveHighScores(data, HighScoresFilename);
-        //    }
-        //}
+                SaveHighScores(data, HighScoresFilename);
+            }
+        }
+
+        private void printHighScore()
+        {
+            HighScoreData data = LoadHighScores(HighScoresFilename);
+
+            int startingX = 450;
+            int startingY = 200;
+            int actualX = 0;
+            int actualY = 0;
+
+            Color textColor;
+
+            bool alreadyRed = false;
+
+            for (int i = 0; i < 10; i++)
+            {
+                if (i / 5 == 0)
+                    actualX = startingX;
+                else
+                    actualX = 900;
+
+                actualY = startingY + (i % 5) * 50;
+
+                if (data.Score[i] == totalScore && !alreadyRed)
+                {
+                    textColor = Color.Red;
+                    alreadyRed = true;
+                }
+                else
+                    textColor = new Color(234, 194, 57);
+
+                if(i < 9)
+                    DrawShadowedString(highScoreFont, i + 1 + ".  Player: " + data.Score[i], new Vector2(actualX, actualY), textColor);
+                else
+                    DrawShadowedString(highScoreFont, i + 1 + ". Player: " + data.Score[i], new Vector2(actualX, actualY), textColor);
+            }
+        }
     }
 }

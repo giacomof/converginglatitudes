@@ -77,6 +77,12 @@ namespace LearningXNA
 
         private Texture2D disappearingTileOpen;
         private Texture2D switchTileOn;
+        private Texture2D switch1On;
+        private Texture2D switch2On;
+        private Texture2D switch3On;
+        private Texture2D switch4On;
+        private Texture2D switch5On;
+
         private Texture2D lightBulb;
         private Texture2D exclamationMark;
 
@@ -210,6 +216,12 @@ namespace LearningXNA
 
             disappearingTileOpen = Content.Load<Texture2D>("Tiles/drawerOpen");
             switchTileOn = Content.Load<Texture2D>("Tiles/switchOn");
+
+            switch1On = Content.Load<Texture2D>("Tiles/switch1On");
+            switch2On = Content.Load<Texture2D>("Tiles/switch2On");
+            switch3On = Content.Load<Texture2D>("Tiles/switch3On");
+            switch4On = Content.Load<Texture2D>("Tiles/switch4On");
+            switch5On = Content.Load<Texture2D>("Tiles/switch5On");
 
             lightBulb = Content.Load<Texture2D>("EventIcons/lightBulb");
             exclamationMark = Content.Load<Texture2D>("EventIcons/exclamation");
@@ -466,25 +478,25 @@ namespace LearningXNA
                 //END OF MOVING PLATFORM STUFF
 
                 case '˥':
-                    return LoadTile("switchOff", TileCollision.SwitchWall1);
+                    return LoadTile("switch1Off", TileCollision.SwitchWall1);
                 case '˦':
-                    return LoadTile("switchOff", TileCollision.SwitchWall2);
+                    return LoadTile("switch2Off", TileCollision.SwitchWall2);
                 case '˧':
-                    return LoadTile("switchOff", TileCollision.SwitchWall3);
+                    return LoadTile("switch3Off", TileCollision.SwitchWall3);
                 case '†':
-                    return LoadTile("switchOff", TileCollision.SwitchWall4);
+                    return LoadTile("switch4Off", TileCollision.SwitchWall4);
                 case '‡':
-                    return LoadTile("switchOff", TileCollision.SwitchWall5);
+                    return LoadTile("switch5Off", TileCollision.SwitchWall5);
                 case '░':
-                    return LoadDestroyableTile("Tile0", 1, x, y);
+                    return LoadDestroyableTile("lockTile1", 1, x, y);
                 case '▒':
-                    return LoadDestroyableTile("Tile0", 2, x, y);
+                    return LoadDestroyableTile("lockTile2", 2, x, y);
                 case '▓':
-                    return LoadDestroyableTile("Tile0", 3, x, y);
+                    return LoadDestroyableTile("lockTile3", 3, x, y);
                 case '█':
-                    return LoadDestroyableTile("Tile0", 4, x, y);
+                    return LoadDestroyableTile("lockTile4", 4, x, y);
                 case '▐':
-                    return LoadDestroyableTile("Tile0", 5, x, y);
+                    return LoadDestroyableTile("lockTile5", 5, x, y);
 
                 case '*':
                     return LoadTile("drawerOpen", TileCollision.Disappearing);
@@ -1578,31 +1590,31 @@ namespace LearningXNA
                                 if (destroyableWall1Active)
                                     spriteBatch.Draw(texture, position, Color.White);
                                 else
-                                    spriteBatch.Draw(switchTileOn, position, Color.White);
+                                    spriteBatch.Draw(switch1On, position, Color.White);
                                 break;
                             case TileCollision.SwitchWall2:
                                 if (destroyableWall2Active)
                                     spriteBatch.Draw(texture, position, Color.White);
                                 else
-                                    spriteBatch.Draw(switchTileOn, position, Color.White);
+                                    spriteBatch.Draw(switch2On, position, Color.White);
                                 break;
                             case TileCollision.SwitchWall3:
                                 if (destroyableWall3Active)
                                     spriteBatch.Draw(texture, position, Color.White);
                                 else
-                                    spriteBatch.Draw(switchTileOn, position, Color.White);
+                                    spriteBatch.Draw(switch3On, position, Color.White);
                                 break;
                             case TileCollision.SwitchWall4:
                                 if (destroyableWall4Active)
                                     spriteBatch.Draw(texture, position, Color.White);
                                 else
-                                    spriteBatch.Draw(switchTileOn, position, Color.White);
+                                    spriteBatch.Draw(switch4On, position, Color.White);
                                 break;
                             case TileCollision.SwitchWall5:
                                 if (destroyableWall5Active)
                                     spriteBatch.Draw(texture, position, Color.White);
                                 else
-                                    spriteBatch.Draw(switchTileOn, position, Color.White);
+                                    spriteBatch.Draw(switch5On, position, Color.White);
                                 break;
                             default:
                                 spriteBatch.Draw(texture, position, Color.White);
