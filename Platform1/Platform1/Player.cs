@@ -452,6 +452,9 @@ namespace LearningXNA
             isDead = false;
             isScared = false;
             scaredTimerClock = 0;
+            jumpTime = 0;
+            isJumping = false;
+            isBouncing = false;
 
             isIdle = true;
             hasReachedExit = false;
