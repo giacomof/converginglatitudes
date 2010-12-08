@@ -2659,7 +2659,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-
     <Compile Include="Sprites\Mole\Idle.png">
       <Name>Idle</Name>
       <Importer>TextureImporter</Importer>
@@ -2674,7 +2673,6 @@
   <ItemGroup>
     <None Include="Levels\4.txt">
       <Name>4</Name>
-
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -2684,7 +2682,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-
     <Compile Include="Tiles\earth1.png">
       <Name>earth1</Name>
       <Importer>TextureImporter</Importer>
@@ -2747,6 +2744,13 @@
     </Compile>
     <Compile Include="Overlays\tutorial10.png">
       <Name>tutorial10</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Overlays\hud\interface3.png">
+      <Name>interface3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
