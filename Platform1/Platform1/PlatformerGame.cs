@@ -32,7 +32,6 @@ namespace LearningXNA
 
         Video initialVideo;
         VideoPlayer videoPlayer;
-        private bool checkVideo = true;
 
 
         // Global content.
@@ -70,6 +69,10 @@ namespace LearningXNA
         private Texture2D tutorialOverlay10;
         private Texture2D tutorialOverlay11;
 
+        private Texture2D gameTitle;
+        private Texture2D highScore;
+        private Texture2D credits;
+
 
         private Random random = new Random();
         private bool alreadyLost = false;
@@ -82,13 +85,7 @@ namespace LearningXNA
         private SoundEffect youlose3;
         private SoundEffect youlose4;
 
-
-        // Meta-level game state.
-
-
-        private int levelIndex = -1;
-
-
+        private int levelIndex = 6;
 
         private Level level;
         private bool wasContinuePressed;
@@ -118,6 +115,14 @@ namespace LearningXNA
         const short MONSTER_MOLE        = 3;
 
         public int totalScore = 0;
+
+        const int SHOW_TITLE     = 0;
+        const int SHOW_VIDEO     = 1;
+        const int NORMAL_PLAY    = 2;
+        const int HIGH_SCORE     = 3;
+        const int CREDITS        = 4;
+        
+        public int gameState = 0;
 
         public PlatformerGame()
         {
@@ -192,9 +197,12 @@ namespace LearningXNA
             youlose4 = Content.Load<SoundEffect>("Sounds/youlose/youlose4");
 
 
-            MediaPlayer.IsRepeating = true;
+            gameTitle = Content.Load<Texture2D>("Overlays/title");
+            highScore = Content.Load<Texture2D>("Overlays/highScore");
+            credits = Content.Load<Texture2D>("Overlays/credits");
 
-            videoPlayer.Play(initialVideo);
+
+            MediaPlayer.IsRepeating = true;
 
             LoadNextLevel();
         }
@@ -208,21 +216,33 @@ namespace LearningXNA
         {
             HandleInput();
 
-            if (checkVideo)
+            switch (gameState)
             {
-                if (videoPlayer.State == MediaState.Stopped)
-                {
-                    videoPlayer.Dispose();
-                    MediaPlayer.Play(Content.Load<Song>("Sounds/human_beat"));
-                    checkVideo = false;
-                }
-            }
-            else
-            {
+                case SHOW_TITLE:
+                    //do something
+                    break;
 
-                level.Update(gameTime);
+                case SHOW_VIDEO:
+                    if (videoPlayer.State == MediaState.Stopped)
+                    {
+                        videoPlayer.Dispose();
+                        MediaPlayer.Play(Content.Load<Song>("Sounds/human_beat"));
+                        gameState = NORMAL_PLAY;
+                    }
+                    break;
 
-                base.Update(gameTime);
+                case NORMAL_PLAY:
+                    level.Update(gameTime);
+                    base.Update(gameTime);
+                    break;
+
+                case HIGH_SCORE:
+                    //do something
+                    break;
+
+                case CREDITS:
+                    //do something
+                    break;
             }
             
         }
@@ -258,28 +278,48 @@ namespace LearningXNA
             // to get the player back to playing.
             if (!wasContinuePressed && continuePressed)
             {
-                if(!videoPlayer.IsDisposed)
-                    videoPlayer.Stop();
+                switch (gameState)
+                {
+                    case SHOW_TITLE:
+                        gameState = SHOW_VIDEO;
+                        videoPlayer.Play(initialVideo);
+                        break;
 
-                if (!level.Player.IsAlive)
-                {
-                    level.StartNewLife();
-                }
-                else if (level.TimeRemaining == TimeSpan.Zero)
-                {
-                    if (level.ReachedExit)
-                    {
-                        totalScore += level.Score - totalScore;
-                        LoadNextLevel();
-                    }
-                    else
-                    {
-                        totalScore = level.ScoreAtBeginning;
-                        ReloadCurrentLevel();
-                        level.Player.CanBeCat = canBeCat;
-                        level.Player.CanBeDuck = canBeDuck;
-                        level.Player.CanBeMole = canBeMole;
-                    }
+                    case SHOW_VIDEO:
+                        gameState = NORMAL_PLAY;
+                        videoPlayer.Stop();
+                        break;
+
+                    case NORMAL_PLAY:
+                        if (!level.Player.IsAlive)
+                        {
+                            level.StartNewLife();
+                        }
+                        else if (level.TimeRemaining == TimeSpan.Zero)
+                        {
+                            if (level.ReachedExit)
+                            {
+                                totalScore += level.Score - totalScore;
+                                LoadNextLevel();
+                            }
+                            else
+                            {
+                                totalScore = level.ScoreAtBeginning;
+                                ReloadCurrentLevel();
+                                level.Player.CanBeCat = canBeCat;
+                                level.Player.CanBeDuck = canBeDuck;
+                                level.Player.CanBeMole = canBeMole;
+                            }
+                        }
+                        break;
+
+                    case HIGH_SCORE:
+                        gameState = CREDITS;
+                        break;
+
+                    case CREDITS:
+                        Exit();
+                        break;
                 }
             }
 
@@ -297,6 +337,11 @@ namespace LearningXNA
                 // Try to find the next level. They are sequentially numbered txt files.
                 levelPath = String.Format("Levels/{0}.txt", ++levelIndex);
                 levelPath = Path.Combine(StorageContainer.TitleLocation, "Content/" + levelPath);
+                if (levelIndex == 7)
+                {
+                    gameState = HIGH_SCORE;
+                    break;
+                }
                 if (File.Exists(levelPath))
                     break;
 
@@ -308,26 +353,29 @@ namespace LearningXNA
                 levelIndex = -1;
             }
 
-            // Unloads the content for the current level before loading the next one.
-            if (level != null)
+            if (levelIndex != 7)
             {
-                if (level.ReachedExit)
+                // Unloads the content for the current level before loading the next one.
+                if (level != null)
                 {
-                    // Save the change shape abilities before disposing the actual level
-                    canBeCat = level.Player.CanBeCat;
-                    canBeDuck = level.Player.CanBeDuck;
-                    canBeMole = level.Player.CanBeMole;
+                    if (level.ReachedExit)
+                    {
+                        // Save the change shape abilities before disposing the actual level
+                        canBeCat = level.Player.CanBeCat;
+                        canBeDuck = level.Player.CanBeDuck;
+                        canBeMole = level.Player.CanBeMole;
+                    }
+                    level.Dispose();
                 }
-                level.Dispose();
+                // Load the level.
+                level = new Level(Services, levelPath, levelIndex);
+                level.ScoreAtBeginning = totalScore;
+                level.Score = totalScore;
+                // Apply the old change shape abilities after loading the new level
+                level.Player.CanBeCat = canBeCat;
+                level.Player.CanBeDuck = canBeDuck;
+                level.Player.CanBeMole = canBeMole;
             }
-            // Load the level.
-            level = new Level(Services, levelPath, levelIndex);
-            level.ScoreAtBeginning = totalScore;
-            level.Score = totalScore;
-            // Apply the old change shape abilities after loading the new level
-            level.Player.CanBeCat = canBeCat;
-            level.Player.CanBeDuck = canBeDuck;
-            level.Player.CanBeMole = canBeMole;
         }
 
         private void ReloadCurrentLevel()
@@ -344,20 +392,37 @@ namespace LearningXNA
         {
             graphics.GraphicsDevice.Clear(Color.Black);
 
-            if (!videoPlayer.IsDisposed)
+            switch (gameState)
             {
-                spriteBatch.Begin();
-                spriteBatch.Draw(videoPlayer.GetTexture(), new Rectangle(0, 0, initialVideo.Width, initialVideo.Height), Color.White);
-                spriteBatch.End();
-            }
-            else
-            {
+                case SHOW_TITLE:
+                    spriteBatch.Begin();
+                    spriteBatch.Draw(gameTitle, new Rectangle(0, 0, 1280, 720), Color.White);
+                    spriteBatch.End();
+                    break;
 
-                level.Draw(gameTime, spriteBatch);
+                case SHOW_VIDEO:
+                    spriteBatch.Begin();
+                    spriteBatch.Draw(videoPlayer.GetTexture(), new Rectangle(0, 0, initialVideo.Width, initialVideo.Height), Color.White);
+                    spriteBatch.End();
+                    break;
 
-                DrawHud();
+                case NORMAL_PLAY:
+                    level.Draw(gameTime, spriteBatch);
+                    DrawHud();
+                    base.Draw(gameTime);
+                    break;
 
-                base.Draw(gameTime);
+                case HIGH_SCORE:
+                    spriteBatch.Begin();
+                    spriteBatch.Draw(highScore, new Rectangle(0, 0, 1280, 720), Color.White);
+                    spriteBatch.End();
+                    break;
+
+                case CREDITS:
+                    spriteBatch.Begin();
+                    spriteBatch.Draw(credits, new Rectangle(0, 0, 1280, 720), Color.White);
+                    spriteBatch.End();
+                    break;
             }
         }
 
