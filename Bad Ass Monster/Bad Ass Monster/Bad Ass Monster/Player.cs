@@ -391,7 +391,7 @@ namespace LearningXNA
             monsterDuckFlyAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/duckFly"), 0.03f, true);
             monsterDuckDieAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/duckDie"), 0.1f, false);
 
-            monsterMoleIdleAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/moleIdle"), 0.1f, true);
+            monsterMoleIdleAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/moleIdle"), 0.2f, true);
             monsterMoleRunAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/moleRun"), 0.1f, true);
             monsterMoleJumpAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/moleJump"), 0.1f, false);
             monsterMoleShovelAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/moleShovel"), 0.1f, true);
