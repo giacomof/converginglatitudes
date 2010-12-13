@@ -106,7 +106,7 @@ namespace LearningXNA
         private SoundEffect youlose3;
         private SoundEffect youlose4;
 
-        private int levelIndex = 2;
+        private int levelIndex =-1;
 
 
         private Level level;
@@ -121,9 +121,9 @@ namespace LearningXNA
         private const int BackBufferHeight = 720;
 
         // Used to store tha ability to change animal between levels
-        public bool canBeCat = true; //DEBUG REASON
-        public bool canBeDuck = true;
-        public bool canBeMole = true;
+        public bool canBeCat = false; //DEBUG REASON
+        public bool canBeDuck = false;
+        public bool canBeMole = false;
 
         //DEBUG INTERFACE CHANGE
         public int actualHud = 2;
