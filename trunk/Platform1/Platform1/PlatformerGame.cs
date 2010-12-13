@@ -103,7 +103,7 @@ namespace LearningXNA
         private SoundEffect youlose3;
         private SoundEffect youlose4;
 
-        private int levelIndex = 3;
+        private int levelIndex = 5;
 
         private Level level;
         private bool wasContinuePressed;
