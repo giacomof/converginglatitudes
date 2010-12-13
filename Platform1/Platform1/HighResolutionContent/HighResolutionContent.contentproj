@@ -1408,11 +1408,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Backgrounds\level4\Layer2_3.png">
-      <Name>Layer2_3</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Backgrounds\level4\Layer2_4.png">
       <Name>Layer2_4</Name>
       <Importer>TextureImporter</Importer>
@@ -2848,6 +2843,35 @@
     </Compile>
     <Compile Include="Tiles\switch5On.png">
       <Name>switch5On</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Backgrounds\level4\Layer1_9 - Kopia.png">
+      <Name>Layer1_9 - Kopia</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Backgrounds\level4\Layer2_11.png">
+      <Name>Layer2_11</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Backgrounds\level4\Layer2_12.png">
+      <Name>Layer2_12</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Backgrounds\level4\Layer3_11.png">
+      <Name>Layer3_11</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Backgrounds\level4\Layer2_3.png">
+      <Name>Layer2_3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
