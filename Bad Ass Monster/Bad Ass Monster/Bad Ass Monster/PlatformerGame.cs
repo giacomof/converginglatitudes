@@ -362,6 +362,7 @@ namespace LearningXNA
                         break;
 
                     case FINAL_OVERLAY1:
+                        SaveHighScore(totalScore);
                         gameState = FINAL_OVERLAY2;
                         break;
 
@@ -636,7 +637,6 @@ namespace LearningXNA
                     else if (gameState != FINAL_OVERLAY2)
                     {
                         totalScore = level.Score;
-                        SaveHighScore(totalScore);
                         gameState = FINAL_OVERLAY1;
                     }
                 }
