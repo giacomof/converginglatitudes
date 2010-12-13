@@ -288,22 +288,22 @@ namespace LearningXNA
             if (keyboardState.IsKeyDown(Keys.Escape))
                 Exit();
 
-            if (keyboardState.IsKeyDown(Keys.I))
-            {
-                if (!wasChangedInterface)
-                {
-                    changeInterface = !changeInterface;
-                    actualHud++;
-                    if (actualHud > 2)
-                        actualHud = 0;
-                }
+            //if (keyboardState.IsKeyDown(Keys.I))
+            //{
+            //    if (!wasChangedInterface)
+            //    {
+            //        changeInterface = !changeInterface;
+            //        actualHud++;
+            //        if (actualHud > 2)
+            //            actualHud = 0;
+            //    }
 
-                wasChangedInterface = true;
-            }
-            else
-            {
-                wasChangedInterface = false;
-            }
+            //    wasChangedInterface = true;
+            //}
+            //else
+            //{
+            //    wasChangedInterface = false;
+            //}
 
             bool continuePressed = keyboardState.IsKeyDown(Keys.Space);
 
