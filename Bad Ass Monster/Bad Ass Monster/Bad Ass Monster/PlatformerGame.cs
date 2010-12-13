@@ -53,6 +53,7 @@ namespace LearningXNA
         // Global content.
         private SpriteFont hudFont;
         private SpriteFont highScoreFont;
+        private SpriteFont scoreFont;
         private Texture2D hud;
         private Texture2D hud2;
         private Texture2D hud3;
@@ -182,6 +183,7 @@ namespace LearningXNA
             // Load fonts
             hudFont = Content.Load<SpriteFont>("Fonts/Hud");
             highScoreFont = Content.Load<SpriteFont>("Fonts/HighScore");
+            scoreFont = Content.Load<SpriteFont>("Fonts/score");
 
             // Load HUD stuff
             hud = Content.Load<Texture2D>("Overlays/hud/interface");
@@ -893,9 +895,9 @@ namespace LearningXNA
             HighScoreData data = LoadHighScores(HighScoresFilename);
 
             Color textColor = new Color(234, 194, 57);
-            //
+            //totalScore.ToString()
 
-            DrawShadowedString(highScoreFont, totalScore.ToString(), new Vector2(825, 335), textColor);
+            DrawShadowedString(scoreFont, "599", new Vector2(825, 330), textColor);
         }
     }
 }
