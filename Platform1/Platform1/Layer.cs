@@ -16,8 +16,8 @@ namespace LearningXNA
 
         public Layer(ContentManager content, string basePath, float scrollRate)
         {
-            Textures = new Texture2D[11];
-            for (int i = 0; i < 11; ++i)
+            Textures = new Texture2D[13];
+            for (int i = 0; i < 13; ++i)
                 Textures[i] = content.Load<Texture2D>(basePath + "_" + i);
 
             ScrollRate = scrollRate;
