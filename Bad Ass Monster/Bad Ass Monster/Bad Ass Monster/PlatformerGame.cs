@@ -91,6 +91,8 @@ namespace LearningXNA
         private Texture2D gameTitleSpace;
         private Texture2D highScore;
         private Texture2D credits;
+        private Texture2D finalOverlay1;
+        private Texture2D finalOverlay2;
 
         private float titleSpaceTimer = 2000;
 
@@ -121,9 +123,9 @@ namespace LearningXNA
         private const int BackBufferHeight = 720;
 
         // Used to store tha ability to change animal between levels
-        public bool canBeCat = true; //DEBUG REASON
-        public bool canBeDuck = true;
-        public bool canBeMole = true;
+        public bool canBeCat = false; //DEBUG REASON
+        public bool canBeDuck = false;
+        public bool canBeMole = false;
 
         //DEBUG INTERFACE CHANGE
         public int actualHud = 2;
@@ -142,8 +144,10 @@ namespace LearningXNA
         const int SHOW_TITLE_SPACE      = 0;
         const int SHOW_VIDEO            = 1;
         const int NORMAL_PLAY           = 2;
-        const int HIGH_SCORE            = 3;
-        const int CREDITS               = 4;
+        const int FINAL_OVERLAY1        = 3;
+        const int FINAL_OVERLAY2        = 4;
+        const int HIGH_SCORE            = 5;
+        const int CREDITS               = 6;
         
         public int gameState = -1;
 
@@ -226,6 +230,8 @@ namespace LearningXNA
             gameTitleSpace = Content.Load<Texture2D>("Overlays/title_space"); 
             highScore = Content.Load<Texture2D>("Overlays/highScore");
             credits = Content.Load<Texture2D>("Overlays/credits");
+            finalOverlay1 = Content.Load<Texture2D>("Overlays/finalOverlay1");
+            finalOverlay2 = Content.Load<Texture2D>("Overlays/finalOverlay2");
 
 
             MediaPlayer.IsRepeating = true;
@@ -267,6 +273,14 @@ namespace LearningXNA
                 case NORMAL_PLAY:
                     level.Update(gameTime);
                     base.Update(gameTime);
+                    break;
+
+                case FINAL_OVERLAY1:
+                    //do something
+                    break;
+
+                case FINAL_OVERLAY2:
+                    //do something
                     break;
 
                 case HIGH_SCORE:
@@ -347,6 +361,14 @@ namespace LearningXNA
                         }
                         break;
 
+                    case FINAL_OVERLAY1:
+                        gameState = FINAL_OVERLAY2;
+                        break;
+
+                    case FINAL_OVERLAY2:
+                        gameState = HIGH_SCORE;
+                        break;
+
                     case HIGH_SCORE:
                         gameState = CREDITS;
                         break;
@@ -371,12 +393,7 @@ namespace LearningXNA
                 // Try to find the next level. They are sequentially numbered txt files.
                 levelPath = String.Format("Levels/{0}.txt", ++levelIndex);
                 levelPath = Path.Combine(StorageContainer.TitleLocation, "Content/" + levelPath);
-                if (levelIndex == 7)
-                {
-                    gameState = HIGH_SCORE;
-                    SaveHighScore(totalScore);
-                    break;
-                }
+
                 if (File.Exists(levelPath))
                     break;
 
@@ -451,6 +468,27 @@ namespace LearningXNA
                     level.Draw(gameTime, spriteBatch);
                     DrawHud();
                     base.Draw(gameTime);
+                    break;
+
+                case FINAL_OVERLAY1:
+                    level.Draw(gameTime, spriteBatch);
+                    DrawHud();
+                    base.Draw(gameTime);
+
+                    spriteBatch.Begin();
+                    spriteBatch.Draw(finalOverlay1, new Rectangle(0, 0, 1280, 720), Color.White);
+                    spriteBatch.End();
+                    break;
+
+                case FINAL_OVERLAY2:
+                    level.Draw(gameTime, spriteBatch);
+                    DrawHud();
+                    base.Draw(gameTime);
+
+                    spriteBatch.Begin();
+                    spriteBatch.Draw(finalOverlay2, new Rectangle(0, 0, 1280, 720), Color.White);
+                    printScore();
+                    spriteBatch.End();
                     break;
 
                 case HIGH_SCORE:
@@ -593,7 +631,14 @@ namespace LearningXNA
             {
                 if (level.ReachedExit)
                 {
-                    status = winOverlay;
+                    if (levelIndex != 6)
+                        status = winOverlay;
+                    else if (gameState != FINAL_OVERLAY2)
+                    {
+                        totalScore = level.Score;
+                        SaveHighScore(totalScore);
+                        gameState = FINAL_OVERLAY1;
+                    }
                 }
                 else
                 {
@@ -841,6 +886,16 @@ namespace LearningXNA
                 else
                     DrawShadowedString(highScoreFont, i + 1 + ". Player: " + data.Score[i], new Vector2(actualX, actualY), textColor);
             }
+        }
+
+        private void printScore()
+        {
+            HighScoreData data = LoadHighScores(HighScoresFilename);
+
+            Color textColor = new Color(234, 194, 57);
+            //
+
+            DrawShadowedString(highScoreFont, totalScore.ToString(), new Vector2(825, 335), textColor);
         }
     }
 }
