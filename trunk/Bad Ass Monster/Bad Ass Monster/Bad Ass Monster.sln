@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bad Ass Monster", "Bad Ass Monster\Bad Ass Monster.csproj", "{CC6FBE0B-993B-41D7-BB86-833A308A59E9}"
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Debug|Xbox 360 = Debug|Xbox 360
+		Debug|Zune = Debug|Zune
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+		Release|Xbox 360 = Release|Xbox 360
+		Release|Zune = Release|Zune
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC6FBE0B-993B-41D7-BB86-833A308A59E9}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{CC6FBE0B-993B-41D7-BB86-833A308A59E9}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{CC6FBE0B-993B-41D7-BB86-833A308A59E9}.Debug|x86.ActiveCfg = Debug|x86
+		{CC6FBE0B-993B-41D7-BB86-833A308A59E9}.Debug|x86.Build.0 = Debug|x86
+		{CC6FBE0B-993B-41D7-BB86-833A308A59E9}.Debug|Xbox 360.ActiveCfg = Debug|x86
+		{CC6FBE0B-993B-41D7-BB86-833A308A59E9}.Debug|Zune.ActiveCfg = Debug|x86
+		{CC6FBE0B-993B-41D7-BB86-833A308A59E9}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{CC6FBE0B-993B-41D7-BB86-833A308A59E9}.Release|Mixed Platforms.Build.0 = Release|x86
+		{CC6FBE0B-993B-41D7-BB86-833A308A59E9}.Release|x86.ActiveCfg = Release|x86
+		{CC6FBE0B-993B-41D7-BB86-833A308A59E9}.Release|x86.Build.0 = Release|x86
+		{CC6FBE0B-993B-41D7-BB86-833A308A59E9}.Release|Xbox 360.ActiveCfg = Release|x86
+		{CC6FBE0B-993B-41D7-BB86-833A308A59E9}.Release|Zune.ActiveCfg = Release|x86
+		{6C127D32-9F01-4025-A51F-DC20E7010014}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{6C127D32-9F01-4025-A51F-DC20E7010014}.Debug|x86.ActiveCfg = Debug|x86
+		{6C127D32-9F01-4025-A51F-DC20E7010014}.Debug|Xbox 360.ActiveCfg = Debug|x86
+		{6C127D32-9F01-4025-A51F-DC20E7010014}.Debug|Zune.ActiveCfg = Debug|x86
+		{6C127D32-9F01-4025-A51F-DC20E7010014}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{6C127D32-9F01-4025-A51F-DC20E7010014}.Release|x86.ActiveCfg = Release|x86
+		{6C127D32-9F01-4025-A51F-DC20E7010014}.Release|Xbox 360.ActiveCfg = Release|x86
+		{6C127D32-9F01-4025-A51F-DC20E7010014}.Release|Zune.ActiveCfg = Release|x86
+		{78000264-63F2-434E-AADF-E23B260E958A}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{78000264-63F2-434E-AADF-E23B260E958A}.Debug|x86.ActiveCfg = Debug|x86
+		{78000264-63F2-434E-AADF-E23B260E958A}.Debug|Xbox 360.ActiveCfg = Debug|x86
+		{78000264-63F2-434E-AADF-E23B260E958A}.Debug|Zune.ActiveCfg = Debug|x86
+		{78000264-63F2-434E-AADF-E23B260E958A}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{78000264-63F2-434E-AADF-E23B260E958A}.Release|x86.ActiveCfg = Release|x86
+		{78000264-63F2-434E-AADF-E23B260E958A}.Release|Xbox 360.ActiveCfg = Release|x86
+		{78000264-63F2-434E-AADF-E23B260E958A}.Release|Zune.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
