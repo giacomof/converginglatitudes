@@ -94,12 +94,12 @@ namespace LearningXNA
                     texture = Level.Content.Load<Texture2D>("Sprites/FallingObject/lego" + index);
                     break;
                 case 1:
-                    index = random.Next(3);
-                    texture = Level.Content.Load<Texture2D>("Tiles/rock" + index);
+                    index = random.Next(2);
+                    texture = Level.Content.Load<Texture2D>("Tiles/pendingSpikes" + index);
                     break;
                 case 2:
-                    index = random.Next(3);
-                    texture = Level.Content.Load<Texture2D>("Tiles/rock" + index);
+                    index = random.Next(2);
+                    texture = Level.Content.Load<Texture2D>("Tiles/pendingSpikes" + index);
                     break;
             }
             origin = new Vector2(texture.Width / 2.0f, texture.Height / 2.0f);

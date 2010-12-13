@@ -24,6 +24,7 @@ Tutorial
 - Tutorial overlay 9										'ÿ'
 - Tutorial overlay 10										'Ș'
 - Tutorial overlay 11										'Ț'
+- Tutorial overlay 12										'ĉ'
 
 Enemies
 - Falling Object (lego tiles)								'f'

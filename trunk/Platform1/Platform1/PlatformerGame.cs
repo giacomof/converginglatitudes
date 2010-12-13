@@ -85,6 +85,7 @@ namespace LearningXNA
         private Texture2D tutorialOverlay9;
         private Texture2D tutorialOverlay10;
         private Texture2D tutorialOverlay11;
+        private Texture2D tutorialOverlay12;
 
         private Texture2D gameTitle;
         private Texture2D highScore;
@@ -207,6 +208,7 @@ namespace LearningXNA
             tutorialOverlay9 = Content.Load<Texture2D>("Overlays/tutorial9");
             tutorialOverlay10 = Content.Load<Texture2D>("Overlays/tutorial10");
             tutorialOverlay11 = Content.Load<Texture2D>("Overlays/tutorial11");
+            tutorialOverlay12 = Content.Load<Texture2D>("Overlays/tutorial12");
 
             youlose0 = Content.Load<SoundEffect>("Sounds/youlose/youlose0");
             youlose1 = Content.Load<SoundEffect>("Sounds/youlose/youlose1");
@@ -629,6 +631,9 @@ namespace LearningXNA
                         break;
                     case 11:
                         status = tutorialOverlay11;
+                        break;
+                    case 12:
+                        status = tutorialOverlay12;
                         break;
                 }
             }
