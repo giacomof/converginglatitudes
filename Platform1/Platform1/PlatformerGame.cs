@@ -88,8 +88,11 @@ namespace LearningXNA
         private Texture2D tutorialOverlay12;
 
         private Texture2D gameTitle;
+        private Texture2D gameTitleSpace;
         private Texture2D highScore;
         private Texture2D credits;
+
+        private float titleSpaceTimer = 2000;
 
 
         private Random random = new Random();
@@ -103,7 +106,7 @@ namespace LearningXNA
         private SoundEffect youlose3;
         private SoundEffect youlose4;
 
-        private int levelIndex = 2;
+        private int levelIndex = 5;
 
 
         private Level level;
@@ -135,13 +138,14 @@ namespace LearningXNA
 
         public int totalScore = 0;
 
-        const int SHOW_TITLE     = 0;
-        const int SHOW_VIDEO     = 1;
-        const int NORMAL_PLAY    = 2;
-        const int HIGH_SCORE     = 3;
-        const int CREDITS        = 4;
+        const int SHOW_TITLE            = -1;
+        const int SHOW_TITLE_SPACE      = 0;
+        const int SHOW_VIDEO            = 1;
+        const int NORMAL_PLAY           = 2;
+        const int HIGH_SCORE            = 3;
+        const int CREDITS               = 4;
         
-        public int gameState = 0;
+        public int gameState = -1;
 
         public PlatformerGame()
         {
@@ -219,6 +223,7 @@ namespace LearningXNA
 
 
             gameTitle = Content.Load<Texture2D>("Overlays/title");
+            gameTitleSpace = Content.Load<Texture2D>("Overlays/title_space"); 
             highScore = Content.Load<Texture2D>("Overlays/highScore");
             credits = Content.Load<Texture2D>("Overlays/credits");
 
@@ -240,6 +245,13 @@ namespace LearningXNA
             switch (gameState)
             {
                 case SHOW_TITLE:
+                    if (titleSpaceTimer > 0)
+                        titleSpaceTimer -= gameTime.ElapsedGameTime.Milliseconds;
+                    else
+                        gameState = SHOW_TITLE_SPACE;
+                    break;
+
+                case SHOW_TITLE_SPACE:
                     //do something
                     break;
 
@@ -301,7 +313,7 @@ namespace LearningXNA
             {
                 switch (gameState)
                 {
-                    case SHOW_TITLE:
+                    case SHOW_TITLE_SPACE:
                         gameState = SHOW_VIDEO;
                         videoPlayer.Play(initialVideo);
                         break;
@@ -420,6 +432,12 @@ namespace LearningXNA
                 case SHOW_TITLE:
                     spriteBatch.Begin();
                     spriteBatch.Draw(gameTitle, new Rectangle(0, 0, 1280, 720), Color.White);
+                    spriteBatch.End();
+                    break;
+                
+                case SHOW_TITLE_SPACE:
+                    spriteBatch.Begin();
+                    spriteBatch.Draw(gameTitleSpace, new Rectangle(0, 0, 1280, 720), Color.White);
                     spriteBatch.End();
                     break;
 
