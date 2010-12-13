@@ -895,9 +895,8 @@ namespace LearningXNA
             HighScoreData data = LoadHighScores(HighScoresFilename);
 
             Color textColor = new Color(234, 194, 57);
-            //totalScore.ToString()
 
-            DrawShadowedString(scoreFont, "599", new Vector2(825, 330), textColor);
+            DrawShadowedString(scoreFont, totalScore.ToString(), new Vector2(825, 330), textColor);
         }
     }
 }
