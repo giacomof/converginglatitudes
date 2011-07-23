@@ -987,7 +987,7 @@ namespace LearningXNA
         ////DISAPPEARING PLATFORM
         public void UpdateDisappearingTile(GameTime gameTime)
         {
-            int seconds = gameTime.TotalRealTime.Seconds;
+            int seconds = gameTime.TotalGameTime.Seconds;
             if ((seconds / 5) % 2 == 0)
             {
                 changeCollider = true;
@@ -1443,7 +1443,7 @@ namespace LearningXNA
 
             ScrollCamera(spriteBatch.GraphicsDevice.Viewport);
             Matrix cameraTransform = Matrix.CreateTranslation(-cameraPosition, 0.0f, 0.0f);
-            spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.None, cameraTransform);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cameraTransform);
 
             DrawTiles(spriteBatch);
 

@@ -599,7 +599,7 @@ namespace LearningXNA
         /// </summary>
         private void GetInput()
         {
-            // Get input state.
+            // Get input state
             KeyboardState keyboardState = Keyboard.GetState();
 
             isClimbing = false;
