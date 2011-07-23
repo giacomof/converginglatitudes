@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Audio;
+using System.Diagnostics;
 
 
 namespace LearningXNA
@@ -387,6 +388,10 @@ namespace LearningXNA
 
         private void LoadNextLevel()
         {
+
+            String exeName = Process.GetCurrentProcess().MainModule.FileName;
+            String release_dir = Path.GetDirectoryName(exeName);
+
             // Find the path of the next level.
             string levelPath;
 
@@ -395,7 +400,7 @@ namespace LearningXNA
             {
                 // Try to find the next level. They are sequentially numbered txt files.
                 levelPath = String.Format("Levels/{0}.txt", ++levelIndex);
-                levelPath = Path.Combine(StorageContainer.TitleLocation, "Content/" + levelPath);
+                levelPath = Path.Combine(release_dir, "Content/" + levelPath);
 
                 if (File.Exists(levelPath))
                     break;
@@ -753,8 +758,11 @@ namespace LearningXNA
 
         public static void SaveHighScores(HighScoreData data, string filename)
         {
+            String exeName = Process.GetCurrentProcess().MainModule.FileName;
+            String release_dir = Path.GetDirectoryName(exeName);
+
             // Get the path of the save game
-            string fullpath = Path.Combine(StorageContainer.TitleLocation, filename);
+            string fullpath = Path.Combine(release_dir, filename);
 
             // Open the file, creating it if necessary
             FileStream stream = File.Open(fullpath, FileMode.OpenOrCreate);
@@ -775,8 +783,11 @@ namespace LearningXNA
         {
             HighScoreData data;
 
+            String exeName = Process.GetCurrentProcess().MainModule.FileName;
+            String release_dir = Path.GetDirectoryName(exeName);
+
             // Get the path of the save game
-            string fullpath = Path.Combine(StorageContainer.TitleLocation, filename);
+            string fullpath = Path.Combine(release_dir, filename);
 
             // Open the file
             FileStream stream = File.Open(fullpath, FileMode.OpenOrCreate,
@@ -799,8 +810,11 @@ namespace LearningXNA
 
         protected override void Initialize()
         {
+            String exeName = Process.GetCurrentProcess().MainModule.FileName;
+            String release_dir = Path.GetDirectoryName(exeName);
+
             // Get the path of the save game
-            string fullpath = Path.Combine(StorageContainer.TitleLocation, HighScoresFilename);
+            string fullpath = Path.Combine(release_dir, HighScoresFilename);
 
             // Check to see if the save exists
             if (!File.Exists(fullpath))

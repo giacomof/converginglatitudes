@@ -102,7 +102,7 @@ namespace LearningXNA
        public void Update(GameTime gameTime)
         {
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            int seconds = gameTime.TotalRealTime.Seconds;
+            int seconds = gameTime.TotalGameTime.Seconds;
             if ((seconds / 3) % 2 == 0 && isJumping == false)
             {
                 isJumping = true;

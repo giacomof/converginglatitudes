@@ -1,7 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bad Ass Monster", "Bad Ass Monster\Bad Ass Monster.csproj", "{CC6FBE0B-993B-41D7-BB86-833A308A59E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bad Ass MonsterHighResolutionContent", "Bad Ass Monster\HighResolutionContent\Bad Ass MonsterHighResolutionContent.contentproj", "{6C127D32-9F01-4025-A51F-DC20E7010014}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bad Ass MonsterSharedContent", "Bad Ass Monster\SharedContent\Bad Ass MonsterSharedContent.contentproj", "{78000264-63F2-434E-AADF-E23B260E958A}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
